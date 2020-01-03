@@ -1,0 +1,79 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+
+<div class="row top-menu">
+  <div class="col-md-10"><span class="text-dark">Catalog App</span></div>
+  <div class="col-md-2 text-right"><button><a href="#">Login</a></button></div>
+</div>
+<div class="row divider blue">
+  <div class="col-md-12"></div>
+</div>
+
+
+<div class = 'flash'>
+        {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+      <ul>
+      {% for message in messages %}
+          <li> <strong> {{ message }} </strong> </li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+  {% endwith %}
+
+</div>
+
+
+
+<div class="row padding-top padding-bottom">
+  <div class="col-md-1"></div>
+  <div class="col-md-10 padding-top padding-bottom">
+    <div class="col-md-2 padding-left"></div>
+    <div class="vl"></div>
+    <div class="col-md-8 padding-left"></div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+
+
+  <div class="row padding-top padding-bottom">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 padding-top padding-bottom">
+      <div class="col-md-2 padding-none">
+
+        <div class="col-md-2 padding-none">
+          <h1 class="title text-dark text-black">Categories</h1>
+        </div>
+
+        <div class="col-md-2 padding-none category-list">
+          {% for category in categories %}
+          <a href = "{{url_for('showCatalog', category_id = category.id)}}">
+            <h3 class="orange-text">{{category.name}}</h3>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="vl"></div>
+      <div class="col-md-8 padding-none">
+
+        <div class="col-md-8 padding-left">
+          <h2 class="title text-dark">Latest Items</h2>
+        </div>
+
+        <div class="col-md-8 padding-left latest-item-list">
+          {% for item in items %}
+          <a href = "{{url_for('showCategory', category_id = category.id)}}">
+            <h3 class="orange-text">{{item.name}}</h3><span>' (' + {{ category.name }} + ')'</span>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+{% endblock %}

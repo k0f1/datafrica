@@ -1,0 +1,52 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div class="flash">
+        {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+      <ul>
+      {% for message in messages %}
+          <li> <strong> {{ message }} </strong> </li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+    {% endwith %}
+</div>
+<div class="row main d-flex">
+  <div class="col-md-1"></div>
+
+  <div class="col-md-3 category-list">
+    <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
+    <ul>
+        {% for category in categories %}
+        <li>
+          <a href = "{{url_for('showCategory', category_id = category.id)}}">
+            <p class="orange-text">{{category.name}}</p>
+          </a>
+        </li>
+        {% endfor %}
+    </ul>
+  </div>
+  <div class="vl"></div>
+
+  <div class="col-md-5">
+    <a href="{{url_for('newItem')}}"><h2 class="orange-text">Add Item</h2></a>
+    <h2 class=" latest-item-list title text-dark">
+        <strong>Latest Items</strong>
+    </h2>
+    <ul class="latest-item-list">
+        {% for item in latestItems %}
+        <li>
+            <a href = "{{url_for('showItem', category_id = category.id,
+              item_id = item.id)}}"><p class="orange-text">{{item.title}}</p>
+            </a><span>' (' + {{item.category_id.name}} + ')'</span>
+        </li>
+        {% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+{% endblock %}

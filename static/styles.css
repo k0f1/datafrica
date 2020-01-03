@@ -1,0 +1,140 @@
+/*
+To make it abit easier for myself, I have added the styles in the order that the elements appear.
+*/
+
+• {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #e5e5e5;
+  font-family: Open Sans,Helvetica,sans-serif;
+  font-size: 16px!important;
+  font-style: normal;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
+h1, h2 {
+  font-family: 'Georgia', serif;
+  color: #51453B;
+}
+
+h1 { font-size: 1.2em;}
+
+h2 {font-size: 1.0em;}
+
+h3 {color: #FFA500;}
+
+a  {text-decoration: none;}
+
+/*Removes indentation from <ul> tag */
+ul {
+  padding: 0;
+}
+
+
+li {list-style-type: none;}
+
+/*Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class.
+ */
+
+
+/*
+nav a button
+
+Tap targets should be bigger that your average finger
+which is about 10mm or half an inche or 40CSS pixels in inorder
+that fingers can use them . To ensure that all your elements are at least that size,
+add min-width 48pixels and min-height 48pixels to every tappable element
+*/
+
+
+nav a, button {
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 14px;
+}
+
+
+.container {
+  display: grid;
+  max-width: 100%;
+  max-height: auto;
+}
+
+
+
+
+.row {
+  border: 2px dotted red;
+}
+
+
+/*Select all <div> elements with class="col-md-10"  */
+/* The display:flex property here is used to render this element items/columns in a row */
+.main {
+  background-color: white;
+  max-width: 100%;
+  display: flex;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+
+/*Select all <span> elements with the class="text-muted"  */
+span.text-muted {
+  color: #e5e5e5;
+}
+
+
+/*Selects all elements with vl that is a descendant of an element with button */
+.vl.button {
+  width: 1px;
+  height: 3px;
+  border-left: 1px solid red;
+}
+
+
+
+
+/*Select all <li> elements with the class="flash" */
+li.flash {
+	list-style-type: none;
+	text-align: center;
+
+}
+
+.main.col-md-3 {
+  min-width: 30%;
+}
+
+.main.colmd-6 {
+  min-width: 70%;
+}
+
+.flash {
+	background-color: #98FB98;
+	width:100%;
+	text-decoration: none;
+
+}
+
+
+.vl {
+  width: 1px;
+  height: 100%;
+  border-left: 1px solid #e5e5e5;
+}
+
+.padding-top { padding-top: 20px; }
+
+.padding-bottom { padding-bottom: 30px; }
+
+
+
+.padding-none {
+	padding: 0;
+}
