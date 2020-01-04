@@ -2,18 +2,7 @@
 {% block content %}
 {% include "header.html" %}
 
-
-
-<div class="row top-menu">
-  <div class="col-md-10"></div>
-  <div class="col-md-2 text-right"></div>
-</div>
-<div class="row divider blue">
-  <div class="col-md-12"></div>
-</div>
-
-
-<div class = 'flash'>
+<div class="flash">
         {% with messages = get_flashed_messages() %}
     {% if messages %}
 
@@ -23,59 +12,41 @@
       {% endfor %}
       </ul>
       {% endif %}
-  {% endwith %}
-
+    {% endwith %}
 </div>
-
-
-
-<div class="row padding-top padding-bottom">
+<div class="row main d-flex">
   <div class="col-md-1"></div>
-  <div class="col-md-10 padding-top padding-bottom">
-    <div class="col-md-2 padding-left"></div>
-    <div class="vl"></div>
-    <div class="col-md-8 padding-left"></div>
-  </div>
-  <div class="col-md-1"></div>
-</div>
 
-
-
-  <div class="row padding-top padding-bottom">
-    <div class="col-md-1"></div>
-    <div class="col-md-10 padding-top padding-bottom">
-      <div class="col-md-2 padding-none">
-
-        <div class="col-md-2 padding-none">
-          <h1 class="title text-dark text-black">Categories</h1>
-        </div>
-
-        <div class="col-md-2 padding-none category-list">
-          {% for category in categories %}
-          <a href = "{{url_for('showCatalog', category_id = category.id)}}">
-            <h3 class="orange-text">{{category.name}}</h3>
+  <div class="col-md-3 category-list">
+    <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
+    <ul>
+        {% for category in categories %}
+        <li>
+          <a href = "{{url_for('showCategory', category_id = category.id)}}">
+            <p class="orange-text">{{category.name}}</p>
           </a>
-        </div>
+        </li>
         {% endfor %}
-      </div>
-      <div class="vl"></div>
-      <div class="col-md-8 padding-left">
-
-        <div class="col-md-8">
-          <h2 class="category title text-dark"><strong>{{ category.name }} + ' Items' + ' (' + {% sum(item.stock) %} + ' Items' +')'</strong></h2>
-
-        </div>
-
-        {% for item in items %}
-        <a href = "{{url_for('showCategory', category_id = category.id)}}">
-          <div class="col-md-8 padding-left latest-item-list">
-            <h3 class="orange-text">{{item.title}}</h3>
-          </div>
-        </a>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="col-md-1"></div>
+    </ul>
   </div>
+  <div class="vl"></div>
+
+  <div class="col-md-5">
+    <h2 class="item-list title text-dark">
+      <strong>{{ category.name }} + '   Items' + ' (
+        ' + {%  category.id.items   %} +   ' Items' +')'
+      </strong>
+    </h2>
+    <ul class="item-list">
+        {% for item in items %}
+        <li>
+            <a href = "{{url_for('showItem', category_id = category.id,
+              item_id = item.id)}}"><p class="orange-text">{{item.title}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-1"></div>
+</div>
 
 {% endblock %}

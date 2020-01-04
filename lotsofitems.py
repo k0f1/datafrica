@@ -1,5 +1,7 @@
-#!/usr/bin/env python3
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
@@ -20,12 +22,13 @@ session = DBSession()
 
 # Items for Fitness Equipment
 category1 = Category(name = "Fitness Equipments")
+
 session.add(category1)
 session.commit()
 
+item1 = Item(title="Eco Friendly Yoga Matt",
+             description="61cm yoga matt", price="£10.60", category=category1)
 
-item1 = Item(title = "Eco Friendly Yoga Matt",
-description= "61cm yoga matt", price = "£10.60", category = category1)
 session.add(item1)
 session.commit()
 
@@ -76,22 +79,22 @@ session.add(category1)
 session.commit()
 
 # Mobile phone cases
-item1 = Item(title = "For samsung Galaxy 10", desciption = "Best quality dual mobile Phone Case", price = "£2.50", category = category2)
+item1 = Item(title = "For samsung Galaxy 10", description = "Best quality dual mobile Phone Case", price = "£2.50", category = category2)
 session.add(item1)
 session.commit()
 
 
-item2 = Item(title = "For Iphone X", desciption = "Real Saffiano leather mobile phone case for Iphone X", price = "£10.50", category = category2)
+item2 = Item(title = "For Iphone X", description = "Real Saffiano leather mobile phone case for Iphone X", price = "£10.50", category = category2)
 session.add(item2)
 session.commit()
 
 # Smart Phone Power Banks - lithium batteries is another Item
-item3 = Item(item = "Solar Mobile Phone Power Bank", desciption = "Soler 20000mah mobile phone charger wireless modern sample battery portable power bank for iphone 6/6s", price = "£30.50", category = category2)
+item3 = Item(title = "Solar Mobile Phone Power Bank", description = "Soler 20000mah mobile phone charger wireless modern sample battery portable power bank for iphone 6/6s", price = "£30.50", category = category2)
 session.add(item3)
 session.commit()
 
 
-item4 = Item(title = "Wireless Mobile Phone Power Bank", desciption = "Qi 8000mAh 10000mah Wireless Charger Power Bank Mobile Phone Charger for iPhone 8 X", price = "£14.99", category = category2)
+item4 = Item(title = "Wireless Mobile Phone Power Bank", description = "Qi 8000mAh 10000mah Wireless Charger Power Bank Mobile Phone Charger for iPhone 8 X", price = "£14.99", category = category2)
 session.add(item4)
 session.commit()
 
@@ -101,12 +104,12 @@ category3 = Category(name = "Camping")
 session.add(category1)
 session.commit()
 
-item1 = Item(title = "170T Sleep Bag",  desciption = "Amazon Hot 170T Polyester Taffeta Lining Soft Hollow Cotton 200gsm (190+30)*75cm Spill Resistant Envelope Camping Sleeping bag", price = "£13.99", category = category3)
+item1 = Item(title = "170T Sleep Bag",  description = "Amazon Hot 170T Polyester Taffeta Lining Soft Hollow Cotton 200gsm (190+30)*75cm Spill Resistant Envelope Camping Sleeping bag", price = "£13.99", category = category3)
 session.add(item1)
 session.commit()
 
 
-item2 = Item(title = "190T Tent", desciption = "190T 2 person outdoor easy folding wholesale waterproof double layer pop up tent", price = "£19.99", category = category3)
+item2 = Item(title = "190T Tent", description = "190T 2 person outdoor easy folding wholesale waterproof double layer pop up tent", price = "£19.99", category = category3)
 session.add(item2)
 session.commit()
 
@@ -119,7 +122,7 @@ session.commit()
 
 
 # Pool Inflatables item
-item1 = Item(title = "Giant Pink Flamingo Pool Inflatable", desciption = "New Design Inflatable Summer Cool Giant Pink Flamingo Swimming Pool Float. Medium Intex - Inflatable Flamingo - 142x137x97 cm)", price = "£4.99", category = category4)
+item1 = Item(title = "Giant Pink Flamingo Pool Inflatable", description = "New Design Inflatable Summer Cool Giant Pink Flamingo Swimming Pool Float. Medium Intex - Inflatable Flamingo - 142x137x97 cm)", price = "£4.99", category = category4)
 session.add(item1)
 session.commit()
 
@@ -160,7 +163,7 @@ item3 = Item(title = "Shinguards", description = "2019 WECDOIT branded Spot good
 session.add(item4)
 session.commit()
 
-item4 = (title = "Soccer Cleats", description = "2020 top quality new design football shoes, men outdoor indoor soccer cleats, oem football boots soccer shoes", price = "£30.00", category = category6)
+item4 = Item(title = "Soccer Cleats", description = "2020 top quality new design  football shoes, men outdoor indoor soccer cleats, oem football boots soccer shoes", price = "£30.00", category = category6)
 session.add(item4)
 session.commit()
 
@@ -202,7 +205,7 @@ category12 = Category(name = "Hockey")
 session.add(category12)
 session.commit()
 
-item1 Item(title = "Stick", description = "017 Best selling 80% carbon ice hockey sticks with the best quality ", price = "£40.00", category = category12)
+item1 = Item(title = "Stick", description = "017 Best selling 80% carbon ice hockey sticks with the best quality ", price = "£40.00", category = category12)
 session.add(item1)
 session.commit()
 
@@ -215,17 +218,17 @@ session.commit()
 
 
 # Lace Bras
-item1 = Item(title = "BEIZHI Lace Bras", desciption = "BEIZHI 2 piece women lingerie bra set lace bra and panty set underwear", price = "£14.99", category = category13)
+item1 = Item(title = "BEIZHI Lace Bras", description = "BEIZHI 2 piece women lingerie bra set lace bra and panty set underwear", price = "£14.99", category = category13)
 session.add(item1)
 session.commit()
 
 # Cat Eye Sun Glasses
-item2 = Item(title = "Trendy women", desciption = "Women Trendy Plastic Half Cat Eye Frame Yellow Sunglasses", price = "£5.00", category = category13)
+item2 = Item(title = "Trendy women", description = "Women Trendy Plastic Half Cat Eye Frame Yellow Sunglasses", price = "£5.00", category = category13)
 session.add(item2)
 session.commit()
 
 
-item3 = Item(title = "Retro Vintage Cateye", desciption = "2019 Retro Vintage Cateye Custom Feminino Oculos de Sol Small Triangle Cat Eye Girls Sunglasses Sun Glasses", price = "£7.00", category = category13)
+item3 = Item(title = "Retro Vintage Cateye", description = "2019 Retro Vintage Cateye Custom Feminino Oculos de Sol Small Triangle Cat Eye Girls Sunglasses Sun Glasses", price = "£7.00", category = category13)
 session.add(item3)
 session.commit()
 
