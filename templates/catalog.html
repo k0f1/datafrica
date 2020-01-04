@@ -20,7 +20,7 @@
   <div class="col-md-3 category-list">
     <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
     <ul>
-      {% for category in category %}
+      {% for category in categories %}
         <li>
           <a href = "{{url_for('showCategory', category_id = category.id)}}">
             <p class="orange-text">{{category.name}}</p>
@@ -37,7 +37,7 @@
         <strong>Latest Items</strong>
     </h2>
     <ul class="latest-item-list">
-      {% for category in category %}
+      {% for category in categories %}
         {% for item in latestItems %}
           <li>
             <a href = "{{url_for('showItem', category_id = category.id,
