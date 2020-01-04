@@ -79,9 +79,10 @@ nav a, button {
   max-width: 100%;
   max-height: auto;
   display: flex;
-  margin-top: 20px;
-  padding-top: 10px;
-  padding-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 70px;
+  padding-top: 20px;
+  padding-bottom: 30px;
 }
 
 
