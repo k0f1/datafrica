@@ -2,6 +2,8 @@
 {% block content %}
 {% include "header.html" %}
 
+
+
 <div class="flash">
         {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -14,6 +16,8 @@
       {% endif %}
     {% endwith %}
 </div>
+
+
 <div class="row main d-flex">
   <div class="col-md-1"></div>
 
@@ -23,7 +27,7 @@
       {% for category in categories %}
         <li class="text-warning">
           <a href = "{{url_for('showCategory', category_id = category.id)}}">
-            <p class="text-danger">{{category.name}}</p>
+            <p class="text-warning">{{category.name}}</p>
           </a>
         </li>
       {% endfor %}
@@ -32,7 +36,7 @@
   <div class="vl"></div>
 
   <div class="col-md-5">
-    <a href="{{url_for('newItem')}}"><h2 class="orange-text">Add Item</h2></a>
+    <a href="{{url_for('newItem')}}"><p class="text-warning">Add Item</p></a>
     <h2 class=" latest-item-list title text-dark">
         <strong>Latest Items</strong>
     </h2>
@@ -41,7 +45,7 @@
         {% for item in latestItems %}
           <li class="text-warning">
             <a href = "{{url_for('showItem', category_id = category.id,
-                item_id = item.id)}}"><p class="text-danger">{{item.title}}<em class="text-muted">({{ item.category.name }})</em></p>
+                item_id = item.id)}}"><p class="text-warning">{{item.title}}<em class="text-muted">({{ item.category.name }})</em></p>
             </a>
           </li>
         {% endfor %}
