@@ -41,7 +41,7 @@
         {% for item in latestItems %}
           <li>
             <a href = "{{url_for('showItem', category_id = category.id,
-                item_id = item.id)}}"><p>{{item.title}}<span class="text-muted">{{item.category_id.name}}</span></p>
+                item_id = item.id)}}"><p>{{item.title}}<em class="text-muted">({{ item.category.name }})</em></p>
             </a>
           </li>
         {% endfor %}
