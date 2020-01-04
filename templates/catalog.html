@@ -21,9 +21,9 @@
     <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
     <ul>
       {% for category in categories %}
-        <li>
+        <li class="text-warning">
           <a href = "{{url_for('showCategory', category_id = category.id)}}">
-            <p class="orange-text">{{category.name}}</p>
+            <p class="text-danger">{{category.name}}</p>
           </a>
         </li>
       {% endfor %}
@@ -36,12 +36,12 @@
     <h2 class=" latest-item-list title text-dark">
         <strong>Latest Items</strong>
     </h2>
-    <ul class="latest-item-list">
+    <ul>
       {% for category in categories %}
         {% for item in latestItems %}
-          <li>
+          <li class="text-warning">
             <a href = "{{url_for('showItem', category_id = category.id,
-                item_id = item.id)}}"><p>{{item.title}}<em class="text-muted">({{ item.category.name }})</em></p>
+                item_id = item.id)}}"><p class="text-danger">{{item.title}}<em class="text-muted">({{ item.category.name }})</em></p>
             </a>
           </li>
         {% endfor %}
