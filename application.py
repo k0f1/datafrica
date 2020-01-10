@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 app = Flask(__name__)
 
 # Add database imports here
-from sqlalchemy import create_engine, asc, desc
+from sqlalchemy import create_engine, asc, desc, literal
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
 
@@ -32,7 +32,7 @@ def showCatalog():
     """
 
     categories = session.query(Category).all()
-    latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
+    latestItems = session.query(Item).order_by(desc(Item.id)).limit(20)
     return render_template('catalog.html',
                            categories = categories,
                            latestItems = latestItems)
