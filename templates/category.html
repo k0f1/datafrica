@@ -2,6 +2,8 @@
 {% block content %}
 {% include "header.html" %}
 
+
+
 <div class="flash">
         {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -14,37 +16,45 @@
       {% endif %}
     {% endwith %}
 </div>
+
+
 <div class="row main d-flex">
   <div class="col-md-1"></div>
 
   <div class="col-md-3 category-list">
-    <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
+    <h2 class="text-dark"><strong>Categories</strong></h2>
     <ul>
-        {% for category in categories %}
-        <li>
+      {% for category in categories %}
+        <li class="text-warning">
           <a href = "{{url_for('showCategory', category_id = category.id)}}">
-            <p class="orange-text">{{category.name}}</p>
+            <p class="text-warning">{{category.name}}</p>
           </a>
         </li>
-        {% endfor %}
+      {% endfor %}
     </ul>
   </div>
   <div class="vl"></div>
 
-  <div class="col-md-5">
-    <h2 class="item-list title text-dark">
-      <strong>{{ category.name }} + '   Items' + ' (
-        ' + {%  category.id.items   %} +   ' Items' +')'
-      </strong>
-    </h2>
-    <ul class="item-list">
-        {% for item in items %}
-        <li>
-            <a href = "{{url_for('showItem', category_id = category.id,
-              item_id = item.id)}}"><p class="orange-text">{{item.title}}</p>
-        </li>
-        {% endfor %}
-    </ul>
+  <div class="col-md-5 item-list">
+          <ul>
+          {% if items !=[] %} <!--If items is not an empty list-->
+              {% for item in items %}
+                <h2 class="item-list text-dark">
+                  <strong>{{ category.name }} Items ({{[item.category_id].count(item)}} items)
+                  </strong>
+                </h2>
+                {% if item.category_id == item.category.name %} <!--If there is a match -->
+                  <ul class="item-list">
+                    <li class="text-warning">
+                      <a href = "{{url_for('showItem', category_id = category.id,
+                            item_id = item.id)}}"><p class="text-warning">{{item.title}}</p>
+                      </a>
+                    </li>
+                  </ul>
+                {% endif %}
+              {% endfor %}
+          {% endif %}
+          </ul>
   </div>
   <div class="col-md-1"></div>
 </div>

@@ -2,6 +2,8 @@
 {% block content %}
 {% include "header.html" %}
 
+
+
 <div class="flash">
         {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -14,37 +16,42 @@
       {% endif %}
     {% endwith %}
 </div>
+
+
 <div class="row main d-flex">
   <div class="col-md-1"></div>
 
   <div class="col-md-3 category-list">
     <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
     <ul>
-        {% for category in categories %}
-        <li>
+      {% for category in categories %}
+        <li class="text-warning">
           <a href = "{{url_for('showCategory', category_id = category.id)}}">
-            <p class="orange-text">{{category.name}}</p>
+            <p class="text-warning">{{category.name}}</p>
           </a>
         </li>
+      {% endfor %}
     </ul>
   </div>
   <div class="vl"></div>
 
   <div class="col-md-5">
+    <a href="{{url_for('newItem')}}"><p class="text-warning">Add Item</p></a>
     <h2 class=" latest-item-list title text-dark">
         <strong>Latest Items</strong>
     </h2>
-    <ul class="latest-item-list">
+    <ul>
+      {% for category in categories %}
         {% for item in latestItems %}
-        <li>
+          <li class="text-warning">
             <a href = "{{url_for('showItem', category_id = category.id,
-              item_id = item.id)}}"><p class="orange-text">{{item.title}}</p>
-            </a><span>' (' + {{item.category_id.name}} + ')'</span>
-        </li>
+                item_id = item.id)}}"><p class="text-warning">{{item.title}}<em class="text-muted">({{ item.category.name }})</em></p>
+            </a>
+          </li>
         {% endfor %}
+      {% endfor %}
     </ul>
   </div>
-  {% endfor %}
   <div class="col-md-1"></div>
 </div>
 

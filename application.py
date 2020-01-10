@@ -21,7 +21,7 @@ session = DBSession()
 # Add other imports here
 
 
-# Show all Categories and latest Items added to the database.
+# Show all Categories and latest Item-list associated with them
 @app.route('/')
 @app.route('/catalog')
 def showCatalog():
@@ -33,15 +33,14 @@ def showCatalog():
 
 
 
-# "Show a Category and items associated with it
+# "Show item-list associated with a specific category
 # for Category %s" % category_id
-@app.route('/catalog/category/<int:category_id>')
+@app.route('/catalog/category/<int:category_id>/items')
 def showCategory(category_id):
     # Add SQLAlchemy statements
-    category = session.query(Category).filter_by(id = category.id).one()
+    category = session.query(Category).filter_by(id = category_id).one()
     items = session.query(Item).filter_by(category_id = category_id).all()
-    return render_template('category.html', category = category,
-        items = items)
+    return render_template('category.html', category = category, items = items)
 
 
 # "This page is the Item for %s" % item_id
@@ -73,7 +72,7 @@ def newItem():
 
 
 # "This page is for editing Item %s" % item_id
-@app.route('/catalog//category<int:category_id>/item/<int:item_id>/edit',
+@app.route('/catalog//category/<int:category_id>/item/<int:item_id>/edit',
 methods = ['GETS', 'POST'])
 def editItem(category_id, item_id):
 
