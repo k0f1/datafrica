@@ -26,7 +26,7 @@
     <ul>
       {% for category in categories %}
         <li class="text-warning">
-          <a href = "{{url_for('showCategory', category_id = category.id)}}">
+          <a href = "{{url_for('showCategory', category_name = category.name)}}">
             <p class="text-warning">{{category.name}}</p>
           </a>
         </li>

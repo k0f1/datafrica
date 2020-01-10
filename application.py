@@ -23,34 +23,60 @@ session = DBSession()
 
 # Show all Categories and latest Item-list associated with them
 @app.route('/')
-@app.route('/catalog')
+@app.route('/catalog/')
 def showCatalog():
     # Add SQLAlchemy statements
-    categories = session.query(Category).order_by(asc(Category.name))
-    latestItems = session.query(Item).order_by(desc(Item.id)).limit(20)
-    return render_template('catalog.html', categories = categories,
-        latestItems = latestItems)
+    """Show the homepage displaying the categories and latest items.
+        Returns:
+        A web page with the 20 latest items that have added.
+    """
+
+    categories = session.query(Category).all()
+    latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
+    return render_template('catalog.html',
+                           categories = categories,
+                           latestItems = latestItems)
 
 
 
 # "Show item-list associated with a specific category
-# for Category %s" % category_id
-@app.route('/catalog/category/<int:category_id>/items')
-def showCategory(category_id):
+@app.route('/catalog/<category_name>/items')
+def showCategory(category_name):
     # Add SQLAlchemy statements
-    category = session.query(Category).filter_by(id = category_id).one()
-    items = session.query(Item).filter_by(category_id = category_id).all()
-    return render_template('category.html', category = category, items = items)
+    """Show items belonging to a specified category.
+        Args:
+            category_name (str): The name of the category to which the item
+            belongs.
+        Returns:
+        A web page showing all the items in the specified category plus all categories.
+    """
+
+    category = session.query(Category).filter_by(name = category_name).one()
+    items = session.query(Item).filter_by(
+                category = category).order_by(Item.title).all()
+    return render_template('category.html',
+                          category = category,
+                          items = items)
 
 
 # "This page is the Item for %s" % item_id
-@app.route('/catalog/category/<int:category_id>/item/<int:item_id>')
-def showItem(category_id, item_id):
+@app.route('/catalog/<category_name>/<item_title>/')
+def showItem(category_name, item_title):
     # Add SQLAlchemy statements
-    category = session.query(Category).filter_by(id = category_id).one()
-    item = session.query(Item).filter_by(id = item_id).one()
-    return render_template('item.html', category = category_id,
-        item = item_id)
+    """Show details of a particular item belonging to a specified category.
+        Args:
+        category_name (str): The name of the category to which the item
+            belongs.
+        item_title (str): The name of the item.
+        Returns:
+        A web page showing information of the requested item.
+    """
+
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(Item).filter_by(title = item_title).one()
+    return render_template('item.html',
+                           category = category,
+                           item = item)
 
 
 # "This page will be for adding a new Item"
@@ -72,17 +98,23 @@ def newItem():
 
 
 # "This page is for editing Item %s" % item_id
-@app.route('/catalog//category/<int:category_id>/item/<int:item_id>/edit',
+@app.route('/catalog//<category_name>/<item_title>/edit',
 methods = ['GETS', 'POST'])
-def editItem(category_id, item_id):
+def editItem(category_name, item_title):
+    # Add SQLAlchemy statements
+    """Edit the details of the specified item.
+        Args:
+        item_title (str): Title of item to be edited.
+        category_name (str): Optionally, can also specify the category to
+            which the item belongs to.
 
-    """ Returns:
+        Returns:
         GET: edititem.html - form with inputs to edit item info
         POST: if I get a post - redirect to 'showCategory' after updating item info.
     """
-    # Add SQLAlchemy statements
-    editedItem = session.query(Item).filter_by(id = item_id).one()
-    category = session.query(Category).filter_by(id = category_id).one()
+
+    editedItem = session.query(Item).filter_by(title = item_title).one()
+    category = session.query(Category).filter_by(name = category_name).one()
     if request.method == 'POST':
         if request.form['']:
             editedItem.title = request.form['title']
@@ -90,29 +122,37 @@ def editItem(category_id, item_id):
             editedItem.description = request.form['description']
         if request.form['price']:
             editedItem.price = request.form['price']
-            return redirect(url_for('showCategory', category_id = category_id))
+            return redirect(url_for('showCategory',
+                                   category_name = category_name,
+                                   item_title = item_title))
     else:
-        return render_template('edititem.html', item = editeditem,
-        category_id =  category_id, item_id = item_id)
+        return render_template('edititem.html',
+                              item = editeditem,
+                              category_name =  category_name,
+                              item_title = item_title)
 
 
 # "This page is for deleting Item %s" %item_id
-@app.route('/catalog/category/<int:category_id>/item/<int:item_id>/delete')
-def deleteItem(category_id, item_id):
-    """ Returns:
+@app.route('/catalog/<category_name>/<item_title>/delete')
+def deleteItem(category_name, item_title):
+    # Add SQLAlchemy statements
+    """Delete a specified item from the database.
+        Args:
+        item_title (str): Title of the item to be deleted.
+
+        Returns:
         GET: deleteitem.html - form for confirmation prior to deletion of item.
         POST: if I get a post -redirect to 'showCategory' after item info deletion.
     """
 
-    # Add SQLAlchemy statements
-    category = session.query(Category).filter_by(id = category_id).one()
-    itemToDelete = session.query(Item).filter_by(id =item_id).one()
+    category = session.query(Category).filter_by(name = category_name).one()
+    itemToDelete = session.query(Item).filter_by(title =item_title).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
-        return redirect(url_for('showCategory', category_id = category_id))
+        return redirect(url_for('showCategory', category_name = category_name))
     else:
-        return render_template('deleteitem.html', category = category_id,
+        return render_template('deleteitem.html', category = category_name,
             item = itemToDelete)
 
 
