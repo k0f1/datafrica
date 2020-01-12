@@ -2,13 +2,14 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 app = Flask(__name__)
 
 # Add database imports here
-from sqlalchemy import create_engine, asc, desc, literal
+from sqlalchemy import create_engine, asc, desc, literal, func
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
-
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 # Make an instance of create engine
-engine = create_engine('sqlite:///catalog.db')
+# engine = create_engine('sqlite:///catalog.db')
+engine = create_engine ('sqlite:///catalogupdate.db')
 
 # Bind the engine to the metadata of the Base class
 # To establish conversation with the database and act as staging zone
@@ -32,7 +33,8 @@ def showCatalog():
     """
 
     categories = session.query(Category).all()
-    latestItems = session.query(Item).order_by(desc(Item.id)).limit(20)
+    latestItems = session.query(Item).order_by(desc(Item.id)).\
+                            filter_by(id = Item.id).limit(20)
     return render_template('catalog.html',
                            categories = categories,
                            latestItems = latestItems)
@@ -45,18 +47,22 @@ def showCategory(category_name):
     # Add SQLAlchemy statements
     """Show items belonging to a specified category.
         Args:
-            category_name (str): The name of the category to which the item
-            belongs.
+        category_name (str): The name of the category to which the item
+        belongs.
         Returns:
         A web page showing all the items in the specified category plus all categories.
     """
 
-    category = session.query(Category).filter_by(name = category_name).one()
-    items = session.query(Item).filter_by(
-                category = category).order_by(Item.title).all()
+    items = session.query(Item).filter_by(category = category).all()
+    # Return count of item "id" grouped by category_name.
+    itemTotal = session.query(func.count(
+                                Item.id)).group_by(Category.name)
+    categories = session.query(Category).all()
     return render_template('category.html',
                           category = category,
-                          items = items)
+                          items = items,
+                          itemTotal = itemTotal,
+                          categories = categories)
 
 
 # "This page is the Item for %s" % item_id

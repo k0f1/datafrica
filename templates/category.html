@@ -23,38 +23,34 @@
 
   <div class="col-md-3 category-list">
     <h2 class="text-dark"><strong>Categories</strong></h2>
-    <ul>
       {% for category in categories %}
-        <li class="text-warning">
-          <a href = "{{url_for('showCategory', category_name = category.name)}}">
+        <a class="text-warning" href = "{{url_for('showCategory',
+            category_name  = category.name)}}">
+          <div class="col-md-3 category-list">
             <p class="text-warning">{{category.name}}</p>
-          </a>
-        </li>
+          </div>
+        </a>
       {% endfor %}
-    </ul>
   </div>
   <div class="vl"></div>
 
   <div class="col-md-5 item-list">
-          <ul>
           {% if items !=[] %} <!--If items is not an empty list-->
               {% for item in items %}
                 <h2 class="item-list text-dark">
-                  <strong>{{ category.name }} Items ({{[item.category_id].count(item)}} items)
+                  <strong>{{ category.name }} Items ({{itemTotal.category}} items)
                   </strong>
                 </h2>
-                {% if item.category_id == item.category.name %} <!--If there is a match -->
-                  <ul class="item-list">
-                    <li class="text-warning">
-                      <a href = "{{url_for('showItem', category_id = category.id,
-                            item_id = item.id)}}"><p class="text-warning">{{item.title}}</p>
-                      </a>
-                    </li>
-                  </ul>
-                {% endif %}
+                <a href = "{{url_for('showItem', category_id = category.id,
+                      item_id = item.id)}}">
+                  <div class="col-md-5 item-list">
+                    <p class="text-warning">{{item.title}}
+                        <em class="text-muted">({{item.quantity}})</em>
+                    </p>
+                  </div>
+                </a>
               {% endfor %}
           {% endif %}
-          </ul>
   </div>
   <div class="col-md-1"></div>
 </div>

@@ -1,5 +1,6 @@
 ####### At begining of file #######
 
+# Note: Any update on this database requires a change to a new database name
 import os
 import sys
 import datetime
@@ -35,6 +36,7 @@ class Item(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(80), nullable=False)
     # picture = Column(String(250))
+    quantity = Column(Integer)
     description = Column(String(250))
     price = Column(String(8))
     category_id = Column(Integer, ForeignKey('category.id'))
@@ -47,5 +49,6 @@ class Item(Base):
 
 # Make an instance - engine from create_engine. Point it to the database.
 # engine = create_engine ('sqlite:///cataloginventory.db')
-engine = create_engine ('sqlite:///catalog.db')
+# engine = create_engine ('sqlite:///catalog.db')
+engine = create_engine ('sqlite:///catalogupdate.db')
 Base.metadata.create_all(engine)
