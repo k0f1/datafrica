@@ -1,5 +1,6 @@
 ####### At begining of file #######
 
+# Note: Any update on this database requires a change to a new database name
 import os
 import sys
 import datetime
