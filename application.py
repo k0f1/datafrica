@@ -5,7 +5,7 @@ app = Flask(__name__)
 from sqlalchemy import create_engine, asc, desc, literal, func
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
-# from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 # Make an instance of create engine
 engine = create_engine('sqlite:///catalog.db')
@@ -34,8 +34,7 @@ def showCatalog():
 
     categories = session.query(Category).all()
     # result[::-1] return the slice of every elelement of result in reverse
-    latestItems = session.query(Item).order_by(desc(Item.id)).\
-                    filter_by(id = Item.id)
+    latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
     return render_template('catalog.html',
                            categories = categories,
                            latestItems = latestItems)
@@ -53,17 +52,26 @@ def showCategory(category_name):
         Returns:
         A web page showing all the items in the specified category plus all categories.
     """
+    try:
+        category = session.query(Category).filter_by(name=category_name).one()
 
-    items = session.query(Item).filter_by(category = category).all()
+    except NoResultFound:
+        flash("The category '%s' does not exist." % category_name)
+        return redirect(url_for('showCatalog'))
+
+    categories = session.query(category).all()
+
+    items = session.query(Item).filter_by(category = category).\
+                order_by(Item.name).all()
+
     # Return count of item "id" grouped by category_name.
     itemTotal = session.query(func.count(
                                 Item.id)).group_by(Category.name)
-    categories = session.query(Category).all()
     return render_template('category.html',
+                          categories = categories,
                           category = category,
                           items = items,
-                          itemTotal = itemTotal,
-                          categories = categories)
+                          itemTotal = itemTotal)
 
 
 # "This page is the Item for %s" % item_id
