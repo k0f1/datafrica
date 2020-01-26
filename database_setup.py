@@ -3,7 +3,6 @@
 # Note: Any update on this database requires a change to a new database name
 import os
 import sys
-import datetime
 
 
 from sqlalchemy import Column, ForeignKey, Integer, String
@@ -47,6 +46,5 @@ class Item(Base):
 ####### Insert at end of file #######
 
 # Make an instance - engine from create_engine. Point it to the database.
-# engine = create_engine ('sqlite:///cataloginventory.db')
 engine = create_engine ('sqlite:///catalog.db')
 Base.metadata.create_all(engine)
