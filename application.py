@@ -52,15 +52,8 @@ def showCategory(category_name):
         Returns:
         A web page showing all the items in the specified category plus all categories.
     """
-    try:
-        category = session.query(Category).filter_by(name=category_name).one()
-
-    except NoResultFound:
-        flash("The category '%s' does not exist." % category_name)
-        return redirect(url_for('showCatalog'))
-
+    category = session.query(Category).filter_by(name=category_name).one()
     categories = session.query(category).all()
-
     items = session.query(Item).filter_by(category = category).\
                 order_by(Item.name).all()
 
@@ -86,7 +79,6 @@ def showItem(category_name, item_title):
         Returns:
         A web page showing information of the requested item.
     """
-
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(Item).filter_by(title = item_title).one()
     return render_template('item.html',

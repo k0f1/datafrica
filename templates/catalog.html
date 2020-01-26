@@ -40,12 +40,16 @@
       <strong>Latest Items</strong>
     </h2>
   {% for item in latestItems %}
+    {% for category in categories %}
+      {% if item.category_id == category.id %}
         <a href = "{{url_for('showItem', category_name = category.name,
                 item_title = item.title)}}">
           <div class="col-md-5 text-warning">
             <p>{{ item.title }}<em class="text-muted">({{ item.category.name }})</em></p>
           </div>
         </a>
+      {% endif %}
+    {% endfor %}
   {% endfor %}
   </div>
 
