@@ -110,12 +110,12 @@ li.flash {
 
 }
 
-.main.col-md-3 {
-  min-width: 30%;
+.main.col-md-2 {
+  min-width: 20%;
 }
 
-.main.colmd-6 {
-  min-width: 70%;
+.main.col-md-8 {
+  min-width: 80%;
 }
 
 .flash {

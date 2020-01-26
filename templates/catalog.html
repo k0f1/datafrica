@@ -21,36 +21,34 @@
 <div class="row main d-flex">
   <div class="col-md-1"></div>
 
-  <div class="col-md-3 category-list text-warning">
+  <div class="col-md-2 category-list text-warning">
     <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
-
-      {% for category in categories %}
+  {% for category in categories %}
         <a href = "{{url_for('showCategory',category_name =  category.name)}}">
           <div class="text-warning col-md-3 category-list">
-            <p>{{category.name}}</p>
+            <p>{{ category.name }}</p>
           </div>
         </a>
-
-      {% endfor %}
+  {% endfor %}
   </div>
   <div class="vl"></div>
 
 
-  <div class="col-md-5">
+  <div class="col-md-8">
     <a href="{{url_for('newItem')}}"><p class="text-warning">Add Item</p></a>
     <h2 class=" latest-item-list title text-dark">
-        <strong>Latest Items</strong>
+      <strong>Latest Items</strong>
     </h2>
-          {% for item in latestItems %}
-
-            <a href = "{{url_for('showItem', category_name = category.name,
+  {% for item in latestItems %}
+        <a href = "{{url_for('showItem', category_name = category.name,
                 item_title = item.title)}}">
-                <div class="col-md-5 text-warning">
-                  <p>{{item.title}}<em class="text-muted">({{ item.category.name }})</em></p>
-                </div>
-            </a>
-          {% endfor %}
+          <div class="col-md-5 text-warning">
+            <p>{{ item.title }}<em class="text-muted">({{ item.category.name }})</em></p>
+          </div>
+        </a>
+  {% endfor %}
   </div>
+
   <div class="col-md-1"></div>
 </div>
 

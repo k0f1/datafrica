@@ -33,8 +33,9 @@ def showCatalog():
     """
 
     categories = session.query(Category).all()
+    # result[::-1] return the slice of every elelement of result in reverse
     latestItems = session.query(Item).order_by(desc(Item.id)).\
-                            filter_by(id = Item.id).limit(20)
+                    filter_by(id = Item.id)
     return render_template('catalog.html',
                            categories = categories,
                            latestItems = latestItems)
@@ -166,4 +167,5 @@ def deleteItem(category_name, item_title):
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
+    app.run(threaded=False)
     app.run(host = '0.0.0.0', port = 8000)
