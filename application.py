@@ -52,7 +52,7 @@ def showCategory(category_name):
         Returns:
         A web page showing all the items in the specified category plus all categories.
     """
-    category = session.query(Category).filter_by(name=category_name).one()
+    category = session.query(Category).filter_by(id = category_id).one()
     categories = session.query(category).all()
     items = session.query(Item).filter_by(category = category).\
                 order_by(Item.name).all()
@@ -79,7 +79,7 @@ def showItem(category_name, item_title):
         Returns:
         A web page showing information of the requested item.
     """
-    category = session.query(Category).filter_by(name=category_name).one()
+    category = session.query(Category).filter_by(id = category_id).one()
     item = session.query(Item).filter_by(title = item_title).one()
     return render_template('item.html',
                            category = category,
@@ -120,8 +120,8 @@ def editItem(category_name, item_title):
         POST: if I get a post - redirect to 'showCategory' after updating item info.
     """
 
-    editedItem = session.query(Item).filter_by(title = item_title).one()
-    category = session.query(Category).filter_by(name = category_name).one()
+    editedItem = session.query(Item).filter_by(id = item_id).one()
+    category = session.query(Category).filter_by(id = category_id).one()
     if request.method == 'POST':
         if request.form['']:
             editedItem.title = request.form['title']
@@ -152,8 +152,8 @@ def deleteItem(category_name, item_title):
         POST: if I get a post -redirect to 'showCategory' after item info deletion.
     """
 
-    category = session.query(Category).filter_by(name = category_name).one()
-    itemToDelete = session.query(Item).filter_by(title =item_title).one()
+    category = session.query(Category).filter_by(id = category_id).one()
+    itemToDelete = session.query(Item).filter_by(id =item_id).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
@@ -167,5 +167,5 @@ def deleteItem(category_name, item_title):
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(threaded=False)
+    #app.run(threaded=False)
     app.run(host = '0.0.0.0', port = 8000)
