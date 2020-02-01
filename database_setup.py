@@ -20,7 +20,7 @@ class Category(Base):
 
     __tablename__ = 'category'
 
-    # Mapping: connects rows of the catalog table to this class
+    # Mapping: connects rows of the category table to this class
     id = Column(Integer, primary_key=True)
     name = Column(String(80), nullable=False)
 
