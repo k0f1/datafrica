@@ -42,8 +42,9 @@
                   <strong>{{ category.name }} Items ({{itemTotal.category}} items)
                   </strong>
                 </h2>
-                <a href = "{{url_for('showItem', category_id = category.id,
-                      item_id = item.id)}}">
+                <!--showItem opnly accepts category_name and item_title -->
+                <a href = "{{url_for('showItem', category_name = category.name,
+                      item_title = item.title)}}">
                   <div class="col-md-5 item-list">
                     <p class="text-warning">{{item.title}}
                         <em class="text-muted">({{item.id}})</em>

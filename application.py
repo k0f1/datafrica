@@ -53,9 +53,9 @@ def showCategory(category_name):
         A web page showing all the items in the specified category plus all categories.
     """
     category = session.query(Category).filter_by(name = category_name).one()
-    categories = session.query(category).all()
+    categories = session.query(Category).all()
     items = session.query(Item).filter_by(category = category).\
-                order_by(Item.name).all()
+                order_by(Item.title).all()
 
     # Return count of item "id" grouped by category_name.
     itemTotal = session.query(func.count(
@@ -167,5 +167,5 @@ def deleteItem(category_name, item_title):
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(threaded=False)
+    #app.run(threaded=False)
     app.run(host = '0.0.0.0', port = 8000)
