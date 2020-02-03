@@ -22,7 +22,7 @@ class Category(Base):
 
     # Mapping: connects rows of the category table to this class
     id = Column(Integer, primary_key=True)
-    name = Column(String(80), nullable=False)
+    name = Column(String(80), nullable=False, index=True)
 
 
 

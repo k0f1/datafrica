@@ -151,16 +151,19 @@ def deleteItem(category_name, item_title):
         GET: deleteitem.html - form for confirmation prior to deletion of item.
         POST: if I get a post -redirect to 'showCategory' after item info deletion.
     """
-
+    # filter_by uses the names of the columns in a table
     category = session.query(Category).filter_by(name = category_name).one()
     itemToDelete = session.query(Item).filter_by(id =item_id).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
-        return redirect(url_for('showCategory', category_name = category_name))
+        return redirect(url_for('showCategory',
+                                category_name = category_name,
+                                item_title = item_title))
     else:
-        return render_template('deleteitem.html', category = category_name,
-            item = itemToDelete)
+        return render_template('deleteitem.html',
+                                category = category_name,
+                                item = itemToDelete)
 
 
 
