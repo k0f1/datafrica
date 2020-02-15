@@ -26,8 +26,8 @@
       {% for category in categories %}
         <a class="text-warning" href = "{{url_for('showCategory',
             category_name  = category.name)}}">
-          <div class="col-md-2 category-list">
-            <p class="text-warning">{{category.name}}</p>
+          <div class="text-warning category-list">
+            <p>{{category.name}}</p>
           </div>
         </a>
       {% endfor %}

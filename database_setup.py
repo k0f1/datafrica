@@ -33,7 +33,7 @@ class Item(Base):
 
     # Mapping
     id = Column(Integer, primary_key=True)
-    title = Column(String(80), nullable=False)
+    title = Column(String(80), nullable=False, index=True)
     # picture = Column(String(250))
     description = Column(String(250))
     price = Column(String(8))
