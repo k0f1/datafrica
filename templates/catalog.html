@@ -21,7 +21,7 @@
 <div class="row main d-flex">
   <div class="col-md-1"></div>
 
-  <div class="col-md-4 category-list text-warning">
+  <div class="col-md-2 category-list text-warning">
     <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
   {% for category in categories %}
         <a href = "{{url_for('showCategory',category_name =  category.name)}}">
@@ -34,7 +34,7 @@
   <div class="vl"></div>
 
 
-  <div class="col-md-6">
+  <div class="col-md-8">
     <a href="{{url_for('newItem')}}"><p class="text-warning">Add Item</p></a>
     <h2 class=" latest-item-list title text-dark">
       <strong>Latest Items</strong>
@@ -45,7 +45,7 @@
       {% if item.category_id == category.id %}
         <a href = "{{url_for('showItem', category_name = category.name,
                 item_title = item.title)}}">
-          <div class="col-md-6 text-warning">
+          <div class="col-md-8 text-warning">
             <p>{{ item.title }}<em class="text-muted">({{ item.category.name }})</em></p>
           </div>
         </a>

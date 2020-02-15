@@ -21,12 +21,12 @@
 <div class="row main d-flex">
   <div class="col-md-1"></div>
 
-  <div class="col-md-3 category-list">
+  <div class="col-md-2 category-list">
     <h2 class="text-dark"><strong>Categories</strong></h2>
       {% for category in categories %}
         <a class="text-warning" href = "{{url_for('showCategory',
             category_name  = category.name)}}">
-          <div class="col-md-3 category-list">
+          <div class="col-md-2 category-list">
             <p class="text-warning">{{category.name}}</p>
           </div>
         </a>
@@ -34,7 +34,7 @@
   </div>
   <div class="vl"></div>
 
-  <div class="col-md-5 item-list">
+  <div class="col-md-8 item-list">
       {% for category in categories %}
           {% if items !=[] %} <!--If items is not an empty list-->
               {% for item in items %}
@@ -45,7 +45,7 @@
                 <!--showItem opnly accepts category_name and item_title -->
                 <a href = "{{url_for('showItem', category_name = category.name,
                       item_title = item.title)}}">
-                  <div class="col-md-5 item-list">
+                  <div class="col-md-8 item-list">
                     <p class="text-warning">{{item.title}}
                         <em class="text-muted">({{item.id}})</em>
                     </p>
