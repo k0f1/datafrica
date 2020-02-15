@@ -35,25 +35,21 @@
   <div class="vl"></div>
 
   <div class="col-md-8 item-list">
-      {% for category in categories %}
+    <h2 class="item-list text-dark">
+      <strong>{{ category.name }} Items ({{itemTotal.category}} items)
+      </strong>
+    </h2>
           {% if items !=[] %} <!--If items is not an empty list-->
               {% for item in items %}
-                <h2 class="item-list text-dark">
-                  <strong>{{ category.name }} Items ({{itemTotal.category}} items)
-                  </strong>
-                </h2>
                 <!--showItem opnly accepts category_name and item_title -->
                 <a href = "{{url_for('showItem', category_name = category.name,
                       item_title = item.title)}}">
-                  <div class="col-md-8 item-list">
-                    <p class="text-warning">{{item.title}}
-                        <em class="text-muted">({{item.id}})</em>
-                    </p>
+                  <div class="text-warning item-list">
+                    <p>{{item.title}}</p>
                   </div>
                 </a>
               {% endfor %}
           {% endif %}
-        {% endfor %}
   </div>
   <div class="col-md-1"></div>
 </div>

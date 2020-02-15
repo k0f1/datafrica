@@ -5,7 +5,7 @@ import os
 import sys
 
 
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -33,7 +33,7 @@ class Item(Base):
 
     # Mapping
     id = Column(Integer, primary_key=True)
-    title = Column(String(80), nullable=False, index=True)
+    title = Column(String(80), nullable=False, unique=True)
     # picture = Column(String(250))
     description = Column(String(250))
     price = Column(String(8))

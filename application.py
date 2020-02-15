@@ -5,7 +5,7 @@ app = Flask(__name__)
 from sqlalchemy import create_engine, asc, desc, literal, func
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
-# from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+
 
 # Make an instance of create engine
 engine = create_engine('sqlite:///catalog.db')
