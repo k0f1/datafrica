@@ -93,7 +93,7 @@ span.text-muted {
 }
 
 
-/*Selects all elements with vl that is a descendant of an element with button */
+/*Selects all elements with class vl that is a descendant of an element with button */
 .vl.button {
   width: 1px;
   height: 3px;
@@ -140,4 +140,21 @@ li.flash {
 
 .padding-none {
 	padding: 0;
+}
+
+
+/*Selects all <div> elements with class="button"*/
+div.button {
+  display: flex;
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 14px;
+}
+
+
+
+/*Selects all elements with bt that is a descendant of an element with button */
+
+.bt.button {
+  margin-left: 30px;
 }
