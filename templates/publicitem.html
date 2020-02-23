@@ -3,17 +3,6 @@
 {% include "header.html" %}
 
 
-
-<div class="row top-menu">
-  <div class="col-md-10"></div>
-  <div class="col-md-2 text-right"></div>
-</div>
-<div class="row divider blue">
-  <div class="col-md-12"></div>
-</div>
-
-
-
 <div class = 'flash'>
         {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -30,23 +19,22 @@
 
 
 
-<div class="row padding-top padding-bottom">
+<div class="row main padding-top padding-bottom">
   <div class="col-md-1"></div>
   <div class="col-md-10 padding-top padding-bottom">
-    {% for item in category %}
-      <a href="{{url_for('showItem', category_id, item_id)}}">{{ item.name }}</a>
-      <div class="item text-dark">
-        <h3 class="title text-dark">{{ item.name }}</h3>
-
-        <p class="text-dark">{{item.picture}}</p>
-        <p class="text-dark">{{item.description}}</p>
-        <p class="text-dark">{{item.stock}}</p>
+      <div class="item">
+        <h2 class="title text-dark text-black"><strong>{{ item.title }}</strong></h2>
+        <p>{{item.description}}</p>
         <p class="price">{{item.price}}</p>
 
+        <div class="button padding-top, padding-bottom">
+          <a class="text-danger" href="{{url_for('editItem', category_name = category.name, item_title=item.title ) }}"><div class="col-md-1">Buy Now</div></a>
+          <div class="vl"></div>
+          <a class="text-danger" href="{{url_for('deleteItem', category_name = category.name, item_title=item.title ) }}"><div class="col-md-1">Add to Basket</div></a>
+        </div>
       </div>
 
   </div>
-  {% endfor %}
   <div class="col-md-1"></div>
 </div>
 

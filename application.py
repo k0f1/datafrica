@@ -57,9 +57,9 @@ def showCategory(category_name):
     items = session.query(Item).filter_by(category = category).\
                 order_by(Item.title).all()
 
-    # Return count of item "id" grouped by category_name.
+    # return count of user "id" grouped by "name"
     itemTotal = session.query(func.count(
-                                Item.id)).group_by(Category.name)
+                                Item.id)).group_by(Item.category_id)
     return render_template('category.html',
                           categories = categories,
                           category = category,
