@@ -1,13 +1,16 @@
 {% extends "main.html" %}
 {% block content %}
+{% include "header.html" %}
+{% include "cart.html "%}
 
-<script>
+{% block script %}
 function addToCart(item_title) {
     fetch('/catalog/cart/item_title',
         {method: 'PUT'}
     )
 }
-</script>
+{% endblock %}
+
 
 <div class = 'flash'>
         {% with messages = get_flashed_messages() %}

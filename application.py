@@ -239,13 +239,11 @@ def deleteItem(category_name, item_title):
 @app.route('/catalog/cart/')
 def showCart():
 
-    """Renders shoppingcart page with or without added items.
+    """Renders cart icon in the content page.
             Args: None
-                Empty cart message on flash
             Returns:
-        GET: shoppingcart.html) showing information of the requested item.
+        GET: cart.html.
     """
-    flash("Your Shopping Basket is empty")
     return render_template('cart.html')
 
 
@@ -259,19 +257,24 @@ def addToCart(item_title):
         Args:
         item_title (str): The name of the item.
         Returns:
-        GET: renders shoppingcart.html.
+        GET: renders cart.html.
         PUT: sends data of a particular item to the server to update the url.
     """
     addItemToCart = sesion.query(Item).filter_by(title =item_title).one()
-    if requests.method == 'POST':
+    if requests.method == 'PUT':
         session.add(addedToCart)
         session.commit()
-        return render_template('shoppingcart.html',
+        return render_template('view.html',
                             addItemToCart = addItemToCart,
                             item_title = item_title)
     else:
         #If I get a POST, redirect here
         return redirect_uri('showCart')
+
+
+@app.route('/catalog/cart/view')
+def viewCart():
+    render_template('view.html')
 
 
 
@@ -283,24 +286,21 @@ def deleteCartItem(item_title):
         item_title (str): Title of the item to be deleted.
 
         Returns:
-        GET: shoppingcart.html - showing information prior to deletion of item.
+        GET: cart.html - showing information prior to deletion of item.
         POST: sends data to the server to update the resource.
     """
     deleteItemFromCart = session.query(Item).filter_by(title = item_title).one()
     if requests.method == 'POST':
         session.delete(deleteItemFromCart)
         session.commit()
-        return render_template('shoppingcart.html',
+        return render_template('cart.html',
                             deleteItemFromCart = deleteItemFromCart)
     else:
         #If I get a POST, redirect here
         return redirect_uri('showCart')
 
 
-@app.route('/catalog/cart/view', methods= ['GET', 'POST'])
-def view():
-    """Returns checkout page for users to pay for items"""
-    return render_template('view.html')
+
 
 
 @app.route('/catalog/cart/review')

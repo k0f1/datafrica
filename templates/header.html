@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Udacity Site Header</title>
+  <title>Buz Site Header</title>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
   <style>
     * {
@@ -17,8 +17,8 @@
     header {
       font-weight: 400;
       -webkit-font-smoothing: antialiased;
-      color: #697681;
-      background: white;
+      color: #ffffff;
+      background: #000000;
       height: 85px;
       padding: 15px;
     }
@@ -69,8 +69,11 @@
         </div>
         <div>
           <ul class="menu">
-            <li>Cart</li>
-            <li>Login</li>
+            <li><button type="button" class="btn btn-warning btn-lg">Login</button></li>
+            <li> <a href="{{url_for('showCart')}}" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+        </a>
+            </li>
           </ul>
         </div>
       </div>
