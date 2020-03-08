@@ -153,6 +153,8 @@ div.button {
 
 
 
+
+
 /*Selects all elements with bt that is a descendant of an element with button */
 
 .bt.button {
@@ -180,6 +182,8 @@ div.button {
 		float:right;
 	}
 
+
+/*Selects all elements with thead, tbody that is a descendant of an element table with id=cart.  Thr gap indicate a descendant */
 	table#cart thead { display: none; }
 	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
 	table#cart tbody tr td:first-child { background: #333; color: #fff; }

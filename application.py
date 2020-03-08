@@ -21,6 +21,27 @@ session = DBSession()
 
 # Add other imports here
 
+# NEW IMPORTS FOR THIS STEP
+from flask import session as login_session
+# As keyword b/c we already used the variable session in my database sqlalchemy.
+import random, string
+
+
+# Create ant-forgery state token
+@app.route('/login')
+def showLogin():
+    # This method creates a unique session token with
+    # each GET request sent to localhost:8000/login.
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+        for x in xrange(32))
+        # state is a random mixed 32 character long string.
+        # Store state from our login_session(a dict) in a variable state.
+    login_session['state'] = state
+    # return "The current session state is %s" %login_session['state']
+    # STATE=state was later added after being created in login.html
+    return render_template('login.html', STATE=state)
+
+
 
 # Show all Categories and latest Item-list associated with them
 @app.route('/')
@@ -31,11 +52,20 @@ def showCatalog():
         Returns:
         A web page with the 20 latest items that have added.
     """
-
     categories = session.query(Category).all()
     # result[::-1] return the slice of every elelement of result in reverse
     latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
-    return render_template('catalog.html',
+
+    # ADD LOGIN PERMISSION
+    # If a user name is not detected for a given request.
+    # render publiccatalog.html, else render catalog.html.
+    if 'username' not in login_session:
+        return render_template('publiccatalog.html',
+                                categories = categories,
+                                latestItems = latestItems)
+
+    else:
+        return render_template('catalog.html',
                            categories = categories,
                            latestItems = latestItems)
 
@@ -52,6 +82,7 @@ def showCategory(category_name):
         Returns:
         A web page showing all the items in the specified category plus all categories.
     """
+
     category = session.query(Category).filter_by(name = category_name).one()
     categories = session.query(Category).all()
     items = session.query(Item).filter_by(category = category).\
@@ -60,7 +91,19 @@ def showCategory(category_name):
     # return count of user "id" grouped by "name"
     itemTotal = session.query(func.count(
                                 Item.id)).group_by(Item.category_id)
-    return render_template('category.html',
+
+    # ADD LOGIN PERMISSION
+    # If a user name is not detected for a given request.
+    # Lets return publiccategory.html, else we return category.html.
+    if 'username' not in login_session:
+        return render_template('publiccategory.html',
+                          categories = categories,
+                          category = category,
+                          items = items,
+                          itemTotal = itemTotal)
+
+    else:
+        return render_template('category.html',
                           categories = categories,
                           category = category,
                           items = items,
@@ -81,7 +124,17 @@ def showItem(category_name, item_title):
     """
     category = session.query(Category).filter_by(name = category_name).one()
     item = session.query(Item).filter_by(title = item_title).one()
-    return render_template('item.html',
+
+    # ADD LOGIN PERMISSION
+    # If a user name is not detected for a given request.
+    # Lets render publicitem.html
+    if 'username' not in login_session:
+        return render_template('publicitem.html',
+                           category = category,
+                           item = item)
+
+    else:
+        return render_template('item.html',
                            category = category,
                            item = item)
 
@@ -92,8 +145,13 @@ methods = ['GET', 'POST'])
 def newItem():
     """ Returns:
         GET: newitem.html - form with input for item creation
-        POST: if i get a post -redirect to 'showCatalog' after creating new item info.
+        POST: if I get a post -redirect to 'showCatalog' after creating new item info.
     """
+    # ADD LOGIN PERMISSION
+    # If a user name is not detected for a given request.
+    # Lets redirect to login page.
+    if 'username' not in login_session:
+        return redirect('/login')
      # Add SQLAlchemy statements
     if request.method == 'POST':
         newItem = Item(title = request.form['title'], description = request.form['description'], price = request.form['price'] , category_id = category_id)
@@ -119,11 +177,16 @@ def editItem(category_name, item_title):
         GET: edititem.html - form with inputs to edit item info
         POST: if I get a post - redirect to 'showCategory' after updating item info.
     """
+    # ADD LOGIN PERMISSION
+    # If a user name is not detected for a given request.
+    # Lets redirect to login page.
+    if 'username' not in login_session:
+        return redirect('/login')
 
     editedItem = session.query(Item).filter_by(id = item_id).one()
     category = session.query(Category).filter_by(name = category_name).one()
     if request.method == 'POST':
-        if request.form['']:
+        if request.form['title']:
             editedItem.title = request.form['title']
         if request.form['description']:
             editedItem.description = request.form['description']
@@ -140,7 +203,8 @@ def editItem(category_name, item_title):
 
 
 # "This page is for deleting Item %s" %item_id
-@app.route('/catalog/<category_name>/<item_title>/delete')
+@app.route('/catalog/<category_name>/<item_title>/delete',
+    methods = ['GET', 'POST'])
 def deleteItem(category_name, item_title):
     # Add SQLAlchemy statements
     """Delete a specified item from the database.
@@ -151,6 +215,12 @@ def deleteItem(category_name, item_title):
         GET: deleteitem.html - form for confirmation prior to deletion of item.
         POST: if I get a post -redirect to 'showCategory' after item info deletion.
     """
+    # ADD LOGIN PERMISSION
+    # If a user name is not detected for a given request.
+    # Lets redirect to login page.
+    if 'username' not in login_session:
+        return redirect('/login')
+
     # filter_by uses the names of the columns in a table
     category = session.query(Category).filter_by(name = category_name).one()
     itemToDelete = session.query(Item).filter_by(id =item_id).one()
@@ -165,6 +235,78 @@ def deleteItem(category_name, item_title):
                                 category = category_name,
                                 item = itemToDelete)
 
+
+@app.route('/catalog/cart/')
+def showCart():
+
+    """Renders shoppingcart page with or without added items.
+            Args: None
+                Empty cart message on flash
+            Returns:
+        GET: shoppingcart.html) showing information of the requested item.
+    """
+    flash("Your Shopping Basket is empty")
+    return render_template('cart.html')
+
+
+# PUT is just like POST only that PUT is idempotent and POST is not.
+# ie can make the same request repeatedly while producing the same result.
+@app.route('/catalog/cart/<item_title>/add', methods = ['GET', 'PUT'])
+def addToCart(item_title):
+
+    """Adds a particular item to the cart by sending item data
+        to the server and then update the resource location.
+        Args:
+        item_title (str): The name of the item.
+        Returns:
+        GET: renders shoppingcart.html.
+        PUT: sends data of a particular item to the server to update the url.
+    """
+    addItemToCart = sesion.query(Item).filter_by(title =item_title).one()
+    if requests.method == 'POST':
+        session.add(addedToCart)
+        session.commit()
+        return render_template('shoppingcart.html',
+                            addItemToCart = addItemToCart,
+                            item_title = item_title)
+    else:
+        #If I get a POST, redirect here
+        return redirect_uri('showCart')
+
+
+
+@app.route('/catalog/cart/<item_title>/delete', methods = ['GET', 'POST'])
+def deleteCartItem(item_title):
+
+    """Delete a specified item from the the shopping cart.
+        Args:
+        item_title (str): Title of the item to be deleted.
+
+        Returns:
+        GET: shoppingcart.html - showing information prior to deletion of item.
+        POST: sends data to the server to update the resource.
+    """
+    deleteItemFromCart = session.query(Item).filter_by(title = item_title).one()
+    if requests.method == 'POST':
+        session.delete(deleteItemFromCart)
+        session.commit()
+        return render_template('shoppingcart.html',
+                            deleteItemFromCart = deleteItemFromCart)
+    else:
+        #If I get a POST, redirect here
+        return redirect_uri('showCart')
+
+
+@app.route('/catalog/cart/view', methods= ['GET', 'POST'])
+def view():
+    """Returns checkout page for users to pay for items"""
+    return render_template('view.html')
+
+
+@app.route('/catalog/cart/review')
+def reviewCheckout():
+    """Review Your Order & Complete Checkout"""
+    return render_template('display.html')
 
 
 if __name__ == '__main__':
