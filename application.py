@@ -249,7 +249,7 @@ def showCart():
 
 # PUT is just like POST only that PUT is idempotent and POST is not.
 # ie can make the same request repeatedly while producing the same result.
-@app.route('/catalog/cart/<item_title>/add', methods = ['GET', 'PUT'])
+@app.route('/catalog/cart/add', methods = ['GET', 'PUT'])
 def addToCart(item_title):
 
     """Adds a particular item to the cart by sending item data

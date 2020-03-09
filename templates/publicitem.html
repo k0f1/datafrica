@@ -2,6 +2,7 @@
 {% block content %}
 {% include "header.html" %}
 
+<!--TODO <script> to send arguement to addToCart -->
 
 <div class = 'flash'>
         {% with messages = get_flashed_messages() %}
@@ -32,7 +33,9 @@
           </div>
           <div class="vl"></div>
           <div class="col-md-2">
-            <a class="text-warning" onclick="addToCart({{item_title}})" type="button" href="{{url_for('addToCart') }}">Add to Basket</a>
+            <!--Construct to send one arguement to the method (item_title) -->
+            <a class="text-warning" onclick="addToCart({{item_title}})"
+             type="button" href="{{url_for('addToCart') }}">Add to Basket</a>
           </div>
         </div>
       </div>
