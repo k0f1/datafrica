@@ -239,7 +239,7 @@ def deleteItem(category_name, item_title):
 @app.route('/catalog/cart/')
 def showCart():
 
-    """Renders cart icon in the content page.
+    """Renders cart.html page.
             Args: None
             Returns:
         GET: cart.html.
@@ -261,20 +261,17 @@ def addToCart(item_title):
         PUT: sends data of a particular item to the server to update the url.
     """
     addItemToCart = sesion.query(Item).filter_by(title =item_title).one()
+    cartItems = [].append(addItemToCart)
     if requests.method == 'PUT':
         session.add(addedToCart)
         session.commit()
-        return render_template('view.html',
+        return render_template('cart.html',
                             addItemToCart = addItemToCart,
                             item_title = item_title)
     else:
         #If I get a POST, redirect here
         return redirect_uri('showCart')
 
-
-@app.route('/catalog/cart/view')
-def viewCart():
-    render_template('view.html')
 
 
 
