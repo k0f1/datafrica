@@ -122,7 +122,8 @@ def showItem(category_name, item_title):
         Returns:
         A web page showing information of the requested item.
     """
-    category = session.query(Category).filter_by(name = category_name).one()
+    category = session.query(Category).filter_by(
+                                name = category_name).one()
     item = session.query(Item).filter_by(title = item_title).one()
 
     # ADD LOGIN PERMISSION

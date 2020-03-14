@@ -19,7 +19,7 @@
   <!--Include Facebook meta tag to enable API request via HTTP -->
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
-// end of header 
+// end of header
 {% endblock %}
 
 {% block content %}
@@ -66,6 +66,7 @@
      <!--  Step 3: Add the below script before the ending </body> tag -->
      {% block script %}
      <script>
+       //jQuery syntax
        $('#signinButton').click(function() {
          function signInCallback(authResult){
            if (authResult['code']){

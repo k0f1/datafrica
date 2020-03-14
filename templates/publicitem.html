@@ -1,5 +1,37 @@
 {% extends "main.html" %}
 {% block title %}Item page {% endblock %}
+{% block script %}
+
+<script>
+//jQuery ready method 
+ $(#addToCart).click(function(){
+   //some code to executed...
+   function addToCartCallback(addItemCart){
+     //ajax HTTP request with PUT.
+     s.ajax({
+       type: 'PUT',
+       //endpoint address
+       url: '/catalog/<category_name>/<item_title>/',
+       // Always include an `X-Requested-With` header in every AJAX request,
+       // to protect against CSRF attacks.
+       headers: {
+       'X-Requested-With': 'XMLHttpRequest'
+       },
+       contentType: 'application/octet-stream; charset=utf-8',
+       success:function(result){
+         $('#cart').html('Cart updated </br>'+ result + '</br>Redirecting...')
+              setTimeout(function() {
+               window.location.href = "/catalog/cart/";
+              }, 2000);
+       },
+       processData:false,
+       data: { addItemToCart['item_title'], addItemToCart['description'], addItemToCart['price'] }
+     });
+   }
+ });
+
+</script>
+{% endblock %}
 {% block content %}
 {% include "header.html" %}
 
@@ -35,8 +67,7 @@
           <div class="vl"></div>
           <div class="col-md-2">
             <!--Construct to send one arguement to the method (item_title) -->
-            <a class="text-warning" onclick="addToCart({{item_title}})"
-             type="button" href="{{url_for('addToCart') }}">Add to Basket</a>
+            <a class="text-warning" onclick="addToCart({{item_title}})" id="addToCart" type="button" href="{{url_for('addToCart') }}">Add to Basket</a>
           </div>
         </div>
       </div>
