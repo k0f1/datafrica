@@ -1,4 +1,5 @@
 {% extends "main.html" %}
+{% block title %} Cart page {% endblock %}
 {% block content %}
 {% include "header.html" %}
 
@@ -8,7 +9,7 @@
 <script>
     $(document).ready(function(){
         // Some code to be executed...
-        fetch("/catalog/cart/item_title", method: 'PUT');
+        fetch("/catalog/cart/item_title", method = ['PUT']);
     });
 </script>
 {% endblock %}

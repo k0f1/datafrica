@@ -1,7 +1,11 @@
-<!DOCTYPE html>
-<header>
+{% extends "main.html" %}
 
 
+
+{% block title %} Login page {% endblock%}
+
+{% block header %}
+{% block script %}
   <!-- BEGIN Pre-requisites -->
 
 
@@ -10,16 +14,15 @@
   <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 
   <!-- END Pre-requisites -->
+{% endblock %}
 
   <!--Include Facebook meta tag to enable API request via HTTP -->
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
+// end of header 
+{% endblock %}
 
-
-</header>
-
-
-<body>
+{% block content %}
   <!--Form for create-profile here followed by  -->
   <h1>Sign In</h1>
 
@@ -29,7 +32,8 @@
   <!-- GOOGLE SIGN IN -->
 
 
-  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="row">
+    {% block script %}
      <script>
        function start() {
          gapi.load('auth2', function() {
@@ -40,11 +44,13 @@
        }
      </script>
 
+     {% endblock %}
+
 
      <!--  Step 2: In the <body> tag, add the below button and div -->
 
      <!--GOOGLE BUTTON -->
-    <div class="col-md-6" aria-label="First">
+    <div class="col">
       <button id="signinButton" class ='grid-cell'>
         <a>
 
@@ -58,6 +64,7 @@
 
      <div id="result"></div>
      <!--  Step 3: Add the below script before the ending </body> tag -->
+     {% block script %}
      <script>
        $('#signinButton').click(function() {
          function signInCallback(authResult){
@@ -95,9 +102,11 @@
          auth2.grantOfflineAccess().then(signInCallback);
        });
      </script>
+     {% endblock %}
 
 
   <!--FACEBOOK SIGN IN -->
+  {% block script %}
    <script>
 
 
@@ -161,6 +170,7 @@
        });
      }
    </script>
+   {% endblock %}
 
        <!--The JS SDK Login Button
        This code lets facebook SDK create facebook log in button.
@@ -170,7 +180,7 @@
 
   <!--FACEBOOK BUTTON-->
 
-    <div class="col-md-6" aria-label="Second">
+    <div class="col">
       <button class="grid-cell">
         <a id="facebook_auth" class="btn btn-default ux-btn-set-item alternative-login-button" scope="public_profile, email", onlogin="sendTokenToServer;" href='javascript:sendTokenToServer()'>
 
@@ -186,7 +196,4 @@
   </div>
 
 
-</body>
-
-
-</html>
+{% endblock %}

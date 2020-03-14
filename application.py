@@ -252,25 +252,29 @@ def showCart():
 @app.route('/catalog/cart/add', methods = ['GET', 'PUT'])
 def addToCart(item_title):
 
-    """Adds a particular item to the cart by sending item data
-        to the server and then update the resource location.
+    """For a user to add a particular item to a cart,  a POST or PUT request has to be sent to the server. Lets modify the server to handle these requests. In application.py, add a route handler addToCart to handle POST or PUT requests for adding item to cart.
         Args:
         item_title (str): The name of the item.
         Returns:
         GET: renders cart.html.
         PUT: sends data of a particular item to the server to update the url.
     """
-    addItemToCart = sesion.query(Item).filter_by(title =item_title).one()
+    addItemToCart = session.query(Item).\
+                            filter_by(title=item_title).one()
     cartItems = [].append(addItemToCart)
-    if requests.method == 'PUT':
-        session.add(addedToCart)
-        session.commit()
+    if request.method == 'PUT':
+        if request.form['title']:
+            addItemToCart.title = request.form['title']
+        if request.form['description']:
+            addItemToCart.description = request.form['description']
+        if request.form['price']:
+            addItemToCart.price = request.form['price']
+        #If I get a POST, redirect to this url.
+        return redirect(url_for('showCart'))
+    else:
         return render_template('cart.html',
                             addItemToCart = addItemToCart,
                             item_title = item_title)
-    else:
-        #If I get a POST, redirect here
-        return redirect_uri('showCart')
 
 
 
@@ -289,12 +293,15 @@ def deleteCartItem(item_title):
     deleteItemFromCart = session.query(Item).filter_by(title = item_title).one()
     if requests.method == 'POST':
         session.delete(deleteItemFromCart)
-        session.commit()
+        # I do not wish to persist my cart
+        #If I get a POST, redirect here
+        return redirect_uri('showCart')
         return render_template('cart.html',
                             deleteItemFromCart = deleteItemFromCart)
     else:
-        #If I get a POST, redirect here
-        return redirect_uri('showCart')
+        return render_template('cart.html',
+                            deleteItemFromCart = deleteItemFromCart)
+
 
 
 
