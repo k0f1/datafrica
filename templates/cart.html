@@ -5,16 +5,6 @@
 
 
 
-{% block script %}
-<script>
-    $(document).ready(function(){
-        // Some code to be executed...
-        fetch("/catalog/cart/item_title", method = ['PUT']);
-    });
-</script>
-{% endblock %}
-
-
 <div class = 'flash'>
         {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -67,7 +57,7 @@
                    <td data-th="Quantity" class="col-md-1">
                      <input type="number" class="form-control text-center" value="1">
                    </td>
-                   <td data-th="Subtotal" class="text-center col-md-1">{{ item.price}}</td>
+                   <td data-th="Subtotal" class="text-center col-md-1">{{ item.price * quantity }}</td>
                    <td class="button padding-top, padding-bottom actions">
                      <a class="text-danger" href="#"><div class="col-md-1">Delete</div></a>
                    </td>
@@ -76,7 +66,7 @@
               <!--Table foot -->
                <tfoot>
                  <tr class="visible-xs"> <!--Visible on extra small devices -->
-                   <td class="text-center"><strong>Total 1.99</strong></td>
+                   <td class="text-center"><strong>"Total" + {{sum(Subtotal)}}</strong></td>
                  </tr>
                  <tr>
                    <td><a href="{{url_for('showCategory',

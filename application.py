@@ -83,7 +83,8 @@ def showCategory(category_name):
         A web page showing all the items in the specified category plus all categories.
     """
 
-    category = session.query(Category).filter_by(name = category_name).one()
+    category = session.query(Category).\
+                    filter_by(name = category_name).one()
     categories = session.query(Category).all()
     items = session.query(Item).filter_by(category = category).\
                 order_by(Item.title).all()
@@ -260,17 +261,10 @@ def addToCart(item_title):
         GET: renders cart.html.
         PUT: sends data of a particular item to the server to update the url.
     """
-    addItemToCart = session.query(Item).\
-                            filter_by(title=item_title).one()
+    addItemToCart = session.query(Item).filter_by(title=item_title).one()
     cartItems = [].append(addItemToCart)
     if request.method == 'PUT':
-        if request.form['title']:
-            addItemToCart.title = request.form['title']
-        if request.form['description']:
-            addItemToCart.description = request.form['description']
-        if request.form['price']:
-            addItemToCart.price = request.form['price']
-        #If I get a POST, redirect to this url.
+        #If I get a PUT, redirect to this url.
         return redirect(url_for('showCart'))
     else:
         return render_template('cart.html',
