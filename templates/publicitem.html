@@ -4,12 +4,30 @@
 
 
 <script>
-//jQuery ready method
+  // The ready function listens for the document-loading event for
+  // when the DOM is ready.
+  $('document').ready(function() {
+    // Some code to be executed...
+    // Listening for click, with the callback function addItemToCart
+    $('#addToBasket').on("click", addItemToCart);
+  });
+  // We use the keyword fucntion to call a js method.
+  function addItemToCart(evt) {
+    //Use the data function to set the content of the #aadToBasket div.
+    $('#addToBasket').data(
+                            "title": item_title,
+                            "description": description,
+                            "price": float(),
+                            "quantity": int(),
+                            "properties": {
+                              "shipping_charge": 0.0
+                            });
+  }
+  /*
   $('#addToBasket').click(function) {
     //Call the addItemToCart method, and parse the product parameters
     //The keyword function is used to call js method.
     function addItemToCart(item_title, description, price, quantity) {
-      // code to be executed
       data = {
         "id": item_id,
         "price": float();
@@ -18,14 +36,11 @@
           "currency_symbol": = £,
           "currency_code": = GPD,
           "shipping_charge": 0.0,
-          "taxes": [],
-          "discount": [],
-          "tax_type": excluded
         }
       }
       s.ajax({
         type: 'POST',
-        url: 'catalog/cart/add',
+        url: '/catalog/cart/<item_title>/add',
         data: data,
         dataType: 'json',
         success: function() {
@@ -35,6 +50,7 @@
       window.location = '/checkout';
     }
   });
+  */
 
 </script>
 

@@ -251,15 +251,16 @@ def shoppingCart():
         total_price = 0
         for item in items:
             item.id = id
-            item.price = total_price
+            item.description = description
+            item.price = price
             total_price = item.price*count[items]
             if item.id in dict_of_items:
                 dict_of_items[item.id] += 1
             else:
-                dict_of_items["item.id"] = {
-                                            "qty": 1,
-                                            "title": item.title_name,
-                                            "price": item.price}
+                 dict_of_items["item.id"] = {
+                                            "title": item.title,
+                                            "price": item.price,
+                                            "qty": 1}
         return render_template("cart.html",
                                 display_cart = dict_of_items,
                                 total = total_price)
@@ -277,7 +278,7 @@ def addItemToCart(item_title):
         cart_session["cart"] = []
 
         cart_session["cart"].append(id)
-        flash("Successfully added to cart")
+        flash("Successfu")
         return redirect("shoppingCart")
     else:
         flash("New Item %s Successfully added to the cart' % addedItem.name")
