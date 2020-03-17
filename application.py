@@ -26,6 +26,8 @@ from flask import session as login_session
 # As keyword b/c we already used the variable session in my database sqlalchemy.
 import random, string
 
+# NEW IMPORTS FOR SHOPPING CART
+from flask import session as cart_session
 
 # Create ant-forgery state token
 @app.route('/login')
@@ -237,40 +239,50 @@ def deleteItem(category_name, item_title):
                                 category = category_name,
                                 item = itemToDelete)
 
-
-@app.route('/catalog/cart/')
-def showCart():
-
-    """Renders cart.html page.
-            Args: None
-            Returns:
-        GET: cart.html.
-    """
-    return render_template('cart.html')
-
-
-# PUT is just like POST only that PUT is idempotent and POST is not.
-# ie can make the same request repeatedly while producing the same result.
-@app.route('/catalog/cart/add', methods = ['GET', 'PUT'])
-def addToCart(item_title):
-
-    """For a user to add a particular item to a cart,  a POST or PUT request has to be sent to the server. Lets modify the server to handle these requests. In application.py, add a route handler addToCart to handle POST or PUT requests for adding item to cart.
-        Args:
-        item_title (str): The name of the item.
-        Returns:
-        GET: renders cart.html.
-        PUT: sends data of a particular item to the server to update the url.
-    """
-    addItemToCart = session.query(Item).filter_by(title=item_title).one()
-    cartItems = [].append(addItemToCart)
-    if request.method == 'PUT':
-        #If I get a PUT, redirect to this url.
-        return redirect(url_for('showCart'))
+@app.route('/catalog/cart')
+def shoppingCart():
+    """Displays content of shopping cart. The cart is a list held in the session that contains all items added."""
+    if "cart" not in session:
+        flash("Your Shopping Basket is empty")
+        return render_template("cart.html", display_cart = {}, total = 0)
     else:
-        return render_template('cart.html',
-                            addItemToCart = addItemToCart,
-                            item_title = item_title)
+        items = cart_session['cart']
+        dict_of_items = {}
+        total_price = 0
+        for item in items:
+            item.id = id
+            item.price = total_price
+            total_price = item.price*count[items]
+            if item.id in dict_of_items:
+                dict_of_items[item.id] += 1
+            else:
+                dict_of_items["item.id"] = {
+                                            "qty": 1,
+                                            "title": item.title_name,
+                                            "price": item.price}
+        return render_template("cart.html",
+                                display_cart = dict_of_items,
+                                total = total_price)
 
+
+
+@app.route('/catalog/cart/<item_title>/add', methods = ['GET', 'POST'])
+def addItemToCart(item_title):
+
+    """ Shopping cart functionality using session variables to hold
+        cart list.
+        Intended behavior: when an item is added to a cart, redirect them to the nshopping cart page, while displaying the message "Successfully added to cart"
+    """
+    if "cart" not in cart_session:
+        cart_session["cart"] = []
+
+        cart_session["cart"].append(id)
+        flash("Successfully added to cart")
+        return redirect("shoppingCart")
+    else:
+        flash("New Item %s Successfully added to the cart' % addedItem.name")
+        return render_template('cart.html',
+                                item_title = item_title)
 
 
 
@@ -287,12 +299,8 @@ def deleteCartItem(item_title):
     """
     deleteItemFromCart = session.query(Item).filter_by(title = item_title).one()
     if requests.method == 'POST':
-        session.delete(deleteItemFromCart)
-        # I do not wish to persist my cart
-        #If I get a POST, redirect here
-        return redirect_uri('showCart')
-        return render_template('cart.html',
-                            deleteItemFromCart = deleteItemFromCart)
+        cart_session.delete(deleteItemFromCart)
+        return redirect_uri('shoppingCart')
     else:
         return render_template('cart.html',
                             deleteItemFromCart = deleteItemFromCart)
@@ -300,16 +308,15 @@ def deleteCartItem(item_title):
 
 
 
-
-
-@app.route('/catalog/cart/review')
-def reviewCheckout():
+@app.route('/catalog/checkout/review')
+def checkout():
     """Review Your Order & Complete Checkout"""
+    flash("Sorry, checkout is still to be implemented")
     return render_template('display.html')
 
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    #app.run(threaded=False)
+    app.run(threaded=False)
     app.run(host = '0.0.0.0', port = 8000)
