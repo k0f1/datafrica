@@ -4,53 +4,40 @@
 
 
 <script>
-  // The ready function listens for the document-loading event for
-  // when the DOM is ready.
+  // Event trigger when DOM of the page is fully parsed by the browser.
+  // This is jQuery function $()
   $('document').ready(function() {
     // Some code to be executed...
-    // Listening for click, with the callback function addItemToCart
-    $('#addToBasket').on("click", addItemToCart);
+    // Event handlers for the buttons that are in the page...
+    $('#getContent').click(getContent);
+    $('#loadHTML').click(loadHTML);
   });
   // We use the keyword fucntion to call a js method.
-  function addItemToCart(evt) {
-    //Use the data function to set the content of the #aadToBasket div.
-    $('#addToBasket').data(
-                            "title": item_title,
-                            "description": description,
-                            "price": float(),
-                            "quantity": int(),
-                            "properties": {
-                              "shipping_charge": 0.0
-                            });
-  }
-  /*
-  $('#addToBasket').click(function) {
-    //Call the addItemToCart method, and parse the product parameters
-    //The keyword function is used to call js method.
-    function addItemToCart(item_title, description, price, quantity) {
-      data = {
-        "id": item_id,
-        "price": float();
-        "quantity": quantity,
-        "properties": {
-          "currency_symbol": = £,
-          "currency_code": = GPD,
-          "shipping_charge": 0.0,
+  function getContent() {
+    // Using the jQuery object $ and calling the global ajax function
+    // which takes in a few arguements - the first is the content
+    // we want to get.
+    $.ajax({
+            // The url of the resource want to get
+            url: '/catalog/<category_name>/<item_title>/',
+            type: 'GET',
+            // setContent is the function to be called on success.
+            success: setContent,
+            //The datatype i am expecting from the server.
+            datatype: "JSON"
+          });
         }
-      }
-      s.ajax({
-        type: 'POST',
-        url: '/catalog/cart/<item_title>/add',
-        data: data,
-        dataType: 'json',
-        success: function() {
-          window.location.href = '/cart';
+        // getContent takes in three arguments: data, status and jqxhr
+        function getContent(data,  status, jqxhr) {
+          // #cart is the page where results will be loaded.
+          $('#cart').json(data);
         }
-      });
-      window.location = '/checkout';
-    }
-  });
-  */
+
+        function loadHTML() {
+          // The load function handles everything from retreiving
+          // the data to loading it into the new element #checkout
+          $('#Checkout').load('/catalog/<category_name>/<item_title>/');
+        }
 
 </script>
 
@@ -84,11 +71,11 @@
         <p class="price">{{item.price}}</p>
         <div id="selling">
           <div class="button padding-top, padding-bottom col-md-2">
-            <a class="text-warning" href="{{url_for('deleteItem', category_name = category_name, item_title = item_title) }}">Buy Now</a>
+            <a class="text-warning" id="loadHTML" href="{{url_for('showItem', category_name = category_name, item_title = item_title) }}">Buy Now</a>
           </div>
           <div class="vl"></div>
           <div class="col-md-2">
-            <a class="text-warning" id="addToBasket" type="button"     href="{{url_for('addItemToCart', item_title = item_title)}}">Add to Basket
+            <a class="text-warning" id="getContent" type="button"     href="{{url_for('addItemToCart', item_title = item_title)}}">Add to Basket
             </a>
           </div>
         </div>

@@ -241,8 +241,9 @@ def deleteItem(category_name, item_title):
 
 @app.route('/catalog/cart')
 def shoppingCart():
+    # Cart = Basket
     """Displays content of shopping cart. The cart is a list held in the session that contains all items added."""
-    if "cart" not in session:
+    if "cart" not in cart_session:
         flash("Your Shopping Basket is empty")
         return render_template("cart.html", display_cart = {}, total = 0)
     else:
@@ -267,21 +268,19 @@ def shoppingCart():
 
 
 
-@app.route('/catalog/cart/<item_title>/add', methods = ['GET', 'POST'])
+@app.route('/catalog/cart/<item_title>/add')
 def addItemToCart(item_title):
-
     """ Shopping cart functionality using session variables to hold
         cart list.
-        Intended behavior: when an item is added to a cart, redirect them to the nshopping cart page, while displaying the message "Successfully added to cart"
+        Intended behavior: when an item is added to a cart, redirect them to the nshopping cart page, while displaying the message "Successfully added to Basket"
     """
     if "cart" not in cart_session:
         cart_session["cart"] = []
 
         cart_session["cart"].append(id)
-        flash("Successfu")
+        flash("New Item added to the Basket")
         return redirect("shoppingCart")
     else:
-        flash("New Item %s Successfully added to the cart' % addedItem.name")
         return render_template('cart.html',
                                 item_title = item_title)
 
@@ -309,7 +308,7 @@ def deleteCartItem(item_title):
 
 
 
-@app.route('/catalog/checkout/review')
+@app.route('/catalog/checkout/')
 def checkout():
     """Review Your Order & Complete Checkout"""
     flash("Sorry, checkout is still to be implemented")
@@ -319,5 +318,5 @@ def checkout():
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(threaded=False)
+    # app.run(threaded=False)
     app.run(host = '0.0.0.0', port = 8000)
