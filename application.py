@@ -243,25 +243,27 @@ def deleteItem(category_name, item_title):
 @app.route('/catalog/cart')
 def shoppingCart():
     # Cart = Basket
-    """Displays content of shopping cart. The cart is a list held in the session that contains all items added."""
+    """Displays content of shopping cart. The cart is a list held in the session that contains all items added.
+    """
+
+    addItem = session.query(Item).filter_by(title = item_title).one()
     if "cart" not in cart_session:
         flash("Your Shopping Basket is Empty")
         return render_template("cart.html", display_cart = {}, total = 0)
     else:
         items = cart_session['cart']
-        addItem = session.query(Item).filter_by(title = item_title).one()
         products = {}
         qty = 0
         total = 0
         subtotal_price = 0
         for addItem in items:
-            qty += 1
+            addItem += 1
             addItem.id = id
             addItem.title = title
             addItem.description = description
             addItem.price = price
             subtotal_price = float(addItem.price.qty)
-            prodData = products["item.id"]
+            prodData = products["addItem.id"]
             if podData in products:
                 products[addItem.id] += 1 # increase by 1 for every unique ID
                 prodData = {
@@ -270,7 +272,7 @@ def shoppingCart():
                             "price": addItem.price,
                             "qty": addItem.qty,
                             "subtotal_price": float(addItem.price.qty)}
-                            
+
         return render_template("cart.html",
                                 display_cart = dict_of_items,
                                 addItem = addItem,
@@ -284,10 +286,10 @@ def addItemToCart(item_title):
         cart list.
         Intended behavior: when an item is added to a cart, redirect them to the shopping cart page, while displaying the message "Successfully added to Basket"
     """
+    addItem = session.query(Item).filter_by(title = item_title).one()
     if "cart" not in cart_session:
         cart_session["cart"] = []
     elif items == cart_session["cart"]:
-        addItem = session.query(Item).filter_by(title = item_title).one()
         cart_session["cart"].append(addItem)
         flash("New Item added to the Basket")
         return redirect("shoppingCart")
