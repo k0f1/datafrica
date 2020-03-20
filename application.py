@@ -260,7 +260,7 @@ def shoppingCart():
             addItem.description = description
             addItem.price = price
             addItem.qty = qty
-            subtotal_price = float(item.price.qty)
+            subtotal_price = float(addItem.price.qty)
             if item.id in dict_of_items:
                 dict_of_items[item.id] += 1 # increase by 1 for every unique ID
             else:
@@ -268,8 +268,9 @@ def shoppingCart():
                                         "title": addItem.title,
                                         "description": addItem.description,
                                         "price": addItem.price,
-                                        "qty": 1,
-                                        "subtotal_price": price*qty}
+                                        "qty": addItem.qty,
+                                        "subtotal_price":
+                                                float(addItem.price.qty)}
         return render_template("cart.html",
                                 display_cart = dict_of_items,
                                 addItem = addItem,
