@@ -252,12 +252,13 @@ def shoppingCart():
         return render_template("cart.html", display_cart = {}, total = 0)
     else:
         items = cart_session['cart']
+        # Change items to a dict.
         products = dict({items})
         qty = 0
         total = 0
         subtotal_price = 0
         for addItem in items:
-            addItem += 1
+            qty += 1
             addItem.id = id
             addItem.title = title
             addItem.description = description
