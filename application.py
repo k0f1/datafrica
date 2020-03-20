@@ -239,32 +239,37 @@ def deleteItem(category_name, item_title):
                                 category = category_name,
                                 item = itemToDelete)
 
-@app.route('/catalog/cart')
+@app.route('/catalog/cart', methods = ['GET', 'POST'])
 def shoppingCart():
     # Cart = Basket
     """Displays content of shopping cart. The cart is a list held in the session that contains all items added."""
     if "cart" not in cart_session:
-        flash("Your Shopping Basket is empty")
+        flash("Your Shopping Basket is Empty")
         return render_template("cart.html", display_cart = {}, total = 0)
     else:
         items = cart_session['cart']
         dict_of_items = {}
-        total_price = 0
+        qty = 0
+        subtotal_price = 0
         for item in items:
             item.id = id
+            item.title = title
             item.description = description
             item.price = price
-            total_price = item.price*count[items]
             if item.id in dict_of_items:
                 dict_of_items[item.id] += 1
+                qty += 1
+                subtotal_price = item.price*qty
             else:
                  dict_of_items["item.id"] = {
                                             "title": item.title,
+                                            "description": item.description,
                                             "price": item.price,
-                                            "qty": 1}
+                                            "qty": 1,
+                                            "subtotal_price": item.price*qty}
         return render_template("cart.html",
                                 display_cart = dict_of_items,
-                                total = total_price)
+                                total = total)
 
 
 
@@ -276,7 +281,7 @@ def addItemToCart(item_title):
     """
     if "cart" not in cart_session:
         cart_session["cart"] = []
-    elif cart in cart_session:
+    elif items == cart_session["cart"]:
         addItem = session.query(Item).filter_by(title = item_title).one()
         cart_session["cart"].append(addItem)
         flash("New Item added to the Basket")

@@ -52,13 +52,18 @@
   // This is jQuery function $()
   $('document').ready(function() {
     // Some code to be executed...
-    // Event handlers for the buttons that are in the page...
+    // Event handlers for the buttons in the page
     $('#{{item.title}}').on('click dblclick', addToBasket);
     $('#{{item.title}}').on('click dblclick', buyNow);
+    //
     getJSONData();
   });
-  function addToBasket({{item.title}}, {{item.description}}, {{item.price}});
-  function buyNow({{item.title}}, {{item.description}}, {{item.price}});
+  // Parse the object properties
+  function addToBasket({{item.title}}, {{item.description}},
+           {{item.price}}, {{item.qty}}, {{item.total}}, {{item.subtotal_price}} });
+
+  function buyNow({{item.title}}, {{item.description}},
+           {{item.price}},  {qty = 1}, {total =qty}, {subtotal_price = qty*{{item.price}}});
 
   // We use the keyword fucntion to call a js method.
   function getJSONData(addItem) {
@@ -69,11 +74,11 @@
             // Make a request and get a response.
             // Parse in an object with a set of properties.
 
-            // the URL for the request.
+            // the URL for the request,the object
             url: '/catalog/cart/<item_title>/add',
 
               // whether this is a POST or GET request
-            type: 'GET',
+            type: ['GET', 'POST'],
 
             // the type of data we expect back
             dataType: 'json',
@@ -91,7 +96,7 @@
         }) // End of ajax
 
       } // End of getData function
-      function successFn(result) {
+      function successFn(addItem) {
           console.log("Setting result");
           window.location.href = '/catalog/cart';
         }
