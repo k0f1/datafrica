@@ -91,7 +91,8 @@ def showCategory(category_name):
     items = session.query(Item).filter_by(category = category).\
                 order_by(Item.title).all()
 
-    # return count of user "id" grouped by "name"
+    # # return count of item "id" grouped
+    # by category "id"
     itemTotal = session.query(func.count(
                                 Item.id)).group_by(Item.category_id)
 
@@ -249,7 +250,7 @@ def shoppingCart():
     else:
         items = cart_session['cart']
         addItem = session.query(Item).filter_by(title = item_title).one()
-        dict_of_items = {}
+        products = {}
         qty = 0
         total = 0
         subtotal_price = 0
@@ -259,18 +260,17 @@ def shoppingCart():
             addItem.title = title
             addItem.description = description
             addItem.price = price
-            addItem.qty = qty
             subtotal_price = float(addItem.price.qty)
-            if item.id in dict_of_items:
-                dict_of_items[item.id] += 1 # increase by 1 for every unique ID
-            else:
-                dict_of_items["item.id"] = {
-                                        "title": addItem.title,
-                                        "description": addItem.description,
-                                        "price": addItem.price,
-                                        "qty": addItem.qty,
-                                        "subtotal_price":
-                                                float(addItem.price.qty)}
+            prodData = products["item.id"]
+            if podData in products:
+                products[addItem.id] += 1 # increase by 1 for every unique ID
+                prodData = {
+                            "title": addItem.title,
+                            "description": addItem.description,
+                            "price": addItem.price,
+                            "qty": addItem.qty,
+                            "subtotal_price": float(addItem.price.qty)}
+                            
         return render_template("cart.html",
                                 display_cart = dict_of_items,
                                 addItem = addItem,

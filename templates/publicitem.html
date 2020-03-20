@@ -1,111 +1,125 @@
 {% extends "main.html" %}
-{% block title %} Product {% endblock title %}
+{% block head %}
+{{super()}}
+<title>Product page </title>
+{% endblock %}
 {% block content %}
 {% include "header.html" %}
 
 <!--TODO <script> to send arguement to addToCart -->
 
-<div class = 'flash'>
-        {% with messages = get_flashed_messages() %}
-    {% if messages %}
+        <div class = 'flash'>
+                {% with messages = get_flashed_messages() %}
+            {% if messages %}
 
-      <ul>
-      {% for message in messages %}
-          <li> <strong> {{ message }} </strong> </li>
-      {% endfor %}
-      </ul>
-      {% endif %}
-  {% endwith %}
+              <ul>
+              {% for message in messages %}
+                  <li> <strong> {{ message }} </strong> </li>
+              {% endfor %}
+              </ul>
+              {% endif %}
+          {% endwith %}
 
-</div>
+        </div>
 
-<div class="row main padding-top padding-bottom">
-  <div class="col-md-1"></div>
-  <div class="col-md-10 padding-top padding-bottom">
+        <div class="row main padding-top padding-bottom">
+          <div class="col-md-1"></div>
+          <div class="col-md-10 padding-top padding-bottom">
 
 
-      <div class="item" id="product">
+              <div class="item" id="product">
 
-        <div class="product-item">
-          <h1 class="text-warning">PRODUCT INFORMATION</h1>
-          <h2 class="title text-dark text-black"><strong>{{ item.title }}</strong></h2>
-          <p>{{item.description}}</p>
-          <p class="price">{{item.price}}</p>
-        </div><!--Product information-->
-        <div id="selling">
-          <div class="button padding-top, padding-bottom col-md-2">
-            <a class="text-warning" id="{{item.item_title}}" href="{{url_for('showItem', category_name = category_name, item_title = item_title) }}">Buy Now</a>
-          </div><!--Buy Now Button-->
-          <div class="vl"></div><!-- Vertical Line-->
-          <div class="col-md-2">
-            <a class="text-warning" id="{{item.title}}" type="button"     href="{{url_for('addItemToCart', item_title = item_title)}}">Add to Basket
-            </a>
-          </div><!--Add To Basket Button-->
-        </div><!-- Selling-->
-      </div> <!--Product-->
-  </div>
-  <div class="col-md-1"></div>
-</div>
+                <div class="product-item">
+                  <h1 class="text-warning">PRODUCT INFORMATION</h1>
+                  <h2 class="title text-dark text-black"><strong>{{ item.title }}</strong></h2>
+                  <p>{{item.description}}</p>
+                  <p class="price">{{item.price}}</p>
+                </div><!--Product information-->
+                <div id="selling">
+                  <div class="button padding-top, padding-bottom col-md-2">
+                    <a class="text-warning" id="{{item.item_title}}" href="{{url_for('showItem', category_name = category_name, item_title = item_title) }}">Buy Now</a>
+                  </div><!--Buy Now Button-->
+                  <div class="vl"></div><!-- Vertical Line-->
+                  <div class="col-md-2">
+                    <a class="text-warning" id="{{item.title}}" type="button"     href="{{url_for('addItemToCart', item_title = item_title)}}">Add to Basket
+                    </a>
+                  </div><!--Add To Basket Button-->
+                </div><!-- Selling-->
+              </div> <!--Product-->
+          </div>
+          <div class="col-md-1"></div>
+        </div>
 
-{% block script %}
-<script>
-  // Event trigger when DOM of the page is fully parsed by the browser.
-  // This is jQuery function $()
-  $('document').ready(function() {
-    // Some code to be executed...
-    // Event handlers for the buttons in the page
-    $('#{{item.title}}').on('click dblclick', addToBasket);
-    $('#{{item.title}}').on('click dblclick', buyNow);
-    getJSONData();
-  });
-  // We use the keyword fucntion to call a js method.
-  // Parse the obj properties for addToBasket
-  function addToBasket({{item.title}},{{item.description}},\
-              {{item.price}}, {{item.qty}}, {{item.price.qty}});
+        {% block script %}
+        <script>
+          // Event trigger when DOM of the page is fully parsed by the browser.
+          // This is jQuery function $() receiving the DOM.
+          $('document').ready(function() {
+            // Some code to be executed...
+            // Event handlers for the buttons in the page
+            $('#{{item.title}}').on('click dblclick', addToBasket);
+            $('#{{item.title}}').on('click dblclick', buyNow);
 
-  // Parse the obj properties for buyNow
-  function buyNow({{item.title}},{{item.description}},\
-              {{item.price}}, {{item.qty}}, {{item.price.qty}});
+            // define the function parameter log()
+            // Need to convert qty to a parameter.
+            var qty = function log(qty) {
+                        console.log(qty)
+                      };
 
-  // Load the JSON data for the product
-  function getJSONData(addItem) {
-    // By using the jQuery object $ and calling the global ajax function
-    // which takes in a few arguements - the first is the content
-    // we want to get.
-    $.ajax({
-            // Make a request and get a response.
-            // Parse in an object with a set of properties.
+            getJSONData();
+          });
+          // We use the keyword fucntion to call a js method.
+          // Parse the obj properties for addToBasket
+          function addToBasket({{item.title}},{{item.description}},\
+                                {{item.price}}, var qty = log({obj: "qty"});,\
+                                {{item.price.qty}});
 
-            // the URL for the request,the object
-            url: '/catalog/cart/<item_title>/add',
+          // Parse the obj properties for buyNow
+          function buyNow({{item.title}},{{item.description}},\
+                          {{item.price}}, var qty = log({obj: "qty"});,\
+                          {{item.price.qty}});
+
+          // Load the JSON data for the product
+          // prodData =dict_of_items[item.id]
+          function getJSONData(addItem.JSON).done(function(prodData))} {
+            // By using the jQuery object $ and calling the global ajax function
+            // which takes in a few arguements - the first is the content
+            // we want to get.
+            $.ajax({
+              // Make a request and get a response.
+              // Parse in an object with a set of properties.
+
+              // the URL for the request,the object
+              url: '/catalog/cart/<{{item.title}}>/add',
 
               // whether this is a POST or GET request
-            type: 'GET',
+              type: 'GET',
 
-            // the type of data we expect back
-            dataType: 'json',
+              // the type of data we expect back
+              dataType: 'json',
 
-            // function to call success.
-            success: successFn,
+              // function to call success.
+              success: successFn,
 
-            // function to call on an error.
-            error: errorFn,
+              // function to call on an error.
+              error: errorFn,
 
-            // code to run regardless of success or failure
-            complete: function(xhr, status) {
-              console.log("The request is complete");}
+              // code to run regardless of success or failure
+              complete: function(xhr, status) {
+                console.log("The request is complete");}
 
-    }) // End of ajax
-    } // End of getData function
-    function successFn(addItem) {
-      console.log("Setting result");
-      window.location.href = '/catalog/cart';
-    }
-    function errorFn(xhr, status, strErr) {
-      console.log("There was an error!");
-    }
+            }) // End of ajax
 
-</script>
+          } // End of getData function
+          function successFn(addItem) {
+            console.log("Setting result");
+            window.location.href = '/catalog/cart';
+          }
+          function errorFn(xhr, status, strErr) {
+            console.log("There was an error!");
+          }
+
+        </script>
 {% endblock %}
 
 
