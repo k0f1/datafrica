@@ -248,28 +248,30 @@ def shoppingCart():
         return render_template("cart.html", display_cart = {}, total = 0)
     else:
         items = cart_session['cart']
+        addItem = session.query(Item).filter_by(title = item_title).one()
         dict_of_items = {}
         qty = 0
         total = 0
         subtotal_price = 0
-        for item in items:
-            item.id = id
-            item.title = title
-            item.description = description
-            item.price = price
+        for addItem in items:
+            addItem.id = id
+            addItem.title = title
+            addItem.description = description
+            addItem.price = price
             qty += 1
             subtotal_price = float(price*qty)
             if item.id in dict_of_items:
                 dict_of_items[item.id] += 1 # increase by 1
             else:
                 dict_of_items["item.id"] = {
-                                        "title": item.title,
-                                        "description": item.description,
-                                        "price": item.price,
+                                        "title": addItem.title,
+                                        "description": addItem.description,
+                                        "price": addItem.price,
                                         "qty": 1,
                                         "subtotal_price": price*qty}
         return render_template("cart.html",
                                 display_cart = dict_of_items,
+                                addItem = addItem,
                                 total = total)
 
 
