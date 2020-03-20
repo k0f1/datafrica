@@ -252,7 +252,7 @@ def shoppingCart():
         return render_template("cart.html", display_cart = {}, total = 0)
     else:
         items = cart_session['cart']
-        products = {}
+        products = dict({items})
         qty = 0
         total = 0
         subtotal_price = 0
@@ -294,9 +294,11 @@ def addItemToCart(item_title):
         flash("New Item added to the Basket")
         return redirect("shoppingCart")
     else:
-        return render_template('publicitem.html',
+        return render_template('publiccategory.html',
+                                categories = categories,
                                 category = category,
-                                item_title = item_title)
+                                items = items,
+                                itemTotal = itemTotal)
 
 
 

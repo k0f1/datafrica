@@ -27,10 +27,9 @@
           <div class="col-md-10 padding-top padding-bottom">
 
 
-              <div class="item" id="product">
-
-                <div class="product-item">
-                  <h1 class="text-warning">PRODUCT INFORMATION</h1>
+              <div class="item" id="products">
+                <h1 class="text-warning">PRODUCT INFORMATION</h1>
+                <div class="prodData">
                   <h2 class="title text-dark text-black"><strong>{{ item.title }}</strong></h2>
                   <p>{{item.description}}</p>
                   <p class="price">{{item.price}}</p>
@@ -41,7 +40,8 @@
                   </div><!--Buy Now Button-->
                   <div class="vl"></div><!-- Vertical Line-->
                   <div class="col-md-2">
-                    <a class="text-warning" id="{{item.title}}" type="button"     href="{{url_for('addItemToCart', item_title = item_title)}}">Add to Basket
+                    <a class="text-warning" id="{{item.title}}" type="button"    href="{{url_for('addItemToCart',
+                      item_title = item_title)}}">Add to Basket
                     </a>
                   </div><!--Add To Basket Button-->
                 </div><!-- Selling-->
@@ -62,21 +62,20 @@
 
             // define the function parameter log()
             // Need to convert qty to a parameter.
-            var qty = function log(qty) {
-                        console.log(qty)
-                      };
+            let qty = 1;
+            console.log(qty); // 1
 
             getJSONData();
           });
           // We use the keyword fucntion to call a js method.
           // Parse the obj properties for addToBasket
           function addToBasket({{item.title}},{{item.description}},\
-                                {{item.price}}, var qty = log({obj: "qty"});,\
+                                {{item.price}}, console.log(qty);,\
                                 {{item.price.qty}});
 
           // Parse the obj properties for buyNow
           function buyNow({{item.title}},{{item.description}},\
-                          {{item.price}}, var qty = log({obj: "qty"});,\
+                          {{item.price}}, console.log(qty);,\
                           {{item.price.qty}});
 
           // Load the JSON data for the product
@@ -105,14 +104,18 @@
               error: errorFn,
 
               // code to run regardless of success or failure
+              // Inline fumction
               complete: function(xhr, status) {
                 console.log("The request is complete");}
+              )
 
             }) // End of ajax
 
           } // End of getData function
-          function successFn(addItem) {
+          function successFn(result) {
             console.log("Setting result");
+            // Append the result of the ajax request to elem with cart id.
+            $('#cart').append(result);
             window.location.href = '/catalog/cart';
           }
           function errorFn(xhr, status, strErr) {
