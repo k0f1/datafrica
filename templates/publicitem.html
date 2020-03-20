@@ -53,31 +53,43 @@
   $('document').ready(function() {
     // Some code to be executed...
     // Event handlers for the buttons that are in the page...
-    //$('#getContent').click(getContent);
     $('#{{item.title}}').on('click dblclick', addToBasket);
     $('#{{item.title}}').on('click dblclick', buyNow);
-    getData();
+    getJSONData();
   });
+  function addToBasket({{item.title}}, {{item.description}}, {{item.price}});
+  function buyNow({{item.title}}, {{item.description}}, {{item.price}});
+
   // We use the keyword fucntion to call a js method.
-  function getData() {
+  function getJSONData(addItem) {
     // By using the jQuery object $ and calling the global ajax function
     // which takes in a few arguements - the first is the content
     // we want to get.
     $.ajax({
-            // To make a request to a server and get a response back.
+            // Make a request and get a response.
             // Parse in an object with a set of properties.
-            // the first property is the url of the data we want to retreive.
+
+            // the URL for the request.
             url: '/catalog/cart/<item_title>/add',
+
+              // whether this is a POST or GET request
             type: 'GET',
 
-            //The datatype is the type od data I want to get back
-            dataType: {},
-            // This is the function to be called when things succeed or fail.
+            // the type of data we expect back
+            dataType: 'json',
+
+            // function to call success.
             success: successFn,
+
+            // function to call on an error.
             error: errorFn,
+
+            // code to run regardless of success or failure
             complete: function(xhr, status) {
-              console.log("The request is complete");
-            })// End of ajax
+              console.log("The request is complete");}
+
+        }) // End of ajax
+
       } // End of getData function
       function successFn(result) {
           console.log("Setting result");
