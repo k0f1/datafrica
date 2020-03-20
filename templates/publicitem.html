@@ -56,16 +56,18 @@
     // Event handlers for the buttons in the page
     $('#{{item.title}}').on('click dblclick', addToBasket);
     $('#{{item.title}}').on('click dblclick', buyNow);
-    //
     getJSONData();
   });
   // We use the keyword fucntion to call a js method.
   // Parse the obj properties for addToBasket
-  function addToBasket({{item.title}},{{item.description}},{{item.price}});
+  function addToBasket({{item.title}},{{item.description}},\
+              {{item.price}}, {{item.qty}}, {{item.price.qty}});
 
   // Parse the obj properties for buyNow
-  function buyNow({{item.title}},{{item.description}},{{item.price}});
+  function buyNow({{item.title}},{{item.description}},\
+              {{item.price}}, {{item.qty}}, {{item.price.qty}});
 
+  // Load the JSON data for the product
   function getJSONData(addItem) {
     // By using the jQuery object $ and calling the global ajax function
     // which takes in a few arguements - the first is the content
