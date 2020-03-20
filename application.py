@@ -239,7 +239,7 @@ def deleteItem(category_name, item_title):
                                 category = category_name,
                                 item = itemToDelete)
 
-@app.route('/catalog/cart', methods = ['GET', 'POST'])
+@app.route('/catalog/cart')
 def shoppingCart():
     # Cart = Basket
     """Displays content of shopping cart. The cart is a list held in the session that contains all items added."""
@@ -250,23 +250,24 @@ def shoppingCart():
         items = cart_session['cart']
         dict_of_items = {}
         qty = 0
+        total = 0
         subtotal_price = 0
         for item in items:
             item.id = id
             item.title = title
             item.description = description
             item.price = price
+            qty += 1
+            subtotal_price = price*qty
             if item.id in dict_of_items:
-                dict_of_items[item.id] += 1
-                qty += 1
-                subtotal_price = item.price*qty
+                dict_of_items[item.id] += 1 # increase by 1
             else:
-                 dict_of_items["item.id"] = {
-                                            "title": item.title,
-                                            "description": item.description,
-                                            "price": item.price,
-                                            "qty": 1,
-                                            "subtotal_price": item.price*qty}
+                dict_of_items["item.id"] = {
+                                        "title": item.title,
+                                        "description": item.description,
+                                        "price": item.price,
+                                        "qty": 1,
+                                        "subtotal_price": price*qty}
         return render_template("cart.html",
                                 display_cart = dict_of_items,
                                 total = total)

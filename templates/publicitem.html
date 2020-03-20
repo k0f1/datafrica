@@ -27,6 +27,7 @@
       <div class="item" id="product">
 
         <div class="product-item">
+          <h1 class="text-warning">PRODUCT INFORMATION</h1>
           <h2 class="title text-dark text-black"><strong>{{ item.title }}</strong></h2>
           <p>{{item.description}}</p>
           <p class="price">{{item.price}}</p>
@@ -59,11 +60,11 @@
     getJSONData();
   });
   // Parse the object properties
-  function addToBasket({{item.title}}, {{item.description}},
-           {{item.price}}, {{item.qty}}, {{item.total}}, {{item.subtotal_price}} });
+  function addToBasket({{item.title}}, {{item.description}},\
+                  {{item.price}}, 1 , {{item.price}} });
 
-  function buyNow({{item.title}}, {{item.description}},
-           {{item.price}},  {qty = 1}, {total =qty}, {subtotal_price = qty*{{item.price}}});
+  function buyNow({{item.title}}, {{item.description}},\
+                  {{item.price}}, 1 , {{item.price}}});
 
   // We use the keyword fucntion to call a js method.
   function getJSONData(addItem) {
@@ -78,7 +79,7 @@
             url: '/catalog/cart/<item_title>/add',
 
               // whether this is a POST or GET request
-            type: ['GET', 'POST'],
+            type: 'GET',
 
             // the type of data we expect back
             dataType: 'json',
@@ -93,17 +94,15 @@
             complete: function(xhr, status) {
               console.log("The request is complete");}
 
-        }) // End of ajax
-
-      } // End of getData function
-      function successFn(addItem) {
-          console.log("Setting result");
-          window.location.href = '/catalog/cart';
-        }
-
-        function errorFn(xhr, status, strErr) {
-          console.log("There was an error!");
-        }
+    }) // End of ajax
+    } // End of getData function
+    function successFn(addItem) {
+      console.log("Setting result");
+      window.location.href = '/catalog/cart';
+    }
+    function errorFn(xhr, status, strErr) {
+      console.log("There was an error!");
+    }
 
 </script>
 {% endblock %}
