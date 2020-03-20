@@ -272,16 +272,18 @@ def shoppingCart():
 def addItemToCart(item_title):
     """ Shopping cart functionality using session variables to hold
         cart list.
-        Intended behavior: when an item is added to a cart, redirect them to the nshopping cart page, while displaying the message "Successfully added to Basket"
+        Intended behavior: when an item is added to a cart, redirect them to the shopping cart page, while displaying the message "Successfully added to Basket"
     """
     if "cart" not in cart_session:
         cart_session["cart"] = []
-
-        cart_session["cart"].append(id)
+    elif cart in cart_session:
+        addItem = session.query(Item).filter_by(title = item_title).one()
+        cart_session["cart"].append(addItem)
         flash("New Item added to the Basket")
         return redirect("shoppingCart")
     else:
-        return render_template('cart.html',
+        return render_template('publicitem.html',
+                                category = category,
                                 item_title = item_title)
 
 

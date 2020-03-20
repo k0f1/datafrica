@@ -15,6 +15,53 @@ body {
   margin-left: auto;
 }
 
+header {background-color: #000000;}
+
+/* Styling the header */
+.top-menu {
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  color: #ffffff;
+  background: #000000;
+  height: 85px;
+  padding: 15px;
+  width: 100%;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.vertical-centerer {
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+.header-content {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.logo {
+  width: 200px;
+  display: inline-block;
+  margin: 10px 0px;
+}
+.menu {
+  list-style: none;
+  list-style-type: none;
+}
+.menu > li {
+  display: inline;
+  margin-left: 37.5px;
+}
+
+/* End of style for header */
+
 
 h1, h2 {
   font-family: 'Georgia', serif;
@@ -162,6 +209,7 @@ div.button {
 }
 
 /* Cart styling */
+/* > The angle bracket refers to immediate child selector*/
 .table>tbody>tr>td, .table>tfoot>tr>td {
     vertical-align: middle;
 }
@@ -183,7 +231,7 @@ div.button {
 	}
 
 
-/*Selects all elements with thead, tbody that is a descendant of an element table with id=cart.  Thr gap indicate a descendant */
+/* The gap indicate a descendant selector*/
 	table#cart thead { display: none; }
 	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
 	table#cart tbody tr td:first-child { background: #333; color: #fff; }
