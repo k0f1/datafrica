@@ -258,7 +258,7 @@ def shoppingCart():
             item.description = description
             item.price = price
             qty += 1
-            subtotal_price = price*qty
+            subtotal_price = float(price*qty)
             if item.id in dict_of_items:
                 dict_of_items[item.id] += 1 # increase by 1
             else:

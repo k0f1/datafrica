@@ -59,14 +59,17 @@
     //
     getJSONData();
   });
-  // Parse the object properties
-  function addToBasket({{item.title}}, {{item.description}},\
-                  {{item.price}}, 1 , {{item.price}} });
-
-  function buyNow({{item.title}}, {{item.description}},\
-                  {{item.price}}, 1 , {{item.price}}});
-
   // We use the keyword fucntion to call a js method.
+  // Parse the obj properties for addToBasket
+  function addToBasket({{item.title}},{{item.description}},{{item.price}},\
+  function log({obj: "qty"}) {console.log(1)}; ,\
+  function square(number) { square(float(subtotal_price))}; });
+
+  // Parse the obj properties for buyNow
+  function buyNow({{item.title}},{{item.description}},{{item.price}},\
+  function log({obj: "qty"}) {console.log(1)}; ,\
+  function square(number * number) { square(float(subtotal_price))}; });
+
   function getJSONData(addItem) {
     // By using the jQuery object $ and calling the global ajax function
     // which takes in a few arguements - the first is the content
