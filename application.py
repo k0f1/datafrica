@@ -44,6 +44,9 @@ def showLogin():
     return render_template('login.html', STATE=state)
 
 
+#JSON APIs to view Catalog Information
+
+
 
 # Show all Categories and latest Item-list associated with them
 @app.route('/')
