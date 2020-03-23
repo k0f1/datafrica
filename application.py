@@ -251,13 +251,13 @@ def shoppingCart():
         flash("Your Shopping Basket is Empty")
         return render_template("cart.html", display_cart = {}, total = 0)
     else:
-        items = cart_session['cart']
+        cartItems = cart_session['cart']
         # Change items to a dict.
-        products = dict({items})
+        products = dict({cartItems})
         qty = 0
         total = 0
         subtotal_price = 0
-        for addItem in items:
+        for addItem in cartItems:
             qty += 1
             addItem.id = id
             addItem.title = title
@@ -275,13 +275,13 @@ def shoppingCart():
                             "subtotal_price": float(addItem.price.qty)}
 
         return render_template("cart.html",
-                                display_cart = dict_of_items,
+                                display_cart = products,
                                 addItem = addItem,
                                 total = total)
 
 
 
-@app.route('/catalog/cart/<item_title>/add')
+@app.route('/catalog/<item_title>/add')
 def addItemToCart(item_title):
     """ Shopping cart functionality using session variables to hold
         cart list.
@@ -290,7 +290,7 @@ def addItemToCart(item_title):
     addItem = session.query(Item).filter_by(title = item_title).one()
     if "cart" not in cart_session:
         cart_session["cart"] = []
-    elif items == cart_session["cart"]:
+    elif cartItems == cart_session["cart"]:
         cart_session["cart"].append(addItem)
         flash("New Item added to the Basket")
         return redirect("shoppingCart")
