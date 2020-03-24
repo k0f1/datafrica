@@ -8,7 +8,8 @@ from database_setup import Base, Category, Item
 
 
 # Make an instance of create engine
-engine = create_engine('sqlite:///catalog.db')
+# engine = create_engine('sqlite:///catalog.db')
+engine = create_engine ('sqlite:///catalogwithusers.db')
 # engine = create_engine ('sqlite:///catalogupdate.db')
 
 # Bind the engine to the metadata of the Base class
@@ -45,7 +46,22 @@ def showLogin():
 
 
 #JSON APIs to view Catalog Information
+@app.route('/catalog/JSON')
+def catalogJSON():
+    categories = session.query(Category).all()
+    return jsonify(Category =[i.serialize for i in categories])
 
+
+@app.route('/catalog/items/JSON')
+def itemsJSON():
+    Items = session.query(Item).all()
+    return jsonify(Items = [i.serialize for i in items])
+
+
+@app.route('/catalog/<category_name>/<item_title>/JSON')
+def productItemJSON(category_name, item_title):
+    Product_Item = session.query(Item).filter_by(title = item_title).one()
+    return jsonify(Product_Item = Product_Item.serialize)
 
 
 # Show all Categories and latest Item-list associated with them
@@ -129,8 +145,8 @@ def showItem(category_name, item_title):
         Returns:
         A web page showing information of the requested item.
     """
-    category = session.query(Category).filter_by(
-                                name = category_name).one()
+    category = session.query(Category).\
+                                filter_by(name = category_name).one()
     item = session.query(Item).filter_by(title = item_title).one()
 
     # ADD LOGIN PERMISSION
@@ -200,6 +216,8 @@ def editItem(category_name, item_title):
             editedItem.description = request.form['description']
         if request.form['price']:
             editedItem.price = request.form['price']
+        if request.form['picture']:
+            editedItem.picture = request.form['picture']
             return redirect(url_for('showCategory',
                                    category_name = category_name,
                                    item_title = item_title))
@@ -243,6 +261,15 @@ def deleteItem(category_name, item_title):
                                 category = category_name,
                                 item = itemToDelete)
 
+
+
+# NOTES
+# API client requests
+# addItem : 'GET' request on publicitem.html
+# qty: 'PUT' request - an update of number of quantity of addItem on cart.html
+# Delete item from cart: 'Delete'
+
+
 @app.route('/catalog/cart')
 def shoppingCart():
     # Cart = Basket
@@ -255,18 +282,12 @@ def shoppingCart():
         return render_template("cart.html", display_cart = {}, total = 0)
     else:
         cartItems = cart_session['cart']
-        # Change items to a dict.
-        products = dict({cartItems})
-        qty = 0
-        total = 0
-        subtotal_price = 0
         for addItem in cartItems:
-            qty += 1
             addItem.id = id
             addItem.title = title
             addItem.description = description
             addItem.price = price
-            subtotal_price = float(addItem.price.qty)
+            addItem.qty = int(1)
             prodData = products["addItem.id"]
             if podData in products:
                 products[addItem.id] += 1 # increase by 1 for every unique ID
@@ -290,7 +311,9 @@ def addItemToCart(item_title):
         cart list.
         Intended behavior: when an item is added to a cart, redirect them to the shopping cart page, while displaying the message "Successfully added to Basket"
     """
-    addItem = session.query(Item).filter_by(title = item_title).one()
+    # Retreive the item JSON data.
+    addItem = productItemJSON(category_name, item_title)
+    # Build my response here
     if "cart" not in cart_session:
         cart_session["cart"] = []
     elif cartItems == cart_session["cart"]:

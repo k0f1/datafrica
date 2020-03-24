@@ -41,8 +41,7 @@
                   <div class="vl"></div><!-- Vertical Line-->
                   <div class="col-md-2">
                     <a class="text-warning" id="{{item.title}}"
-                        href="{{url_for('addItemToCart',
-                        item_title = item_title)}}">Add to Basket
+                        href="{{url_for('productItemJSON', category_name = category_name, item_title = item_title)}}">Add to Basket
                     </a>
                   </div><!--Add To Basket Button-->
                 </div><!-- Selling-->
@@ -71,13 +70,11 @@
           // We use the keyword fucntion to call a js method.
           // Parse the obj properties for addToBasket
           function addToBasket({{item.title}},{{item.description}},\
-                                {{item.price}}, console.log(qty);,\
-                                {{item.price.qty}});
+                                {{item.price}};
 
           // Parse the obj properties for buyNow
           function buyNow({{item.title}},{{item.description}},\
-                          {{item.price}}, console.log(qty);,\
-                          {{item.price.qty}});
+                          {{item.price}};
 
           // Receive JSON data for the product
           function getJSONData(addItem.JSON).done(function(prodData))} {
@@ -89,7 +86,7 @@
               // Parse in an object with a set of properties.
 
               // the URL for the request,the object
-              url: '/catalog/cart/<{{item.title}}>/add',
+              url: '/catalog/<category_name>/<item_title>/JSON',
 
               // whether this is a POST or GET request
               type: 'GET',
