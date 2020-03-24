@@ -1,10 +1,40 @@
+#! /usr/bin/env python3
+
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
-app = Flask(__name__)
+
 
 # Add database imports here
 from sqlalchemy import create_engine, asc, desc, literal, func
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item
+from database_setup import Base, Category, Item, User
+
+
+
+# NEW IMPORTS FOR THIS STEP
+from flask import session as login_session
+# As keyword b/c we already used the variable session my database sqlalchemy.
+import random, string
+
+
+
+#IMPORTS FOR THIS STEP
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import FlowExchangeError
+import httplib2
+import json
+# To convert in-memory Python objects to serialised
+# representation, known as Java Script Object Notation.
+from flask import make_response
+import requests
+
+
+app = Flask(__name__)
+
+
+client_id = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
+APPLICATION_NAME = "Ehelt Catalog App"
+
 
 
 # Make an instance of create engine
@@ -43,6 +73,13 @@ def showLogin():
     # return "The current session state is %s" %login_session['state']
     # STATE=state was later added after being created in login.html
     return render_template('login.html', STATE=state)
+
+
+
+@app.route('/logout')
+def showLogout():
+    return "This is linked to disconnect endpoint"
+
 
 
 #JSON APIs to view Catalog Information
@@ -266,7 +303,7 @@ def deleteItem(category_name, item_title):
 # NOTES
 # API client requests
 # addItem : 'GET' request on publicitem.html
-# qty: 'PUT' request - an update of number of quantity of addItem on cart.html
+#
 # Delete item from cart: 'Delete'
 
 

@@ -1,4 +1,6 @@
 catalog/**/APIs
 catalog.db
 client_secrets.json
-
+*.json
+*js
+database_setup.py
