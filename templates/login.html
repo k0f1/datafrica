@@ -1,70 +1,63 @@
 {% extends "main.html" %}
 
 
-
 {% block title %} Login page {% endblock%}
 
-{% block head %}
-{% block script %}
-  <!-- BEGIN Pre-requisites -->
-
-
-  <!--  Step 1: Include the below script in the head tag-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-
-  <!-- END Pre-requisites -->
-{% endblock %}
-
-  <!--Include Facebook meta tag to enable API request via HTTP -->
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
-<!--End of script block -->
-{% endblock %}
-
 {% block content %}
-  <!--Form for create-profile here followed by  -->
-  <h1>Sign In</h1>
+  <!--Form for create-profile here followed by-->
+    <h1>Hi Username! <h1>
 
-  <p class="black-text blue-text"> Sign up or Login with one of the providers below</p>
-
-
-  <!-- GOOGLE SIGN IN -->
+    <p class="black-text blue-text"> Sign up or Login with one of the providers below</p>
 
 
-  <div class="row">
-    {% block script %}
-     <script>
-       function start() {
-         gapi.load('auth2', function() {
-           auth2 = gapi.auth2.init({
-             client_id: '377693933630-mt7bk2ot1bp6j06773v3n295h12bevpk.apps.googleusercontent.com'
-           });
-         });
-       }
-     </script>
+  <div class="row d-flex login-row">
+    <div class="col-md-1">
+      <div class="col-md-10 d-flex padding-top padding-buttom">
+      <!--  Step 2: In the <body> tag, add the below button and div -->
+      <!--GOOGLE BUTTON -->
+        <div class="col-md-5">
+           <button id="signinButton" class ='grid-cell'><a>
+             <img src ="{{url_for('static', filename='Google_G_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+               <span>Google</span>
+             </a>
+           </button>
+      </div> <!--End of google sign in -->
 
-     {% endblock %}
+      <!--FACEBOOK BUTTON-->
 
+      <div class="col-md-5">
+       <button class="grid-cell">
+         <a id="facebook_auth" class="btn btn-default ux-btn-set-item alternative-login-button" scope="public_profile, email", onlogin="sendTokenToServer;" href='javascript:sendTokenToServer()'>
 
-     <!--  Step 2: In the <body> tag, add the below button and div -->
+           <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
 
-     <!--GOOGLE BUTTON -->
-    <div class="col">
-      <button id="signinButton" class ='grid-cell'>
-        <a>
-
-          <img src ="{{url_for('static', filename='Google_G_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
-
-          <span>Google</span>
-        </a>
-      </button>
+           <span>Facebook</span>
+         </a>
+       </button>
+      </div> <!--END FACEBOOK SIGN IN -->
+      </div>
+      <div class="col-md-10" id="result"></div>
     </div>
+  </div>
 
 
-     <div id="result"></div>
+    <!-- GOOGLE SIGN IN -->
+
+    {% block script %}
+      <script>
+
+        function start() {
+          gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+                  client_id: '634413285518-8pdl45mtcls0h964ks1slmb22donh22t.apps.googleusercontent.com'
+            });
+          });
+        }
+      </script>
+
+
      <!--  Step 3: Add the below script before the ending </body> tag -->
-     {% block script %}
+
      <script>
        //jQuery
        $('#signinButton').click(function() {
@@ -103,22 +96,22 @@
          auth2.grantOfflineAccess().then(signInCallback);
        });
      </script>
-     {% endblock %}
+
 
 
   <!--FACEBOOK SIGN IN -->
-  {% block script %}
-   <script>
+
+  <script>
 
 
        // The code for Facebook javascript SDK
      window.fbAsyncInit = function() {
        FB.init({
-         appId      : '{566543414103215}',
+         appId      : '{317413925886267}',
          cookie     : true, // enable cookies to allow the server to access
                             // the session
          xfbml      : true, // parse social plugins on this page
-         version    : '{v5.0}' // use version 5.0
+         version    : '{v6.0}' // use version 5.0
        });
         FB.AppEvents.logPageView();
 
@@ -135,6 +128,8 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
 
+  </script>
+  <script>
 
      // This function sends the access Token to the server
      function sendTokenToServer() {
@@ -179,22 +174,8 @@
        authorization my app wants to request and also invoke this
        sendTokenToServer method-->
 
-  <!--FACEBOOK BUTTON-->
-
-    <div class="col">
-      <button class="grid-cell">
-        <a id="facebook_auth" class="btn btn-default ux-btn-set-item alternative-login-button" scope="public_profile, email", onlogin="sendTokenToServer;" href='javascript:sendTokenToServer()'>
-
-          <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
-
-          <span>Facebook</span>
-        </a>
-      </button>
-    </div>
 
 
-   <!--END FACEBOOK SIGN IN -->
-  </div>
 
 
 {% endblock %}

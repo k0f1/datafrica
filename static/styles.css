@@ -15,6 +15,7 @@ body {
   margin-left: auto;
 }
 
+
 header {background-color: #000000;}
 
 /* Styling the header */
@@ -119,6 +120,10 @@ a {text-decoration: none;}
   border: 2px dotted red;
 }
 
+.col-md-1 {
+  width: 100%;
+}
+
 
 /*Select all <div> elements with class="col-md-10"  */
 /* The display:flex property here is used to render this element items/columns in a row */
@@ -161,6 +166,11 @@ li.flash {
   min-width: 100%;
 }
 
+.col-md-5 {
+  padding-left: 60px;
+  margin-left: 30px;
+}
+
 .main.col-md-8 {
   min-width: 100%;
 }
@@ -179,7 +189,7 @@ li.flash {
   border-left: 1px solid #e5e5e5;
 }
 
-.padding-top { padding-top: 20px; }
+.padding-top { padding-top: 20px; padding-bottom: 20px;}
 
 .padding-bottom { padding-bottom: 30px; }
 
@@ -197,7 +207,6 @@ div.button {
   min-height: 48px;
   font-size: 14px;
 }
-
 
 
 

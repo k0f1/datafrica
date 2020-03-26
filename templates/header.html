@@ -8,7 +8,12 @@
                   </div>
                   <div>
                     <ul class="menu">
-                      <li><a type="button" class="btn btn-warning btn-lg">Login</a></li>
+                      <!--Conditional login and logout links-->
+                    {% if 'username' not in login_session %}
+                      <li><a type="button" class="btn btn-warning btn-lg" href="{{url_for('showLogin')}}">Login</a></li>
+                    {% else %}
+                      <li><a type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
+                      {% endif %}
                       <li>
                         <a href="{{url_for('shoppingCart')}}" class="btn btn-default btn-lg">
                           <span class="glyphicon glyphicon-shopping-cart"></span> Basket

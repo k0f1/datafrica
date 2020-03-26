@@ -48,7 +48,7 @@
         </div>
       {% block script %}
 
-        // This is the script for Adding item to the cart.
+        <!--This is the script for Adding item to the cart.-->
         <script>
           // Event trigger when DOM of the page is fully parsed by the browser.
           // This is jQuery function $() receiving the DOM.
@@ -78,7 +78,7 @@
               // Parse in an object with a set of properties.
 
               // the URL for the request is the object
-              url: '/catalog/<category_name>/<item_title>/JSON',
+              url: '/catalog/{{item.category_id.name}}/{{item.title}}/JSON',
 
               // whether this is a POST or GET request
               type: 'GET',
@@ -111,7 +111,7 @@
             console.log("There was an error!");
           }
 
-        </script> // This is the end of addToBasket
+        </script> <!-- This is the end of addToBasket-->
 
       {% endblock %}
 {% endblock %}
