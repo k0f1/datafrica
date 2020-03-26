@@ -1,5 +1,8 @@
 {% extends "main.html" %}
-{% block head %} {% block title %} Product Information {% endblock %} {% endblock %}
+
+{% block title %} Product Information {% endblock %}
+
+
 {% block content %}
 {% include "header.html" %}
 
@@ -33,12 +36,12 @@
                 </div><!--End of Product information-->
                 <div id="selling">
                   <div class="button padding-top, padding-bottom col-md-2">
-                    <a class="text-warning" id="{{item.item_title}}" href="{{url_for('productItemJSON', category_name = category.category_name, item_title = item.item_title) }}">Buy Now</a>
+                    <a class="text-warning" id="{{item.item_title}}" href="{{url_for('addItemToCart', category_name = category.name, item_title = item.title) }}">Buy Now</a>
                   </div><!--Buy Now Button-->
                   <div class="vl"></div><!-- Vertical Line-->
                   <div class="col-md-2">
-                    <a class="text-warning" id="{{item.item_title}}"
-                        href="{{url_for('productItemJSON', category_name = category.category_name, item_title = item.item_title)}}">Add to Basket
+                    <a class="text-warning" id="{{item.title}}"
+                        href="{{url_for('addItemToCart', category_name = category.category_name, item_title = item_title)}}">Add to Basket
                     </a>
                   </div><!--Add To Basket Button-->
                 </div><!-- Selling-->
@@ -60,13 +63,8 @@
             getJSONData();
           });
           // We use the keyword fucntion to call a js method.
-          // Parse the obj properties for addToBasket
-          function addToBasket({{item.title}}, {{item.description}},\
-                                           {{item.price}});
-
-          // Parse the obj properties for buyNow
-          function buyNow({{item.title}}, {{item.description}},\
-                                   {{item.price}});
+          function addToBasket(id, titile, despcription, price);
+          function buyNow({id, title, description, price);
 
           // Receive JSON data for the product
           function getJSONData() {
@@ -78,13 +76,14 @@
               // Parse in an object with a set of properties.
 
               // the URL for the request is the object
-              url: '/catalog/{{item.category_id.name}}/{{item.title}}/JSON',
-
+              url: '/catalog/{{item.category_id.name}}/\
+                    {{item.title}}?add_item=%s&fields=id,\
+                    title,description,price',
               // whether this is a POST or GET request
               type: 'GET',
 
-              // the type of data we expect back
-              dataType: 'json',
+              // the type of data(dataType) we expect back
+              data: 'json',
 
               // function to call success.
               success: successFn,
@@ -103,10 +102,16 @@
           } // End of getData function
           function successFn(result) {
             console.log("Setting result");
-            // Append the result of the ajax request to elem with cart id.
-            $('#cart').html(append(result));
-            window.location.href = '/catalog/cart';
-          }
+            if function addToBasket(result) {
+              // Append the result of the ajax request to elem with cart id.
+              $('#cart').html(append(result));
+              window.location.href = '/catalog/cart';
+            } else function buyNow(result) {
+              // Append the result of the ajax request to elem with cart id.
+              $('#checkout').html(append(result));
+              window.location.href = '/catalog/checkout';
+            }
+
           function errorFn(xhr, status, strErr) {
             console.log("There was an error!");
           }

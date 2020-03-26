@@ -3,7 +3,7 @@ To make it abit easier for myself, I have added the styles in the order that the
 */
 
 • {
-  box-sizing: border-box;
+  box-sizing: border-box!important;
 }
 
 body {
@@ -59,6 +59,11 @@ header {background-color: #000000;}
 .menu > li {
   display: inline;
   margin-left: 37.5px;
+}
+
+#blank-user {
+  width: 22px;
+  height: 22px;
 }
 
 /* End of style for header */
@@ -117,10 +122,14 @@ a {text-decoration: none;}
 
 .row {
   border: 2px dotted red;
+  width: 100%;
+}
+
+div.no-flex-shrink.col-md-1 {
 }
 
 .col-md-1 {
-  width: 100%;
+  width: 8%;
 }
 
 
@@ -137,6 +146,9 @@ a {text-decoration: none;}
   padding-bottom: 30px;
 }
 
+#row1 {
+  width: 100%;
+}
 
 /*Select all <span> elements with the class="text-muted"  */
 span.text-muted {
@@ -166,8 +178,8 @@ li.flash {
 }
 
 .col-md-5 {
-  padding-left: 60px;
-  margin-left: 30px;
+  padding-left: 15px;
+  margin-left: 15px;
 }
 
 .main.col-md-8 {
@@ -188,7 +200,7 @@ li.flash {
   border-left: 1px solid #e5e5e5;
 }
 
-.padding-top { padding-top: 20px; padding-bottom: 20px;}
+.padding-top { padding-top: 20px;padding-bottom: 20px;}
 
 .padding-bottom { padding-bottom: 30px; }
 
@@ -210,11 +222,13 @@ div.button {
 
 
 
+
 /*Selects all elements with bt that is a descendant of an element with button */
 
 .bt.button {
   margin-left: 30px;
 }
+
 
 /* Cart styling */
 /* > The angle bracket refers to immediate child selector*/
