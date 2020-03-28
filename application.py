@@ -30,10 +30,12 @@ import random, string
 
 
 #IMPORTS FOR THIS STEP
+from oauth2client import client
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import httplib2
 import json
+
 # To convert in-memory Python objects to serialised
 # representation, known as Java Script Object Notation.
 from flask import make_response
@@ -46,6 +48,7 @@ app = Flask(__name__)
 # DECLARE MY CLIENT ID BY REFERENCING THE CLIENT SECRETS FILE
 client_id = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
+
 APPLICATION_NAME = "Ehelt Catalog App"
 
 

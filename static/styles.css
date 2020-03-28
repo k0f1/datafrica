@@ -42,7 +42,8 @@ header {background-color: #000000;}
   flex-direction: column;
   justify-content: center;
 }
-.header-content {
+/*Styling the header and login content */
+.header-content.login-content {
   width: 960px;
   margin-left: auto;
   margin-right: auto;
@@ -149,7 +150,7 @@ div.no-flex-shrink.col-md-1 {
 .main {
   background-color: white;
   max-width: 100%;
-  max-height: auto;
+  max-height: 100%;
   display: flex;
   margin-top: 30px;
   margin-bottom: 70px;
