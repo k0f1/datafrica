@@ -3,7 +3,7 @@ To make it abit easier for myself, I have added the styles in the order that the
 */
 
 • {
-  box-sizing: border-box;
+  box-sizing: border-box!important;
 }
 
 body {
@@ -14,6 +14,7 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
+
 
 header {background-color: #000000;}
 
@@ -60,8 +61,12 @@ header {background-color: #000000;}
   margin-left: 37.5px;
 }
 
-/* End of style for header */
+#blank-user {
+  width: 22px;
+  height: 22px;
+}
 
+/* End of style for header */
 
 h1, h2 {
   font-family: 'Georgia', serif;
@@ -109,14 +114,29 @@ a {text-decoration: none;}
 .container {
   display: grid;
   max-width: 100%;
-  max-height: auto;
+  max-height: 100%;
 }
 
+/* CORRECTION OF SHRINK ENFORECED BY BOOTSRAP */
+/*Selects all elements with both classes as attribute
+Remove any boostrap propperty that is forcing the issue ie .row and col-md */
+.info .product-item {
+  display: block;
+  max-width: 100%;
+}
 
 
 
 .row {
   border: 2px dotted red;
+  width: 100%;
+}
+
+div.no-flex-shrink.col-md-1 {
+}
+
+.col-md-1 {
+  width: 8%;
 }
 
 
@@ -133,11 +153,15 @@ a {text-decoration: none;}
   padding-bottom: 30px;
 }
 
+#row1 {
+  width: 100%;
+}
 
 /*Select all <span> elements with the class="text-muted"  */
 span.text-muted {
   color: #e5e5e5;
 }
+
 
 
 /*Selects all elements with class vl that is a descendant of an element with button */
@@ -161,6 +185,11 @@ li.flash {
   min-width: 100%;
 }
 
+.col-md-5 {
+  padding-left: 15px;
+  margin-left: 15px;
+}
+
 .main.col-md-8 {
   min-width: 100%;
 }
@@ -179,7 +208,7 @@ li.flash {
   border-left: 1px solid #e5e5e5;
 }
 
-.padding-top { padding-top: 20px; }
+.padding-top { padding-top: 20px;padding-bottom: 20px;}
 
 .padding-bottom { padding-bottom: 30px; }
 
@@ -207,6 +236,7 @@ div.button {
 .bt.button {
   margin-left: 30px;
 }
+
 
 /* Cart styling */
 /* > The angle bracket refers to immediate child selector*/

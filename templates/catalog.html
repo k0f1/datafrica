@@ -1,4 +1,7 @@
 {% extends "main.html" %}
+
+{% block title } Ehelt Fitness, Sports and Lifestyles {% endblock %}
+
 {% block content %}
 {% include "header.html" %}
 
@@ -19,42 +22,40 @@
 
 
 <div class="row main d-flex">
-  <div class="col-md-1"></div>
-
-  <div class="col-md-2 category-list text-warning">
-    <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
-  {% for category in categories %}
-        <a href = "{{url_for('showCategory',category_name =  category.name)}}">
-          <div class="text-warning category-list">
-            <p>{{ category.name }}</p>
-          </div>
-        </a>
-  {% endfor %}
-  </div>
-  <div class="vl"></div>
-
-
-  <div class="col-md-8">
-    <a href="{{url_for('newItem')}}"><p class="text-warning">Add Item</p></a>
-    <h2 class=" latest-item-list title text-dark">
-      <strong>Latest Items</strong>
-    </h2>
-  {% for item in latestItems %}
-  <!--The first item, trigeers the inner nested loop which runs to completion, executes subsequent codes and returns back to the top of the outer loop, completing the second iteration and again triggering the nested loop -->
-    {% for category in categories %} <!-- Run this loop-->
-      {% if item.category_id == category.id %}
-        <a href = "{{url_for('showItem', category_name = category.name,
-                item_title = item.title)}}">
-          <div class="col-md-8 text-warning">
-            <p>{{ item.title }}<em class="text-muted">({{ item.category.name }})</em></p>
-          </div>
-        </a>
-      {% endif %}
-    {% endfor %}
-  {% endfor %}
-  </div>
-
-  <div class="col-md-1"></div>
+    <div class="clo-md-1"></div>
+    <div class="col-md-10 padding-top padding-buttom" id="catalog">
+      <div class="col-md-2 category-list text-warning">
+        <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
+      {% for category in categories %}
+            <a href = "{{url_for('showCategory',category_name =  category.name)}}">
+              <div class="text-warning category-list">
+                <p>{{ category.name }}</p>
+              </div>
+            </a>
+      {% endfor %}
+      </div>
+      <div class="vl"></div>
+      <div class="col-md-8">
+        <a href="{{url_for('newItem')}}"><p class="text-warning">Add Item</p></a>
+        <h2 class=" latest-item-list title text-dark">
+          <strong>Latest Items</strong>
+        </h2>
+      {% for item in latestItems %}
+      <!--The first item, trigeers the inner nested loop which runs to completion, executes subsequent codes and returns back to the top of the outer loop, completing the second iteration and again triggering the nested loop -->
+        {% for category in categories %} <!-- Run this loop-->
+          {% if item.category_id == category.id %}
+            <a href = "{{url_for('showItem', category_name = category.name,
+                    item_title = item.title)}}">
+              <div class="col-md-8 text-warning">
+                <p>{{ item.title }}<em class="text-muted">({{ item.category.name }})</em></p>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+      </div>
+    </div>
+    <div></div> <!--Last col-md-1 -->
 </div>
 
 {% endblock %}
