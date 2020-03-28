@@ -75,6 +75,10 @@ h1, h2 {
 
 h1 { font-size: 1.2em;}
 
+#appName {
+  color: white;
+}
+
 h2 {font-size: 1.0em;}
 
 h3 {color: #FFA500;}
