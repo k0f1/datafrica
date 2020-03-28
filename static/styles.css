@@ -116,7 +116,11 @@ a {text-decoration: none;}
   max-width: 100%;
   max-height: auto;
 }
-
+/*Selects all elements with both classes as attribute */
+.info .product-item {
+  display: block;
+  max-width: 100%;
+}
 
 
 
@@ -154,6 +158,7 @@ div.no-flex-shrink.col-md-1 {
 span.text-muted {
   color: #e5e5e5;
 }
+
 
 
 /*Selects all elements with class vl that is a descendant of an element with button */

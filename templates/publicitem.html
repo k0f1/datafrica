@@ -34,7 +34,7 @@
                   <p>{{item.description}}</p>
                   <p class="price">{{item.price}}</p>
                 </div><!--End of Product information-->
-                <div class="row product item" id="sell-product">
+                <div class="row product-item" id="sell-product">
                   <div class="button padding-top, padding-bottom col-md-2">
                     <a class="text-warning" id="{{item.item_title}}" href="{{url_for('addItemToCart', category_name = category.name, item_title = item.title) }}">Buy Now</a>
                   </div><!--Buy Now Button-->
@@ -47,7 +47,7 @@
                 </div><!-- Selling-->
               </div> <!--Product-->
           </div>
-          <div class="col-md-10 row product-item" target="_blank" id="result"></div>
+          <div class="col-md-10 row product-item" id="result"></div>
           <div class="col-md-1"></div>
         </div>
       {% block script %}
