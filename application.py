@@ -580,14 +580,14 @@ def shoppingCart():
 
 
 
-@app.route('/catalog/<category_name>/<item_title>/?add_item')
+@app.route('/catalog/<category_name>/<item_title>/add_item')
 def addItemToCart(category_name, item_title):
     """ Shopping cart functionality using session variables to hold
         cart list.
         Intended behavior: when an item is added to a cart, redirect them to the shopping cart page, while displaying the message "Successfully added to Basket"
     """
     # Retreive the item JSON data.
-    url = '/catalog/<category_name>/<item_title>/?add_item'
+    url = '/catalog/<category_name>/<item_title>/add_item'
     # Build my response here
     # Configure qty to be equal to success status(200) count
     h = httplib2.Http()

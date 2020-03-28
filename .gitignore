@@ -1,0 +1,10 @@
+catalog/**/APIs
+catalog.db
+client_secrets.json
+*.json
+*js
+database_setup.py
+login.html
+publicitem.html
+client_id*
+templates/login.html

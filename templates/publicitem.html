@@ -22,19 +22,19 @@
 
         </div>
 
-        <div class="row main padding-top padding-bottom">
+        <div class="row info main padding-top padding-bottom">
           <div class="col-md-1"></div>
           <div class="col-md-10 padding-top padding-bottom">
 
 
               <div>
                 <h1 class="text-warning">PRODUCT INFORMATION</h1>
-                <div class="Product_Item">
+                <div class="row product-item" id="product">
                   <h2 class="title text-dark text-black"><strong>{{ item.title }}</strong></h2>
                   <p>{{item.description}}</p>
                   <p class="price">{{item.price}}</p>
                 </div><!--End of Product information-->
-                <div id="selling">
+                <div class="row product item" id="sell-product">
                   <div class="button padding-top, padding-bottom col-md-2">
                     <a class="text-warning" id="{{item.item_title}}" href="{{url_for('addItemToCart', category_name = category.name, item_title = item.title) }}">Buy Now</a>
                   </div><!--Buy Now Button-->
@@ -47,6 +47,7 @@
                 </div><!-- Selling-->
               </div> <!--Product-->
           </div>
+          <div class="col-md-10 row product-item" target="_blank" id="result"></div>
           <div class="col-md-1"></div>
         </div>
       {% block script %}
@@ -61,60 +62,64 @@
             $('#{{item.title}}').on('click dblclick', addToBasket);
             $('#{{item.title}}').on('click dblclick', buyNow);
             getJSONData();
-          });
-          // We use the keyword fucntion to call a js method.
-          function addToBasket(id, titile, despcription, price);
-          function buyNow({id, title, description, price);
 
-          // Receive JSON data for the product
-          function getJSONData() {
-            // By using the jQuery object $ and calling the global ajax function
-            // which takes in a few arguements - the first is the object.
-            // we want to get.
-            $.ajax({
-              // Make a request and get a response.
-              // Parse in an object with a set of properties.
 
-              // the URL for the request is the object
-              url: '/catalog/{{item.category_id.name}}/\
-                    {{item.title}}?add_item=%s&fields=id,\
-                    title,description,price',
-              // whether this is a POST or GET request
-              type: 'GET',
 
-              // the type of data(dataType) we expect back
-              data: 'json',
+            // We use the keyword fucntion to call a js method.
+            function addToBasket() {id, titile, despcription, price};
+            function buyNow() {id, titile, despcription, price};
 
-              // function to call success.
-              success: successFn,
+            // Receive JSON data for the product
+            function getJSONData() {
+              // By using the jQuery object $ and calling the global ajax function
+              // which takes in a few arguements - the first is the object.
+              // we want to get.
+              $.ajax({
+                // Make a request and get a response.
+                // Parse in an object with a set of properties.
 
-              // function to call on an error.
-              error: errorFn,
+                // the URL for the request is the object
+                url: '/catalog/<category_name>/<item_title>/add_item',
+                // whether this is a POST or GET request
+                type: 'GET',
 
-              // code to run regardless of success or failure
-              // Inline fumction
-              complete: function(xhr, status) {
-                console.log("The request is complete");
+                // the type of data(dataType) we expect back
+                data: 'json',
+
+                // function to call success.
+                success: successFn,
+
+                // function to call on an error.
+                error: errorFn,
+
+                // code to run regardless of success or failure
+                // Inline fumction
+                complete: function(xhr, status) {
+                  console.log("The request is complete");
+                }
+
+              }) // End of ajax
+
+            } // End of getData function
+            function successFn(result) {
+                console.log("Setting result");
+                if (function addToBasket(result)) {
+                  // Append the result of the ajax request to elem with cart id.
+                  $('#result').html(append(result));
+                  window.location.href = '/catalog/cart';
+                } else if (function buyNow(result)) {
+                  // Append the result of the ajax request to elem with cart id.
+                  $('#result').html(append(result));
+                  window.location.href = '/catalog/checkout';
               }
 
-            }) // End of ajax
-
-          } // End of getData function
-          function successFn(result) {
-            console.log("Setting result");
-            if function addToBasket(result) {
-              // Append the result of the ajax request to elem with cart id.
-              $('#cart').html(append(result));
-              window.location.href = '/catalog/cart';
-            } else function buyNow(result) {
-              // Append the result of the ajax request to elem with cart id.
-              $('#checkout').html(append(result));
-              window.location.href = '/catalog/checkout';
+            function errorFn(xhr, status, strErr) {
+              console.log("There was an error!");
             }
-
-          function errorFn(xhr, status, strErr) {
-            console.log("There was an error!");
           }
+
+
+          });
 
         </script> <!-- This is the end of addToBasket-->
 
