@@ -114,9 +114,12 @@ a {text-decoration: none;}
 .container {
   display: grid;
   max-width: 100%;
-  max-height: auto;
+  max-height: 100%;
 }
-/*Selects all elements with both classes as attribute */
+
+/* CORRECTION OF SHRINK ENFORECED BY BOOTSRAP */
+/*Selects all elements with both classes as attribute
+Remove any boostrap propperty that is forcing the issue ie .row and col-md */
 .info .product-item {
   display: block;
   max-width: 100%;

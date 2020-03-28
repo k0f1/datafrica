@@ -1,14 +1,14 @@
-        <header>
-          <div class="row top-menu">
-            <div class="vertical-centerer flex-container">
-              <div class="flex-container space-between header-content">
-                <div>
-                  <span>
-                    <img class="logo" src="buz_Logo_SVG_200x35.svg" alt="buz Logo">
-                  </span>
-                </div>
-                <div>
-                  <ul class="menu">
+    <header>
+      <div class="row top-menu">
+        <div class="vertical-centerer flex-container">
+          <div class="flex-container space-between header-content">
+            <div>
+              <span>
+                    <img class="logo" src="buz_Logo_SVG_200x35.svg" alt="buz Logo" width="24" height="24" viewBox="0 0 24 24">
+              </span>
+            </div>
+            <div>
+              <ul class="menu">
                     <!--Conditional login and logout links-->
                   {% if 'username' not in login_session %}
                     <li><a type="button" class="btn btn-warning btn-lg" href="{{url_for('showLogin')}}">Login</a></li>
@@ -19,11 +19,11 @@
                       <a href="{{url_for('shoppingCart')}}" class="btn btn-default btn-lg">
                         <span class="glyphicon glyphicon-shopping-cart"></span> Basket
                       </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
           </div>
+        </div>
+      </div>
 
-        </header>
+    </header>

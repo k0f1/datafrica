@@ -27,15 +27,15 @@
           <div class="col-md-10 padding-top padding-bottom">
 
 
-              <div>
+              <div><!--Product -->
                 <h1 class="text-warning">PRODUCT INFORMATION</h1>
-                <div class="row product-item" id="product">
+                <div class="product-item" id="product">
                   <h2 class="title text-dark text-black"><strong>{{ item.title }}</strong></h2>
                   <p>{{item.description}}</p>
                   <p class="price">{{item.price}}</p>
                 </div><!--End of Product information-->
-                <div class="row product-item" id="sell-product">
-                  <div class="button padding-top, padding-bottom col-md-2">
+                <div class="product-item" id="sell-product">
+                  <div class=" col-md-2 button padding-top, padding-bottom col-md-2">
                     <a class="text-warning" id="{{item.item_title}}" href="{{url_for('addItemToCart', category_name = category.name, item_title = item.title) }}">Buy Now</a>
                   </div><!--Buy Now Button-->
                   <div class="vl"></div><!-- Vertical Line-->
@@ -47,7 +47,7 @@
                 </div><!-- Selling-->
               </div> <!--Product-->
           </div>
-          <div class="col-md-10 row product-item" id="result"></div>
+          <div class="product-item" id="result"></div>
           <div class="col-md-1"></div>
         </div>
       {% block script %}
