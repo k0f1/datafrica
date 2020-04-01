@@ -29,15 +29,12 @@ import random, string
 
 
 
-#IMPORTS FOR THIS STEP
+#IMPORTS FOR THIS STEP (oauth server side)
 from oauth2client import client
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import httplib2
 import json
-
-# To convert in-memory Python objects to serialised
-# representation, known as Java Script Object Notation.
 from flask import make_response
 import requests
 
@@ -67,8 +64,6 @@ session = DBSession()
 
 
 
-
-
 # Create ant-forgery state token
 @app.route('/login')
 def showLogin():
@@ -83,65 +78,6 @@ def showLogin():
     # return "The current session state is %s" %login_session['state']
     # to see what are current state look like. STATE is sent back with oauth.
     return render_template('login.html', STATE=state)
-
-
-
-
-
-# LOCAL PERMISSION SYSTEM
-# User Helper Functions
-
-# createUser takes in login_session as input
-def createUser(login_session):
-
-    """create new user in our database, extracting all
-    the fields neccessary to populate it from information
-    gathered from the login_session"""
-
-    newUser = User(name=login_session['username'],
-        email=login_session['email'], picture=login_session['picture'])
-    session.add(newUser)
-    session.commit()
-    user = session.query(User).filter_by(email=login_session['email']).one()
-    # Then returns a user_id of the new user created
-    return user.id
-
-
-
-def getUserInfo(user_id):
-
-    """If a user ID is passed into this method,
-    it simply returns the user object associated with this ID number."""
-
-    user = session.query(User).filter_by(id=user_id).one()
-    # Returns user object associated with this number.
-    return user
-
-
-
-def getUserID(email):
-
-    """This method, takes an email address and return and ID,
-    if that email address belongs to  user stored in our database"""
-
-    try:
-        user = session.query(User).filter_by(email=email).one()
-        # Returns an ID number if the email address belongs to
-        # a user stored in our database.
-        return user.id
-    except:
-        # If not, it returns None.
-        return None
-
-# Only authentictaed users can access the dashboard
-@app.route('/catalog/<username>')
-def login(username):
-    return render_template('account.html')
-
-
-
-# END OF LOCAL PERMISSION
-
 
 
 
@@ -166,15 +102,16 @@ def gconnect():
         oauth_flow = flow_from_clientsecrets('client_secrets.json',
             scope='')
         oauth_flow.redirect_uri = 'postmessage'
+        # Access all credentials including access code.
         credentials = oauth_flow.step2_exchange(code)
+        # retreive only the access token in json format.
+        access_token = credentials.access_token.to_json()
     # If an error happen along the way
     except FlowExchangeError:
         response = make_response(json.dumps('Failed to upgrade the authorization code.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    # Check that the access token is valid.
-    access_token = credentials.access_token
     #Append this token to the following url
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
           % access_token)
@@ -183,9 +120,6 @@ def gconnect():
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
 
-    # This code: If there was an error in the access token info, abort
-    # if x is not None:
-        # # Do something about x
     if result.get('error') is not None:
         response = make_response(json.dumps(result.get('error')), 500)
         response.headers['Content-Type'] = 'application/json'
@@ -231,6 +165,14 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
+
+    # see if user exists, if it doesn't make a new one.
+    # Get user id on the email address stored in our log-in session
+    # stored in the variable user_id.
+    user_id = getUerID(login_session['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
 
 
 
@@ -364,6 +306,64 @@ def fbdisconnect():
 
 #####
 
+
+# LOCAL PERMISSION SYSTEM
+# User Helper Functions
+# Local permission system, leverages the information
+# stored in the log in session object, and uses the server side logic
+# in the datatbase to control the user experience based on
+# provided credential. To implement LPS, our database has
+# to start storing information in a more user specifci manner.
+# We need a table of users, so we can identify what data belongs to whom.
+# This step include work on lotsofitems as well.
+
+
+# createUser takes in login_session as input
+def createUser(login_session):
+
+    """create new user in our database, extracting all
+    the fields neccessary to populate it from information
+    gathered from the login_session"""
+
+    newUser = User(name=login_session['username'],
+        email=login_session['email'], picture=login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    # Then returns a user_id of the new user created
+    return user.id
+
+
+
+def getUserInfo(user_id):
+
+    """If a user ID is passed into this method,
+    it simply returns the user object associated with this ID number."""
+
+    user = session.query(User).filter_by(id=user_id).one()
+    # Returns user object associated with this number.
+    return user
+
+
+
+def getUserID(email):
+
+    """This method, takes an email address and return and ID,
+    if that email address belongs to  user stored in our database"""
+
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        # Returns an ID number if the email address belongs to
+        # a user stored in our database.
+        return user.id
+    except:
+        # If not, it returns None.
+        return None
+
+# END OF LOCAL PERMISSION
+
+
+
 #JSON APIs to view Catalog Information
 @app.route('/catalog/json')
 def catalogJSON():
@@ -394,16 +394,14 @@ def showCatalog():
     """Show the index page displaying the categories and latest items 20 items added to the database."""
 
     categories = session.query(Category).all()
-    # result[::-1] return the slice of every elelement of result in reverse
-    latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
-    return render_template('publiccatalog.html',
+    if 'username' not in login_session:
+        # result[::-1] return the slice of every elelement of result in reverse
+        latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
+        # If there is a username value in the login_session, we would
+        # render one template or the other.
+        return render_template('publiccatalog.html',
                                 categories = categories,
                                 latestItems = latestItems)
-    # ADD LOGIN PERMISSION
-    # If a user name is not detected for a given request.
-    # render publiccatalog.html, else render catalog.html.
-    if 'username' not in login_session:
-        return redirect(url_for('showLogin'))
     else:
         return render_template('catalog.html',
                                 categories = categories,
@@ -418,18 +416,28 @@ def showCategory(category_name):
     # Add SQLAlchemy statements
     """Takes in a specified category_name and returns the the items associated with it. Renders a web page showing all the categories on one side and the items on the other side of the page.
     """
-    category = session.query(Category).\
+    # Username variable not detected
+    if 'username' not in login_session:
+        # The filter_by function always returns a collection of objects
+        # .one method ensures only one category is returned
+        category = session.query(Category).\
                 filter_by(name = category_name).one()
-    categories = session.query(Category).all()
-    items = session.query(Item).filter_by(category = category).\
-                order_by(Item.title).all()
+        categories = session.query(Category).all()
+        items = session.query(Item).filter_by(name = category_name).\
+                            order_by(Item.title).all()
+        # # return count of item "id" grouped by category_id
+        categoryItems = session.query(func.count(
+                                Item.id)).filter_by(
+                                category_id = category.id).one()
 
-    # # return count of item "id" grouped
-    # by category "id"
-    categoryItems = session.query(func.count(
-                                Item.id)).group_by(Item.category_id)
-
-    return render_template('category.html',
+        # Decide which page to show, public or private
+        return render_template('publiccategory',
+                                categories = categories,
+                                category = category,
+                                items = items,
+                                categoryItems = categoryItems)
+    else:
+        return render_template('category.html',
                           categories = categories,
                           category = category,
                           items = items,
@@ -444,19 +452,17 @@ def showItem(category_name, item_title):
     # Add SQLAlchemy statements
     """Renders product information web page of an item.
     """
-    category = session.query(Category).\
+    # Username variable not detected
+    if 'username' not in login_session:
+        category = session.query(Category).\
                 filter_by(name = category_name).one()
-    item = session.query(Item).filter_by(title = item_title).one()
-    return render_template('publicitem.html',
+        item = session.query(Item).filter_by(title = item_title).one()
+
+        # Decide which page should be visible to the public
+        # And which one should be private
+        return render_template('publicitem.html',
                            category = category,
                            item = item)
-
-    # ADD LOGIN PERMISSION
-    # If a user name is not detected for a given request.
-    # Lets render publicitem.html
-    if 'username' not in login_session:
-        return redirect(url_for('showLogin'))
-
     else:
         return render_template('item.html',
                            category = category,
@@ -477,16 +483,23 @@ def newItem():
     # Protect app modification from non-users
     # If a username is not detected for a given request.
     # Lets redirect to login page.
+
+
+    # Verify that a user is logged in by
+    # checking if the username has a variable filled in
     if 'username' not in login_session:
         return redirect('/login')
      # Add SQLAlchemy statements
     if request.method == 'POST':
-        newItem = Item(title = request.form['title'], description = request.form['description'], price = request.form['price'] , category_id = category_id)
+        newItem = Item(title = request.form['title'], description = request.form['description'], price = request.form['price'] , category_id = category_id, user_id=login_session['user_id'])
         session.add(newItem)
+        flash('New Item %s successfully Created' % newItem)
         seesion.commit()
+        # Decide which page should be visible to the public
+        # And which one should be private
         return redirect(url_for('showCatalog'))
     else:
-        return render_template('newitem.html')
+        return render_template('publiccatalog.html')
 
 
 

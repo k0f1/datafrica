@@ -5,7 +5,8 @@ import os
 import sys
 
 
-from sqlalchemy import Column, ForeignKey, Integer, String, UniqueConstraint
+from sqlalchemy import UniqueConstraint
+from sqlalchemy import Column, ForeignKey, Integer, String, Index
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -16,6 +17,7 @@ Base = declarative_base()
 
 class User(Base):
     """This class provides a means to store users details"""
+
     __tablename__ = 'user'
 
     # Mapping: connects rows of users table to this class
@@ -35,6 +37,10 @@ class Category(Base):
     # Mapping: connects rows of the category table to this class
     id = Column(Integer, primary_key=True)
     name = Column(String(80), nullable=False, index=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
+
+
 
     @property
     def serialize(self):
@@ -53,12 +59,14 @@ class Item(Base):
 
     # Mapping
     id = Column(Integer, primary_key=True)
-    title = Column(String(80), nullable=False, unique=True)
+    title = Column(String(100), nullable=False, unique=True)
     # picture = Column(String(250))
     description = Column(String(250))
     price = Column(String(8))
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
 
     @property
@@ -78,6 +86,9 @@ class Item(Base):
 ####### Insert at end of file #######
 
 # Make an instance - engine from create_engine. Point it to the database.
-# engine = create_engine ('sqlite:///catalog.db')
-engine = create_engine ('sqlite:///catalogwithusers.db')
+engine = create_engine ('sqlite:///catalog.db')
+
+
+
+
 Base.metadata.create_all(engine)
