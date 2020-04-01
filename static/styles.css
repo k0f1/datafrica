@@ -18,6 +18,84 @@ body {
 
 header {background-color: #000000;}
 
+/* Styling of login page */
+
+#login .social-login  {
+  background-color: #e5e5e5;
+  display: grid;
+}
+
+#loginHeader {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
+
+header#loginHeader {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/*
+Select all body elements with id login and select all section elements
+with id login-sessionmaker
+ */
+body#login section#login-session {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0px;
+  margin-bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  padding: 32px 40px;
+  background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+
+}
+
+.grid-cell ul {
+  font-size: 14px;
+  display: inline-flex;
+
+}
+
+
+
+/* styling the social login cells  */
+
+
+.grid-cell.customBtn {
+  display: inline-flex;
+  border-width: 0px;
+  display: inline-flex;
+  max-width: 100%;
+  outline: currentcolor none medium !important;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 3px;
+}
+
+
+/*Style the sign buttons */
+button.grid-cell {
+  min-width: 100%;
+  white-space: nowrap;
+}
+
+
+
+input.grid-cell {
+  min-width: 100%;
+  white-space: nowrap;
+
+}
+
+
 /* Styling the header */
 .top-menu {
   font-weight: 400;
