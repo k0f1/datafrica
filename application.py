@@ -7,6 +7,10 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 from sqlalchemy import create_engine, asc, desc, literal, func
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item, User
+# maintain the same connection per thread
+from sqlalchemy.pool import SingletonThreadPool
+
+
 
 
 
@@ -50,8 +54,11 @@ APPLICATION_NAME = "Ehelt Catalog App"
 
 
 
+
+
 # Make an instance of create engine
-engine = create_engine ('sqlite:///catalogwithusers.db')
+engine = create_engine ('sqlite:///catalogwithusers.db',\
+                            poolclass=SingletonThreadPool)
 
 
 # Bind the engine to the metadata of the Base class
@@ -392,13 +399,12 @@ def productItemJSON(category_name, item_title):
 def showCatalog():
     # Add SQLAlchemy statements
     """Show the index page displaying the categories and latest items 20 items added to the database."""
-
     categories = session.query(Category).all()
+    # result[::-1] return the slice of every elelement of result in reverse
+    latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
+    # If there is a username value in the login_session, we would
+    # render one template or the other.
     if 'username' not in login_session:
-        # result[::-1] return the slice of every elelement of result in reverse
-        latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
-        # If there is a username value in the login_session, we would
-        # render one template or the other.
         return render_template('publiccatalog.html',
                                 categories = categories,
                                 latestItems = latestItems)
