@@ -7,8 +7,7 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 from sqlalchemy import create_engine, asc, desc, literal, func
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item, User
-# maintain the same connection per thread
-from sqlalchemy.pool import SingletonThreadPool
+
 
 
 
@@ -57,8 +56,7 @@ APPLICATION_NAME = "Ehelt Catalog App"
 
 
 # Make an instance of create engine
-engine = create_engine ('sqlite:///catalogwithusers.db',\
-                            poolclass=SingletonThreadPool)
+engine = create_engine ('sqlite:///catalog.db')
 
 
 # Bind the engine to the metadata of the Base class
@@ -422,20 +420,21 @@ def showCategory(category_name):
     # Add SQLAlchemy statements
     """Takes in a specified category_name and returns the the items associated with it. Renders a web page showing all the categories on one side and the items on the other side of the page.
     """
-    # Username variable not detected
-    if 'username' not in login_session:
-        # The filter_by function always returns a collection of objects
-        # .one method ensures only one category is returned
-        category = session.query(Category).\
-                filter_by(name = category_name).one()
-        categories = session.query(Category).all()
-        items = session.query(Item).filter_by(name = category_name).\
-                            order_by(Item.title).all()
-        # # return count of item "id" grouped by category_id
-        categoryItems = session.query(func.count(
-                                Item.id)).filter_by(
-                                category_id = category.id).one()
+    # The filter_by function always returns a collection of objects
+    # .one method ensures only one category is returned
+    category = session.query(Category).\
+            filter_by(name = category_name).one()
+    categories = session.query(Category).all()
+    items = session.query(Item).filter_by(name = category_name).\
+                        order_by(Item.title).all()
+    # # return count of item "id" grouped by category_id
+    categoryItems = session.query(func.count(
+                            Item.id)).filter_by(
+                            category_id = category.id).one()
 
+    # # If there is a username value in the login_session, we would
+    # render one template or the other.
+    if 'username' not in login_session:
         # Decide which page to show, public or private
         return render_template('publiccategory',
                                 categories = categories,
@@ -458,12 +457,13 @@ def showItem(category_name, item_title):
     # Add SQLAlchemy statements
     """Renders product information web page of an item.
     """
-    # Username variable not detected
-    if 'username' not in login_session:
-        category = session.query(Category).\
-                filter_by(name = category_name).one()
-        item = session.query(Item).filter_by(title = item_title).one()
+    category = session.query(Category).\
+            filter_by(name = category_name).one()
+    item = session.query(Item).filter_by(title = item_title).one()
 
+    # # # If there is a username value in the login_session, we would
+    # render one template or the other.
+    if 'username' not in login_session:
         # Decide which page should be visible to the public
         # And which one should be private
         return render_template('publicitem.html',
