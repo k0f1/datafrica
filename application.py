@@ -76,6 +76,7 @@ def showLogin():
     # localhost:8000/login.
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)\
                 for x in range(32))
+                # range(x) stops at x - 1 in this case 31.
                 # state is a random mixed 32 character long string.
                 # Store state from our login_session(a dict)
                 # in a variable state.
@@ -686,10 +687,10 @@ def disconnect():
         return redirect(url_for('showCatalog'))
 
 
-@app.route('/clearSession')
-def clearSession():
-    login_session.clear()
-    return "session cleared"
+# @app.route('/clearSession')
+# def clearSession():
+#    login_session.clear()
+#    return "session cleared"
 
 
 
