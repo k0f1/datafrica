@@ -88,7 +88,7 @@ def showLogin():
 
 
 # HANDLER OF CODE SENT BACK FROM CALLBACK METHOD
-@app.route('/gconnect', methods=['POST'])
+@app.route('/gconnect', methods=[ 'GET', 'POST'])
 def gconnect():
     # Using the request.args.get method, my code examines the state
     # token passed in and compares it to the state of the login session.
@@ -217,7 +217,7 @@ def gdisconnect():
 
 
 # FACEBOOK SIGN IN
-@app.route('/fbconnect', methods=['POST'])
+@app.route('/fbconnect', methods=['GET', 'POST'])
 def fbconnect():
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
@@ -684,6 +684,12 @@ def disconnect():
     else:
         flash("You were not logged in")
         return redirect(url_for('showCatalog'))
+
+
+@app.route('/clearSession')
+def clearSession():
+    login_session.clear()
+    return "session cleared"
 
 
 

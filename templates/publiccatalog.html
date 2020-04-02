@@ -1,5 +1,5 @@
 {% extends "main.html" %}
-{% block title %} Items in a category {% endblock %}
+{% block title %} Datafrica home page {% endblock %}
 {% block content %}
 {% include "header.html" %}
 
@@ -25,7 +25,7 @@
   <div class="col-md-2 category-list text-warning">
     <h2 class="title text-dark text-black"><strong>Categories</strong></h2>
   {% for category in categories %}
-        <a href = "{{url_for('showCategory',category_name =  category.name)}}">
+        <a href = "{{url_for('showCategory', category_name =  category.name)}}">
           <div class="text-warning category-list">
             <p>{{ category.name }}</p>
           </div>
