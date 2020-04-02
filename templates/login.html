@@ -2,7 +2,7 @@
 <html lang="en"> <!-- Model after ATLASSIAN-->
   <head>
     <meta charset="utf-8">
-  
+
     <!--My custome css -->
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 
@@ -76,7 +76,7 @@
                 <button class="google grid-cell customBtn" type="button">
                   <!-- Add where you want your sign-in button to render -->
                   <!-- Use an image that follows the branding guidelines in a real app -->
-                    <a href="{{url_for('gconnect')}}">
+                    <a href="{{url_for('showLogin')}}">
                       <img src ="{{url_for('static', filename='Google_G_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
                       <span>Google</span>
                     </a>
@@ -86,7 +86,7 @@
               <div class="grid-cell">
                 <button class="facebook grid-cell customBtn"><!--FACEBOOK-->
                   <fb:button>
-                  <a href="{{url_for('fbconnect')}}">
+                  <a href="{{url_for('showLogin')}}">
                     <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
                     <span>Facebook</span>
                   </a>
