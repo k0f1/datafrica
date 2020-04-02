@@ -68,7 +68,7 @@ body#login section#login-session {
 
 /* styling the social login cells  */
 
-
+/*Select all elements with name*/
 .grid-cell.customBtn {
   display: inline-flex;
   border-width: 0px;
@@ -146,6 +146,42 @@ input.grid-cell {
 }
 
 /* End of style for header */
+
+/*This is the style of the log in log out button.
+
+* :target CSS pseudo-class selects an element with an ID matching the current URL's fragment
+
+
+For example, the following URL has a fragment (denoted by the # sign) that points to an element called section2:
+
+http://www.example.com/index.html#section2
+
+The following element would be selected by a :target selector when the current URL is equal to the above:
+
+<section id="section2">Example</section>
+
+Syntax
+:target
+
+*/
+
+/*
+
+
+#news:target 	Selects the current active #news element (clicked on a URL containing that anchor name)
+
+
+#access:target {
+
+}
+
+#access-closed:target {
+
+}
+
+*/
+
+
 
 h1, h2 {
   font-family: 'Georgia', serif;
