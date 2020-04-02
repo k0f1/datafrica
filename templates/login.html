@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Model after ATLASSIAN-->
+  <head>
+    <meta charset="utf-8">
+  
+    <!--My custome css -->
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+
+    <title>Datafrica log in page</title>
+
+    <script type='text/javascript'
+			src="{{ url_for('static', filename='store.js') }}" async defer></script>
+
+
+
+    <!--This code goes out to google to authenticate our user-->
+    <script>
+    function start() {
+      gapi.load('auth2', function() {
+        auth2 = gapi.auth2.init({
+          client_id: '634413285518-2lrorluhdcp6ab2onm8n844l71c6b4sq.apps.googleusercontent.com',
+          // Scopes to request in addition to 'profile' and 'email'
+          //scope: 'additional_scope'
+          scope: 'openid email',
+          redirecturi: "postmessage",
+          accesstype: "offline",
+          callback: "signInCallback"
+          //data-approvalprompt: 'force' remove in production.
+        });
+      });
+    }
+  </script>
+  </head>
+
+
+  <body id="login">
+    <header id="loginHeader" class="social-login">
+      <div><span class="brand">DATAFRICA</span></div>
+    </header>
+    <section class="vertical-center fd-column flex-container form-item social-login" id="login-session">
+      <div class="size-of-col">
+        <div class="vertical-center flex-container space-between login-content grid">
+          <div class="grid vertical-center fd-column"> <!--GOOGLE -->
+            <div class="grid-cell">
+              <h3>Login in to your account</h3>
+            </div>
+
+
+            <div class="grid vertical-center fd-column">
+              <form>
+                <div class="grid-cell">
+                  <div class="grid fd-column">
+                    <label>Email</label>
+                    <div><input class="grid-cell"placeholder="Email"></div>
+                    <small id="emailHelp">We'll never share your email with anyone else!</small>
+                  </div>
+                </div>
+                <div class="grid-cell">
+                  <div class="grid fd-column">
+                    <label>Password</label>
+                    <div><input class="grid-cell" placeholder="Password"></div>
+                  </div>
+                </div>
+                <div class="grid-cell btn btn-dark" type="submit">
+                  <button class="btn btn-link grid-cell customBtn">Sign in</button>
+                </div>
+              </form>
+            </div>
+            <!--End of personal Email and password Log in-->
+            <div><span>Or</span></div>
+            <div class="grid-cell">
+              <p>Sign in with</p>
+            </div>
+            <div class="grid vertical-center fd-column">
+              <div class="grid-cell">
+                <button class="google grid-cell customBtn" type="button">
+                  <!-- Add where you want your sign-in button to render -->
+                  <!-- Use an image that follows the branding guidelines in a real app -->
+                    <a href="{{url_for('gconnect')}}">
+                      <img src ="{{url_for('static', filename='Google_G_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+                      <span>Google</span>
+                    </a>
+                </button><!--End of google cell -->
+              </div>
+
+              <div class="grid-cell">
+                <button class="facebook grid-cell customBtn"><!--FACEBOOK-->
+                  <fb:button>
+                  <a href="{{url_for('fbconnect')}}">
+                    <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+                    <span>Facebook</span>
+                  </a>
+                  </fb:button>
+                </button> <!--Endof facebook grid-->
+              </div>
+            </div> <!--End of grid for federated sign in -->
+            <div class="grid-cell">
+              <ul class="space-between">
+                <li>Can't log in?</li>
+                <li> &#42;  Sign up for an account</li>
+              </ul>
+            </div>
+        </div> <!--Flex contain ends -->
+        <div id="result"></div><!--Empty div to populate the response from the server on succssful login  -->
+      </div><!--End of vertical flex container with column flex direction  -->
+    </section>
+
+
+
+            <!--Google sign script -->
+            <script>
+                // handles the response google send back to the client.
+                $('#signinButton').click(function () {
+                  function signInCallback(authResult) {
+                    if (authResult['code']) {
+                      $('#signinButton').attr('style', 'display:none');
+                      $.ajax({
+                        type: 'POST',
+                        url: '/gconnect?state={{STATE}}',
+                        processData: false,
+                        data: authResult['code'],
+                        contentType: 'application/octet-stream; charset=utf8',
+                        // prevents jquery processing data into a string.
+                        processData: false,
+                        // We specify the data we sending to our server.
+                        // The one-time use code.
+                        data: authResult['code'],
+                        success: function(result) {
+                          // handle or verify the server response.
+                          if (result) {
+                            // if the server has any info to pass to the
+                            //client, we can present it with the result
+                            //variable
+                            $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
+                            setTimeout(function () {
+                              window.location.href = "/http:localhost:8000/catalog/new";
+                            }, 4000);// Time out
+                        }// Result
+                      }// End of successfn.
+                    }); //Ajax method ends here.
+                  } else if
+                      //There was an error.
+                      (authResult['error']) {
+                        console.log('There was an error:
+                           ' + authResult['error']);
+                  } else {
+
+                        $('#result').html('Failed to make a server-side call. Check your configuration and console');
+
+                      }//End of this else
+
+                      });
+                    }
+                  }
+                auth2.grantOfflineAccess().then(signInCallback);
+                })
+            </script>
+            <!--The beginging of facebook script  -->
+            <script>
+              window.fbAsyncInit = function() {
+                FB.init({
+                  appId      : 'kofuafor@gmail.com/UDBEVg3PDL',
+                  cookie     : true,
+                  xfbml      : true,
+                  version    : 'v6.0'
+                });
+
+                FB.AppEvents.logPageView();
+
+              };
+
+              (function(d, s, id){
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) {return;}
+                  js = d.createElement(s); js.id = id;
+                  js.src = "https://connect.facebook.net/en_US/sdk.js";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+            <script>
+                  FB.getLoginStatus(function(response) {
+                  statusChangeCallback(response);
+                });
+                function checkLoginState() {
+                  FB.getLoginStatus(function(response) {
+                      statusChangeCallback(response);
+                    });
+                  }
+            </script><!--The end of facebook script -->
+
+  </body>
+</html>
