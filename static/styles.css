@@ -65,30 +65,6 @@ body#login section#login-session {
 }
 
 
-
-/* styling the social login cells  */
-
-/*Select all elements with name*/
-.grid-cell.customBtn {
-  display: inline-flex;
-  border-width: 0px;
-  display: inline-flex;
-  max-width: 100%;
-  outline: currentcolor none medium !important;
-  text-align: center;
-  white-space: nowrap;
-  border-radius: 3px;
-}
-
-
-/*Style the sign buttons */
-button.grid-cell {
-  min-width: 100%;
-  white-space: nowrap;
-}
-
-
-
 input.grid-cell {
   min-width: 100%;
   white-space: nowrap;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- Model after ATLASSIAN-->
+<html lang="en">
   <head>
     <meta charset="utf-8">
 
@@ -8,28 +8,11 @@
 
     <title>Datafrica log in page</title>
 
-    <script type='text/javascript'
-			src="{{ url_for('static', filename='store.js') }}" async defer></script>
-
+  <script type="text/javascript" src="{{ url_for('static', filename='store.js') }}" async defer></script>
 
 
     <!--This code goes out to google to authenticate our user-->
-    <script>
-    function start() {
-      gapi.load('auth2', function() {
-        auth2 = gapi.auth2.init({
-          client_id: '#',
-          // Scopes to request in addition to 'profile' and 'email'
-          //scope: 'additional_scope'
-          scope: 'openid email',
-          redirecturi: "postmessage",
-          accesstype: "offline",
-          callback: "signInCallback"
-          //data-approvalprompt: 'force' remove in production.
-        });
-      });
-    }
-  </script>
+
   </head>
 
 
@@ -72,42 +55,57 @@
               <p>Sign in with</p>
             </div>
             <div class="grid vertical-center fd-column">
+
               <div class="grid-cell">
-                <button class="google grid-cell customBtn" type="button">
-                  <!-- Add where you want your sign-in button to render -->
-                  <!-- Use an image that follows the branding guidelines in a real app -->
-                    <a href="{{url_for('showLogin')}}">
-                      <img src ="{{url_for('static', filename='Google_G_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
-                      <span>Google</span>
-                    </a>
+                <button class="google grid-cell customBtn" id="my-signin2">
+                  <img src ="{{url_for('static', filename='Google_G_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+                  <span>Google</span>
                 </button><!--End of google cell -->
               </div>
 
               <div class="grid-cell">
-                <button class="facebook grid-cell customBtn"><!--FACEBOOK-->
-                  <fb:button>
-                  <a href="{{url_for('showLogin')}}">
-                    <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
-                    <span>Facebook</span>
-                  </a>
-                  </fb:button>
-                </button> <!--Endof facebook grid-->
+                <button class="facebook gird-cell customBtn">
+                  <fb:button scope="public_profile, email" onlogin="checkLoginState();">
+                      <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+                      <span>Facebook</span>
+                  </fb:button><!--Endof facebook grid-->
+                </button>
               </div>
+
             </div> <!--End of grid for federated sign in -->
+
             <div class="grid-cell">
               <ul class="space-between">
                 <li>Can't log in?</li>
                 <li> &#42;  Sign up for an account</li>
               </ul>
             </div>
+
         </div> <!--Flex contain ends -->
+
+
         <div id="result"></div><!--Empty div to populate the response from the server on succssful login  -->
       </div><!--End of vertical flex container with column flex direction  -->
     </section>
+              <!-- Authentication code-->
+              <script>
+              function start() {
+                gapi.load('auth2', function() {
+                  auth2 = gapi.auth2.init({
+                    client_id: '634413285518-2lrorluhdcp6ab2onm8n844l71c6b4sq.apps.googleusercontent.com',
+                    // Scopes to request in addition to 'profile' and 'email'
+                    //scope: 'additional_scope'
+                    scope: 'openid email',
+                    redirecturi: "postmessage",
+                    accesstype: "offline",
+                    callback: "signInCallback",
+                    data-approvalprompt: 'force'
+                  });
+                });
+              }
+            </script>
 
 
-
-            <!--Google sign script -->
             <script>
                 // handles the response google send back to the client.
                 $('#signinButton').click(function () {
@@ -154,7 +152,7 @@
             <script>
               window.fbAsyncInit = function() {
                 FB.init({
-                  appId      : '#',
+                  appId      : 'koffuafor@gmail.com/UDBEVg3PDL',
                   cookie     : true,
                   xfbml      : true,
                   version    : 'v6.0'
