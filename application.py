@@ -74,9 +74,8 @@ def showLogin():
     # This method creates a unique session token.This token is sent along side
     # the one-time code sent by google via GET request sent to
     # localhost:8000/login.
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits)\
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                 for x in range(32))
-                # range(x) stops at x - 1 in this case 31.
                 # state is a random mixed 32 character long string.
                 # Store state from our login_session(a dict)
                 # in a variable state.
@@ -89,7 +88,7 @@ def showLogin():
 
 
 # HANDLER OF CODE SENT BACK FROM CALLBACK METHOD
-@app.route('/gconnect', methods=[ 'GET', 'POST'])
+@app.route('/gconnect', methods=['GET', 'POST'])
 def gconnect():
     # Using the request.args.get method, my code examines the state
     # token passed in and compares it to the state of the login session.
@@ -687,10 +686,6 @@ def disconnect():
         return redirect(url_for('showCatalog'))
 
 
-# @app.route('/clearSession')
-# def clearSession():
-#    login_session.clear()
-#    return "session cleared"
 
 
 
