@@ -425,8 +425,7 @@ def showCategory(category_name):
     category = session.query(Category).\
             filter_by(name = category_name).one()
     categories = session.query(Category).all()
-    items = session.query(Item).filter_by(name = category_name).\
-                        order_by(Item.title).all()
+    items = session.query(Item).filter_by(category_id = category.id).all()
     # # return count of item "id" grouped by category_id
     categoryItems = session.query(func.count(
                             Item.id)).filter_by(
@@ -436,7 +435,7 @@ def showCategory(category_name):
     # render one template or the other.
     if 'username' not in login_session:
         # Decide which page to show, public or private
-        return render_template('publiccategory',
+        return render_template('publiccategory.html',
                                 categories = categories,
                                 category = category,
                                 items = items,
