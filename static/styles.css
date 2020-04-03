@@ -96,7 +96,7 @@ input.grid-cell {
   flex-direction: column;
   justify-content: center;
 }
-/*Styling the header and login content */
+/*Styling the header and login button */
 .header-content.login-content {
   width: 960px;
   margin-left: auto;
@@ -116,47 +116,47 @@ input.grid-cell {
   margin-left: 37.5px;
 }
 
-#blank-user {
-  width: 22px;
-  height: 22px;
-}
 
 /* End of style for header */
 
-/*This is the style of the log in log out button.
+/*This is the style of the log in button from google.*/
 
-* :target CSS pseudo-class selects an element with an ID matching the current URL's fragment
-
-
-For example, the following URL has a fragment (denoted by the # sign) that points to an element called section2:
-
-http://www.example.com/index.html#section2
-
-The following element would be selected by a :target selector when the current URL is equal to the above:
-
-<section id="section2">Example</section>
-
-Syntax
-:target
-
-*/
-
-/*
-
-
-#news:target 	Selects the current active #news element (clicked on a URL containing that anchor name)
-
-
-#access:target {
-
+#customBtn {
+  display: inline-block;
+  background: white;
+  color: #444;
+  width: 190px;
+  border-radius: 5px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  white-space: nowrap;
+}
+#customBtn:hover {
+  cursor: pointer;
+}
+span.label {
+  font-family: serif;
+  font-weight: normal;
+}
+span.icon {
+  background: url('/identity/sign-in/g-normal.svg') transparent 5px 50% no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+}
+span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 42px;
+  padding-right: 42px;
+  font-size: 14px;
+  font-weight: bold;
+  /* Use the Roboto font that is loaded in the <head> */
+  font-family: 'Roboto', sans-serif;
 }
 
-#access-closed:target {
-
-}
-
-*/
-
+/*End of google login styling */
 
 
 h1, h2 {

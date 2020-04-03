@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--For google custom buttons -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 
     <!--My custome css -->
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
@@ -44,33 +46,42 @@
                     <div><input class="grid-cell" placeholder="Password"></div>
                   </div>
                 </div>
-                <div class="grid-cell btn btn-dark" type="submit">
-                  <button class="btn btn-link grid-cell customBtn">Sign in</button>
+                <div class="grid-cell btn btn-dark">
+                  <button class="btn btn-link grid-cell" id="customBtn">Sign in</button>
                 </div>
               </form>
             </div>
             <!--End of personal Email and password Log in-->
             <div><span>Or</span></div>
-            <div class="grid-cell">
-              <p>Sign in with</p>
+            <div>
+              <span>Sign up with:</span>
             </div>
             <div class="grid vertical-center fd-column">
-
-              <div class="grid-cell">
-                <button class="google grid-cell customBtn" id="my-signin2">
-                  <img src ="{{url_for('static', filename='Google_G_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
-                  <span>Google</span>
-                </button><!--End of google cell -->
-              </div>
-
-              <div class="grid-cell">
-                <button class="facebook gird-cell customBtn">
-                  <fb:button scope="public_profile, email" onlogin="checkLoginState();">
-                      <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
-                      <span>Facebook</span>
-                  </fb:button><!--Endof facebook grid-->
+              <!-- For google -->
+              <div class="grid-cell google" id=gSignInWrapper>
+                <!--In the callback, you would hide the gSignInWrapper element on a successful sign in-->
+                <button class="google customGPlusSignIn" id="customBtn">
+                  <span class="icon">
+                      <img src ="{{url_for('static', filename='Google_G_Logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+                  </span>
+                  <span class="buttonText">Google</span>
                 </button>
-              </div>
+              </div><!--End google cell -->
+              <div id="name"></div>
+              <script>startApp();</script>
+
+              <div class="grid-cell Facebook">
+                <button class="facebook gird-cell" id="customBtn">
+                  <fb:button scope="public_profile, email" onlogin="checkLoginState();">
+                  <span class="icon">
+                    <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+                  </span>
+                  <span>Facebook</span>
+                  </fb:button>
+                </button>
+              </div><!--Endof facebook grid-->
+
+
 
             </div> <!--End of grid for federated sign in -->
 
