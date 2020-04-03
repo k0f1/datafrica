@@ -8,7 +8,7 @@
 
     <title>Datafrica log in page</title>
 
-  <script type="text/javascript" src="{{ url_for('static', filename='store.js') }}" async defer></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='login.js') }}" async defer></script>
 
 
     <!--This code goes out to google to authenticate our user-->
@@ -87,99 +87,6 @@
         <div id="result"></div><!--Empty div to populate the response from the server on succssful login  -->
       </div><!--End of vertical flex container with column flex direction  -->
     </section>
-              <!-- Authentication code-->
-              <script>
-              function start() {
-                gapi.load('auth2', function() {
-                  auth2 = gapi.auth2.init({
-                    client_id: '634413285518-2lrorluhdcp6ab2onm8n844l71c6b4sq.apps.googleusercontent.com',
-                    // Scopes to request in addition to 'profile' and 'email'
-                    //scope: 'additional_scope'
-                    scope: 'openid email',
-                    redirecturi: "postmessage",
-                    accesstype: "offline",
-                    callback: "signInCallback",
-                    data-approvalprompt: 'force'
-                  });
-                });
-              }
-            </script>
-
-
-            <script>
-                // handles the response google send back to the client.
-                $('#signinButton').click(function () {
-                  function signInCallback(authResult) {
-                    if (authResult['code']) {
-                      $('#signinButton').attr('style', 'display:none');
-                      $.ajax({
-                        type: 'POST',
-                        url: '/gconnect?state={{STATE}}',
-                        processData: false,
-                        data: authResult['code'],
-                        contentType: 'application/octet-stream; charset=utf8',
-                        // prevents jquery processing data into a string.
-                        processData: false,
-                        // We specify the data we sending to our server.
-                        // The one-time use code.
-                        data: authResult['code'],
-                        success: function(result) {
-                          // handle or verify the server response.
-                          if (result) {
-                            // if the server has any info to pass to the
-                            //client, we can present it with the result
-                            //variable
-                            $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
-                            setTimeout(function () {
-                              window.location.href = "/http:localhost:8000/catalog/new";
-                            }, 4000);// Time out
-                        }// Result
-                      }// End of successfn.
-                    }); //Ajax method ends here.
-                  } else if (authResult['error']) {
-                          //There was an error.
-                        console.log('There was an error:' authResult['error']);
-                  } else {
-                    $('#result').html('Failed to make a server-side call. Check your configuration and console');
-                  }//End of this else.
-                  });
-                  }
-                }
-                auth2.grantOfflineAccess().then(signInCallback);
-              })
-            </script>
-            <!--The beginging of facebook script  -->
-            <script>
-              window.fbAsyncInit = function() {
-                FB.init({
-                  appId      : 'koffuafor@gmail.com/UDBEVg3PDL',
-                  cookie     : true,
-                  xfbml      : true,
-                  version    : 'v6.0'
-                });
-
-                FB.AppEvents.logPageView();
-
-              };
-
-              (function(d, s, id){
-                  var js, fjs = d.getElementsByTagName(s)[0];
-                  if (d.getElementById(id)) {return;}
-                  js = d.createElement(s); js.id = id;
-                  js.src = "https://connect.facebook.net/en_US/sdk.js";
-                  fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));
-            </script>
-            <script>
-                  FB.getLoginStatus(function(response) {
-                  statusChangeCallback(response);
-                });
-                function checkLoginState() {
-                  FB.getLoginStatus(function(response) {
-                      statusChangeCallback(response);
-                    });
-                  }
-            </script><!--The end of facebook script -->
-
+            
   </body>
 </html>
