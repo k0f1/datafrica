@@ -58,6 +58,17 @@ body#login section#login-session {
 
 }
 
+/*
+#login-session {
+  justify-content: center;
+}
+*/
+
+#oauthWrapper .grid-cell {
+  display: block;
+  margin-bottom: 30px;
+}
+
 .grid-cell ul {
   font-size: 14px;
   display: inline-flex;

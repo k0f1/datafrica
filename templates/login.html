@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
     <!--For google custom buttons -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 
@@ -33,28 +33,31 @@
 
             <div class="grid vertical-center fd-column">
               <form>
-                <div class="grid-cell">
-                  <div class="grid fd-column">
-                    <label>Email</label>
-                    <div><input class="grid-cell"placeholder="Email"></div>
-                    <small id="emailHelp">We'll never share your email with anyone else!</small>
+                <div id="oauthWrapper">
+                  <div class="grid-cell">
+                    <div class="grid fd-column">
+                      <label>Email</label>
+                      <div><input class="grid-cell"placeholder="Email"></div>
+                      <small id="emailHelp">We'll never share your email with anyone else!</small>
+                    </div>
                   </div>
-                </div>
-                <div class="grid-cell">
-                  <div class="grid fd-column">
-                    <label>Password</label>
-                    <div><input class="grid-cell" placeholder="Password"></div>
+                  <div class="grid-cell">
+                    <div class="grid fd-column">
+                      <label>Password</label>
+                      <div><input class="grid-cell" placeholder="Password"></div>
+                    </div>
                   </div>
-                </div>
-                <div class="grid-cell btn btn-dark">
-                  <button class="btn btn-link grid-cell" id="customBtn">Sign in</button>
+                  <div class="grid-cell btn btn-dark">
+                    <button class="btn btn-link grid-cell" id="customBtn">Sign in</button>
+                  </div>
+
                 </div>
               </form>
             </div>
             <!--End of personal Email and password Log in-->
             <div><span>Or</span></div>
 
-            <div class="grid vertical-center fd-column">
+            <div class="grid vertical-center fd-column" id="oauthWrapper">
               <div class="grid-cell">
                 <span class="label">Sign up with:</span>
               </div>
@@ -63,21 +66,20 @@
                 <!--In the callback, you would hide the gSignInWrapper element on a successful sign in-->
                 <button class="google customGPlusSignIn" id="customBtn">
                   <span class="icon">
-                      <img src ="{{url_for('static', filename='Google_G_Logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+                      <img src ="{{url_for('static', filename='btn_google_light_normal_ios.svg')}}" aria-hidden="true" width="46" height="46" veiwBox="0 0 46 46">
                   </span>
                   <span class="buttonText">Google</span>
                 </button>
               </div><!--End google cell -->
-              <script>startApp();</script>
 
-              <div class="grid-cell Facebook" id="signInWrapper">
+              <div class="grid-cell Facebook" id="fSignInWrapper">
                 <button class="facebook gird-cell" id="customBtn">
-                  <fb:button scope="public_profile, email" onlogin="checkLoginState();">
+                  <fb:login-button scope="public_profile, email" onlogin="checkLoginState();">
                   <span class="icon">
                     <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
                   </span>
                   <span>Facebook</span>
-                  </fb:button>
+                </fb:login-button>
                 </button>
               </div><!--Endof facebook grid-->
 
