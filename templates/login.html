@@ -72,10 +72,8 @@
 
               <div class="grid-cell Facebook" id="fSignInWrapper">
                 <button class="facebook gird-cell" id="customBtn">
+                  <span class="icon"><img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="46" height="46" veiwBox="0 0 46 46"></span>
                   <fb:login-button scope="public_profile, email" onlogin="checkLoginState();">
-                  <span class="icon">
-                    <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
-                  </span>
                   <span>Sign in with Facebook</span>
                 </fb:login-button>
                 </button>
