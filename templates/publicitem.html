@@ -51,7 +51,7 @@
           <div class="col-md-1"></div>
         </div>
 
-  
+
       {% block script %}
 
         <!--This is the script for Adding item to the cart.-->
@@ -107,11 +107,11 @@
                 console.log("Setting result");
                 if (function addToBasket(result)) {
                   // Append the result of the ajax request to elem with cart id.
-                  $('#result').html(append(result));
+                  $('#cart').html(append(result));
                   window.location.href = '/catalog/cart';
                 } else if (function buyNow(result)) {
                   // Append the result of the ajax request to elem with cart id.
-                  $('#result').html(append(result));
+                  $('#checkout').html(append(result));
                   window.location.href = '/catalog/checkout';
               }
 

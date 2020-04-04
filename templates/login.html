@@ -63,8 +63,8 @@
               <div class="grid-cell google" id=gSignInWrapper>
                 <!--In the callback, you would hide the gSignInWrapper element on a successful sign in-->
                 <button class="google customGPlusSignIn" id="customBtn">
-                  <span class="icon">
-                      <img src ="{{url_for('static', filename='btn_google_light_normal_ios.svg')}}" aria-hidden="true" width="46" height="46" veiwBox="0 0 46 46">
+                  <span class="icon" id="signinButton">
+                      <svg src ="{{url_for('static', filename='btn_google_light_normal_ios.svg')}}" aria-hidden="true" width="46" height="46" veiwBox="0 0 46 46"></svg>
                   </span>
                   <span class="buttonText">Sign in with Google</span>
                 </button>
@@ -74,7 +74,7 @@
                 <button class="facebook gird-cell" id="customBtn">
                   <fb:login-button scope="public_profile, email" onlogin="checkLoginState();">
                   <span class="icon">
-                    <img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24">
+                    <svg src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="24" height="24" veiwBox="0 0 24 24"></svg>
                   </span>
                   <span>Sign in with Facebook</span>
                 </fb:login-button>
