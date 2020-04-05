@@ -110,7 +110,7 @@ def gconnect():
         # Access all credentials including access code.
         credentials = oauth_flow.step2_exchange(code)
         # retreive only the access token in json format.
-        access_token = credentials.access_token.to_json()
+        access_token = credentials.access_token
     # If an error happen along the way
     except FlowExchangeError:
         response = make_response(json.dumps('Failed to upgrade the authorization code.'), 401)
