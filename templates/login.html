@@ -22,6 +22,7 @@
     <script async defer src="https://connect.facebook.net/en_US/sdk.js">
     </script>
 
+    <!--Google SDK -->
     <script>
         function start() {
           gapi.load('auth2', function() {
@@ -34,6 +35,20 @@
         }
       </script>
 
+      <!--Facebook SDK -->
+      <script>
+              // The beginging of facebook script
+
+                  // Facebook authentication
+                  window.fbAsyncInit = function() {
+                    FB.init({
+                      appId            : 'koffuafor@gmail.com/UDBEVg3PDL',
+                      autoLogAppEvents : true,
+                      xfbml            : true,
+                      version          : 'v6.0'
+                    });
+                  };
+      </script>
 
 
 
@@ -172,20 +187,8 @@
 
 
 </script>
-<script>
-        // The beginging of facebook script
 
-            // Facebook authentication
-            window.fbAsyncInit = function() {
-              FB.init({
-                appId            : 'koffuafor@gmail.com/UDBEVg3PDL',
-                autoLogAppEvents : true,
-                xfbml            : true,
-                version          : 'v6.0'
-              });
-            };
-</script>
-
+<!--This is facebook js code -->
 <script>
               $('#fSignInWrapper').click(function() {
                 Fb.login(function(response) {

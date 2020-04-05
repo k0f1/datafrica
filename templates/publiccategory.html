@@ -44,7 +44,7 @@
           {% if items !=[] %} <!--If items is not an empty list-->
               {% for item in items %}
                 <!--showItem opnly accepts category_name and item_title -->
-                <a href = "{{url_for('showItem', category_name = category.name,
+                <a class="text-warning" href = "{{url_for('showItem', category_name = category.name,
                       item_title = item.title)}}">
                   <div class="text-warning item-list">
                     <p>{{item.title}}</p>
