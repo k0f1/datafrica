@@ -89,8 +89,6 @@ def showLogin():
 
 
 
-
-
 # HANDLER OF CODE SENT BACK FROM CALLBACK METHOD - one time code from google
 @app.route('/gconnect', methods=['GET', 'POST'])
 def gconnect():
