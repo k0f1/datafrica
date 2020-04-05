@@ -2,21 +2,24 @@
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>{% block page_name %}{% endblock %}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--Custom javascript file -->
-		<script type='text/javascript'
-			src="{{ url_for('static', filename='store.js') }}" async defer></script>
+
+		<title>{% block page_name %}{% endblock %}</title>
 
 		<!--Google Font -->
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-
+		<!--For google custom buttons -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 		<!--Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-
 		<!--My custome css -->
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+
+		<script type="text/javascript" src="{{ url_for('static', filename='login.js') }}" async defer></script>
+		<script type='text/javascript'
+			src="{{ url_for('static', filename='store.js') }}" async defer></script>
 	</head>
 	<body>
 		<div class="container">

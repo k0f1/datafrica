@@ -43,7 +43,7 @@ header#loginHeader {
 Select all body elements with id login and select all section elements
 with id login-sessionmaker
  */
-body#login section#login-session {
+section#login section#login-session {
   display: flex;
   flex-direction: column;
   margin-top: 0px;
