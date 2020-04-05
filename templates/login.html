@@ -11,7 +11,31 @@
 
     <title>Datafrica log in page</title>
 
+    <!-- BEGIN Pre-requisites -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+  </script>
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+  </script>
+  <!-- END Pre-requisites -->
+
+    <!--Facebook-->
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js">
+    </script>
+
+    <script>
+        function start() {
+          gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+              client_id:        '634413285518-2lrorluhdcp6ab2onm8n844l71c6b4sq.apps.googleusercontent.com',
+              scope:             'profile email',
+              return_scopes:     true
+            });
+          });
+        }
+      </script>
+
   <script type="text/javascript" src="{{ url_for('static', filename='login.js') }}" async defer></script>
+
 
 
     <!--This code goes out to google to authenticate our user-->
@@ -61,7 +85,7 @@
             </div>
             <div class="grid vertical-center fd-column" id="oauthWrapper">
               <!-- For google -->
-              <div class="grid-cell google" id=gSignInWrapper>
+              <div class="grid-cell google" id="gSignInWrapper">
                 <!--In the callback, you would hide the gSignInWrapper element on a successful sign in-->
                 <button class="google customGPlusSignIn" id="customBtn">
                   <span class="icon" id="signinButton">
@@ -92,6 +116,126 @@
             </div>
 
         </div> <!--Flex contain ends -->
+        <script>
+
+            // Handles the response google send back to the client.
+            // Load the authorisation code
+            // Google opens your authorization endpoint in the user's browser
+
+            // Handles the returned auth code.
+            $('#gSignInWrapper').click(function() {
+              // This is the callback function
+              function signInCallback(authResult) {
+                if (authResult['code']) {
+                  // Now that the app is authorized, hide the signinButton
+                  $('#gSignInWrapper').attr('style', 'display:none');
+
+                  // Send the one-time code to the server
+                  $.ajax({
+                    type: 'POST',
+                    url: '/gconnect?state={{STATE}}',
+                    // Prevent jQuery from processingthe data into a string
+                    processData: false,
+                    data: authResult['code'],
+                    // Always include an `X-Requested-With` header in every AJAX request, to protect against CSRF attacks.
+                    headers: {
+                              'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    contentType: 'application/octet-stream; charset=utf8',
+                    // prevents jquery processing data into a string.
+                    processData: false,
+                    // We specify the data we sending to our server.
+                    // The one-time use code.
+                    data: authResult['code'],
+                    success: function(result) {
+                      // handle or verify the server response.
+                      if (result) {
+                        // if the server has any info to pass to the
+                        //client, we can present it with the result
+                        //variable
+                        $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
+                        setTimeout(function () {
+                          window.location.href = "/http:localhost:8000/catalog/";
+                        }, 4000);// Time out
+                    }// Result
+                  }// End of successfn.
+                }); //Ajax method ends here.
+              } else if (authResult['error']) {
+                      //There was an error.
+                    console.log('There was an error: ' + authResult['error']);
+              } else {
+                $('#result').html('Failed to make a server-side call. Check your configuration and console');
+              }//End of this else.
+              }
+              auth2.grantOfflineAccess().then(signInCallback);
+            });
+
+
+</script>
+<script>
+        // The beginging of facebook script
+
+            // Facebook authentication
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId            : 'koffuafor@gmail.com/UDBEVg3PDL',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v6.0'
+              });
+            };
+</script>
+
+<script>
+              $('#fSignInWrapper').click(function() {
+                Fb.login(function(response) {
+                  if (authResponse['accessToken']) {
+                    // Now that the app is authorized, hide the signinButton
+                    $('#fSignInWrapper').attr('style', 'display:none');
+                    // Send the one-time code to the server
+                    $.ajax({
+                      type: 'POST',
+                      url: '/fbconnect?state={{STATE}}',
+                      // Prevent jQuery from processingthe data into a string
+                      processData: false,
+                      data: authResponse['accessToken'],
+                      contentType: 'application/octet-stream; charset=utf8',
+                      // Always include an `X-Requested-With` header in every AJAX request, to protect against CSRF attacks.
+                      headers: {
+                                  'X-Requested-With': 'XMLHttpRequest'
+                      },
+                      // prevents jquery processing data into a string.
+                      processData: false,
+                      // We specify the data we sending to our server.
+                      // The one-time use code.
+                      data: authResponse['accessToken'],
+                      success: function(result) {
+                        // handle or verify the server response.
+                        if (result) {
+                          // if the server has any info to pass to the
+                          //client, we can present it with the result
+                          //variable
+                          $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
+                          setTimeout(function () {
+                            window.location.href = "/http:localhost:8000/catalog/";
+                          }, 4000);// Time out
+                      }// Result
+                    }// End of successfn.
+                  }); //Ajax method ends here.
+                } else if (authResponse['not_authorized']) {
+                        //There was an error.
+                      console.log('There was an error: ' + authResponse['not_authorized']);
+                } else {
+                  $('#result').html('Failed to make a server-side call. Check your configuration and console');
+                }//End of this else.
+              });
+            }, {
+                scope: 'public_profile email',
+                return_scopes: true
+            }
+          );
+         // The end of facebook script
+</script>
 
 
         <div id="result"></div><!--Empty div to populate the response from the server on succssful login  -->

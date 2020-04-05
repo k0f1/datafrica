@@ -80,7 +80,7 @@ def showLogin():
                 # Store state from our login_session(a dict)
                 # in a variable state.
     login_session['state'] = state
-    # return "The current session state is %s" %login_session['state']
+    #return "The current session state is %s" %login_session['state']
     # to see what are current state look like. STATE is sent back with oauth.
     return render_template('login.html', STATE=state)
 
@@ -90,7 +90,7 @@ def showLogin():
 # HANDLER OF CODE SENT BACK FROM CALLBACK METHOD - one time code from google
 @app.route('/gconnect', methods=['GET', 'POST'])
 def gconnect():
-    # Using the request.args.get method, my code examines the state
+    # Call request args get for my code to examine the state
     # token passed in and compares it to the state of the login session.
     if request.args.get('state') != login_session['state']:
         # If there is mismatch

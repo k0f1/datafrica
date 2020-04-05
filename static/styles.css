@@ -16,7 +16,9 @@ body {
 }
 
 
-header {background-color: #000000;}
+header {
+  background-color: #000000;
+}
 
 /* Styling of login page */
 
