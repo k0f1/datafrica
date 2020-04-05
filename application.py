@@ -87,6 +87,10 @@ def showLogin():
 
 
 
+
+
+
+
 # HANDLER OF CODE SENT BACK FROM CALLBACK METHOD - one time code from google
 @app.route('/gconnect', methods=['GET', 'POST'])
 def gconnect():
@@ -123,7 +127,7 @@ def gconnect():
           #Create a json GET request with these two lines,
           # containing the url and access_token
     h = httplib2.Http()
-    result = json.loads(h.request(url, 'GET')[1])
+    result = json.loads((h.request(url, 'GET')[1]).decode('utf-8'))
 
     if result.get('error') is not None:
         response = make_response(json.dumps(result.get('error')), 500)
@@ -174,10 +178,21 @@ def gconnect():
     # see if user exists, if it doesn't make a new one.
     # Get user id on the email address stored in our log-in session
     # stored in the variable user_id.
-    user_id = getUerID(login_session['email'])
+    user_id = getUserID(login_session['email'])
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
+
+    output = ''
+    output += '<h1>Welcome, '
+    output += login_session['username']
+    output += '!</h1>'
+    output += '<img src="'
+    output += login_session['picture']
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    flash("you are now logged in as %s" % login_session['username'])
+    print("done!")
+    return output
 
 
 
@@ -323,6 +338,7 @@ def fbdisconnect():
 # This step include work on lotsofitems as well.
 
 
+
 # createUser takes in login_session as input
 def createUser(login_session):
 
@@ -366,6 +382,10 @@ def getUserID(email):
         return None
 
 # END OF LOCAL PERMISSION
+
+
+
+
 
 
 

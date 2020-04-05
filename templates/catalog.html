@@ -1,6 +1,5 @@
 {% extends "main.html" %}
-
-{% block title } Ehelt Site Home {% endblock %}
+{% block page_name %}Datafrica home page{% endblock %}
 
 {% block content %}
 {% include "header.html" %}
@@ -49,7 +48,7 @@
             <p class="col-md-8 text-warning">
               <a href = "{{url_for('showItem', category_name = category.name,
                       item_title = item.title)}}">{{ item.title }}<em class="text-muted">({{ item.category.name }})</em>
-              </a>        
+              </a>
             </p>
 
           {% endif %}
