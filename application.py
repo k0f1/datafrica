@@ -522,7 +522,7 @@ def newItem():
         # And which one should be private
         return redirect(url_for('showCatalog'))
     else:
-        return render_template('publiccatalog.html')
+        return render_template('newItem.html')
 
 
 
@@ -582,7 +582,7 @@ def deleteItem(category_name, item_title):
 
     # filter_by uses the names of the columns in a table
     category = session.query(Category).filter_by(name = category_name).one()
-    itemToDelete = session.query(Item).filter_by(id =item_id).one()
+    itemToDelete = session.query(Item).filter_by(title =item_title).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()

@@ -1,4 +1,97 @@
 {% extends "main.html" %}
+{% block page_name %} {{item.title}} page {% endblock %}
+
+
+{% block content %}
+{% include "header.html" %}
+
+
+
+<div class="row padding-top padding-bottom">
+  <div class="col-md-1"></div>
+    <div class="col-md-10 main padding-top padding-bottom">
+      <div class='col-md-6 col-md-offset-1 padding-top' id='formWrapper'>
+        <h1 class="text-dark"><strong>Edit Item</strong><h1>
+        <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
+        <form action="{{url_for('editItem', category_name = category.name, item_title = item.title)}}" method='post'>
+          <div class="form-group col-md-6">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" placeholder="{{editedItem.title}}"></input>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="description">Description:</label>
+            <textarea type="text" class="form-control" placeholder="{{editedItem.description}}" rows="5">Description</textarea>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" placeholder="{{editedItem.price}}"></input>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="Categories">Choose a category:</label>
+            <select class="form-control" id="categories">
+              {% for category in categories %}
+                <option value ="{{ category.name }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <!--Tick checkbox to include colour selection -->
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="colorPicker">
+            <label class="form-check-label" for="colorPicker">Color picker</label>
+          </div>
+          <div id='favcolor'>
+            <!--If selected, Show color picker -->
+            <label for="favcolor">Add your item colors</label>
+            <input type="color" id="favcolor" name="favcolor" value="">
+            <input type="color" id="favcolor" name="favcolor" value="">
+            <input type="color" id="favcolor" name="favcolor" value="">
+            <input type="color" id="favcolor" name="favcolor" value="">
+            <input type="color" id="favcolor" name="favcolor" value="">
+          </div>
+          <button type="submit" class="btn btn-outline-warning">Submit</button>
+        </form>
+      </div>
+    </div>
+
+  <div class="col-md-1"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
 

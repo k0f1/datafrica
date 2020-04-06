@@ -1,29 +1,11 @@
 {% extends "main.html" %}
+{% block page_name %} {{item.title}} delete page {% endblock %}
+
 {% block content %}
 {% include "header.html" %}
 
 
 
-<div class="row top-menu">
-  <div class="col-md-1"></div>
-  <div class="col-md-8"></div>
-  <div class="col-md-2 text-right"></div>
-  <div class="col-md-1"></div>
-</div>
-<div class="row divider blue">
-  <div class="col-md-1"></div>
-  <div class="col-md-10"></div>
-  <div class="col-md-1"></div>
-</div>
-
-
-
-<div class="row padding-top padding-bottom">
-  <div class="col-md-1"></div>
-  <div class="col-md-10 padding-top padding-bottom">
-
-
-    <h4 class="text-dark">Delete Item<h4>
 
 
       <div class = 'flash'>
@@ -40,11 +22,21 @@
 
       </div>
 
-    <button type="submit" class="btn btn-outline-secondary">Submit</button>
-
-  </div>
-  <div class="col-md-1"></div>
-</div>
 
 
+      <div class="row padding-top padding-bottom">
+        <div class="col-md-1"></div>
+          <div class="col-md-10 main flex-column">
+            <div class="vertical-center">
+              <div>
+                <h1 class="text-dark"><strong>Edit Item</strong><h1>
+              </div>
+              <div>
+                <p>Are you sure you want to delete?</p>
+              </div>
+              <button type="submit" class="btn btn-outline-warning" formmethod="post">Submit</button>
+            </div>
+          </div>
+        <div class="col-md-1"></div>
+      </div>
 {% endblock %}
