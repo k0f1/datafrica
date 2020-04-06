@@ -482,32 +482,30 @@ def newCategory():
     """ Renders a form for input of a new Category - GET request.
         if I get a post -redirect to 'showCatalog' after creating new Category info.
     """
-
-
     # ADD LOGIN PERMISSION
-    # Protect app modification from non-users
     # If a username is not detected for a given request.
     # Lets redirect to login page.
-
-
-    # Verify that a user is logged in by
-    # checking if the username has a variable filled in
-    # Protect the app from non users
     if 'username' not in login_session:
         return redirect('/login')
-        # Add SQLAlchemy statement
+        # Create an if statement that looks for a post request.
+        # By calling request method
     if request.method == 'POST':
-        newCategory = Category(name = request.form['name'],
-                        # Create the user_id field when you
-                        # create a new Category.
-                        user_id=login_session['user_id'])
+        # Extract the name field from my form.
+        newCategory = Category(name = request.form.get('name'),
+                # Create the user_id field when you
+                # create a new Category.
+                user_id=login_session.get('user_id'))
         session.add(newCategory)
         session.commit()
-        flash('category Successfully created %s' % newCategory.name)
-        # Decide which page should be visible to the public
-        # And which one should be private
+        flash('%s successfully created' % newCategory.name)
+        # To redirect my user back to the main page. I can use a helper function
+        # Url for takes the name of the function as the first arg,
+        # and a number of key args, each corresponding to the variable
+        # part of the URL rule.
         return redirect(url_for('showCatalog'))
     else:
+        # If my server did not receive a post request, it will go ahead
+        # and render the template for the new HTML template that i created.
         return render_template('newcategory.html')
 
 

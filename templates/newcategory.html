@@ -1,5 +1,4 @@
 {% extends "main.html" %}
-{% block page_name %} New category page {% endblock %}
 
 
 {% block content %}
@@ -7,24 +6,24 @@
 
 
 
-<div class="row padding-top padding-bottom">
-  <div class="col-md-1"></div>
-    <div class="col-md-10 main padding-top padding-bottom">
-      <div class='col-md-6 col-md-offset-1 padding-top' id='formWrapper'>
-        <h1 class="text-dark"><strong>New Category</strong><h1>
-        <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
-        <form action="{{url_for('newCategory')}}" method='post'>
-          <div class="form-group col-md-6">
-            <label for="title">Name:</label>
-            <input type="text" class="form-control" placeholder="Name"></input>
-          </div>
-          <!--If colour selection is enabled, Add your item colour codes-->
-          <button type="submit" class="btn btn-outline-warning">Create</button>
-        </form>
-      </div>
-    </div>
+        <div class="row padding-top padding-bottom">
+          <div class="col-md-1"></div>
+            <div class="col-md-10 main padding-top padding-bottom">
+              <div class='col-md-6 col-md-offset-1 padding-top' id='formWrapper'>
+                <h1 class="text-dark"><strong>New Category</strong><h1>
+                <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
+                <form action="{{url_for('newCategory')}}" method='post'>
+                  <div class="form-group col-md-6">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" class="form-control">
+                  </div>
+                  <!--If colour selection is enabled, Add your item colour codes-->
+                  <button type="submit" class="btn btn-outline-warning">Create</button>
+                </form>
+              </div>
+            </div>
 
-  <div class="col-md-1"></div>
-</div>
+          <div class="col-md-1"></div>
+        </div>
 
 {% endblock %}
