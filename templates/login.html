@@ -12,8 +12,8 @@
     <title>Datafrica log in page</title>
 
     <!-- BEGIN Pre-requisites -->
-  <script async defer src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
-  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
   <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
   </script>
   <!-- END Pre-requisites -->
@@ -220,7 +220,7 @@
                           //variable
                           $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
                           setTimeout(function () {
-                            window.location.href = "/http:localhost:8000/catalog/";
+                            window.location.href = "/catalog/";
                           }, 4000);// Time out
                       }// Result
                     }// End of successfn.
