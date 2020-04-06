@@ -415,11 +415,18 @@ def productItemJSON(category_name, item_title):
 def showCatalog():
     # Add SQLAlchemy statements
     """Show the index page displaying the categories and latest items 20 items added to the database."""
+    # To protect each category or each category or item based on whoever created it.
     categories = session.query(Category).all()
+
     # result[::-1] return the slice of every elelement of result in reverse
     latestItems = session.query(Item).order_by(desc(Item.id))[0:20]
+
     # If there is a username value in the login_session, we would
     # render one template or the other.
+
+    # # # If there is a username value in the login_session, we would
+    # render one template or the other.
+    # If a user isn't logged in or isn't the original creator
     if 'username' not in login_session:
         return render_template('publiccatalog.html',
                                 categories = categories,
@@ -442,6 +449,8 @@ def showCategory(category_name):
     # .one method ensures only one category is returned
     category = session.query(Category).\
             filter_by(name = category_name).one()
+
+
     categories = session.query(Category).all()
     items = session.query(Item).filter_by(category_id = category.id).all()
     # # return count of item "id" grouped by category_id
@@ -449,8 +458,9 @@ def showCategory(category_name):
                             Item.id)).filter_by(
                             category_id = category.id).one()
 
-    # # If there is a username value in the login_session, we would
+    # # # If there is a username value in the login_session, we would
     # render one template or the other.
+    # If a user isn't logged in
     if 'username' not in login_session:
         # Decide which page to show, public or private
         return render_template('publiccategory.html',
@@ -465,6 +475,106 @@ def showCategory(category_name):
                           items = items,
                           categoryItems = categoryItems)
 
+
+
+@app.route('/catalog/create', methods = ['GET', 'POST'])
+def newCategory():
+    """ Renders a form for input of a new Category - GET request.
+        if I get a post -redirect to 'showCatalog' after creating new Category info.
+    """
+
+
+    # ADD LOGIN PERMISSION
+    # Protect app modification from non-users
+    # If a username is not detected for a given request.
+    # Lets redirect to login page.
+
+
+    # Verify that a user is logged in by
+    # checking if the username has a variable filled in
+    # Protect the app from non users
+    if 'username' not in login_session:
+        return redirect('/login')
+        # Add SQLAlchemy statement
+    if request.method == 'POST':
+        newCategory = Category(name = request.form['name'],
+                        # Create the user_id field when you
+                        # create a new Category.
+                        user_id=login_session['user_id'])
+        session.add(newCategory)
+        session.commit()
+        flash('category Successfully created %s' % newCategory.name)
+        # Decide which page should be visible to the public
+        # And which one should be private
+        return redirect(url_for('showCatalog'))
+    else:
+        return render_template('newcategory.html')
+
+
+@app.route('/catalog/<category_name>/edit', methods = ['GET', 'POST'])
+def editCategory(category_name):
+    # Execute a query to find the category and store it in a variable.
+    editedCategory = session.query(Category).filter_by(name=category_name).one()
+    # ADD LOGIN PERMISSION
+    # Protect app modification from non-users
+    # If a username is not detected for a given request.
+    # Lets redirect to login page.
+    if 'username' not in login_session:
+        return redirect('/login')
+
+    # Verify that a user is logged in by
+    # checking if the username has a variable filled in
+
+    # If a user isn't logged in or isn't the original creator
+    if editedCategory.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert( 'You are not\
+                 authorized to edit this category.');}</script><body onload='myFunction()'>"
+
+    # Add SQLAlchemy statements
+    if request.method == 'POST':
+        editedCategory = Category(name = request.form['name'])
+        session.add(editedCategory)
+        session.commit()
+        flash('The Category %s successfully is edited' % editedCategory)
+        # Decide which page should be visible to the public
+        # And which one should be private
+        return redirect(url_for('showCatalog'))
+    else:
+        return render_template('editedcategory.html',
+                                category_name = category_name,
+                                category = editedCategory)
+
+
+
+@app.route('/catalog/<category_name>/delete', methods = ['GET', 'POST'])
+def deleteCategory(category_name):
+    # Execute a query to find the category and store it in a variable.
+    deleteCategory = session.query(Category).\
+                        filter_by(name = category.name).one()
+    # To protect each item based on whoever created it.
+    # ADD LOGIN PERMISSION
+    # If a user name is not detected for a given request.
+    # Lets redirect to login page.
+    if 'username' not in login_session:
+        return redirect('/login')
+        # ADD ALERT MESSAGE TO PROTECT.
+
+    # If a user isn't logged in or isn't the original creator
+    if editedCategory.user.id != login_session['user_id']:
+        return "<script>function myFunction() {alert( 'You are not\
+                 authorized to delete this category.');}</script><body onload='myFunction()'>"
+
+    if request.method == 'POST':
+        if request.form['name']:
+            editedCategory.name = request.form['name']
+            session.delete(deleteCategory)
+            session.commit()
+            flash('Category Successfully Edited')
+            return redirect(url_for('showCatalog'))
+    else:
+        return render_template('deletecategory.html',
+                                  category = deleteCategory,
+                                  category_name = category_name)
 
 
 
@@ -517,7 +627,7 @@ def newItem():
         newItem = Item(title = request.form['title'], description = request.form['description'], price = request.form['price'] , category_id = category_id, user_id=login_session['user_id'])
         session.add(newItem)
         flash('New Item %s successfully Created' % newItem)
-        seesion.commit()
+        session.commit()
         # Decide which page should be visible to the public
         # And which one should be private
         return redirect(url_for('showCatalog'))
@@ -536,14 +646,23 @@ def editItem(category_name, item_title):
         Returns a GET with edititem.html - form with inputs to edit item info
         if I get a post - redirect to 'showCategory' after updating item info.
     """
+
+    editedItem = session.query(Item).filter_by(id = item_id).one()
+    # To protect each item based on whoever created it.
+    creator = getUserInfo(item.user_id)
+
+    category = session.query(Category).filter_by(name = category_name).one()
     # ADD LOGIN PERMISSION
     # If a user name is not detected for a given request.
     # Lets redirect to login page.
     if 'username' not in login_session:
         return redirect('/login')
+        # ADD ALERT MESSAGE TO PROTECT.
+    # If a user isn't logged in or isn't the original creator
+    if 'username' not in login_session or creator.id !=login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit items.');}</script><body onload='myFunction()'>"
 
-    editedItem = session.query(Item).filter_by(id = item_id).one()
-    category = session.query(Category).filter_by(name = category_name).one()
+
     if request.method == 'POST':
         if request.form['title']:
             editedItem.title = request.form['title']
@@ -551,8 +670,9 @@ def editItem(category_name, item_title):
             editedItem.description = request.form['description']
         if request.form['price']:
             editedItem.price = request.form['price']
-        if request.form['picture']:
-            editedItem.picture = request.form['picture']
+            session.add(editedItem)
+            session.commit()
+            flash('Menu Item Successfully Edited')
             return redirect(url_for('showCategory',
                                    category_name = category_name,
                                    item_title = item_title))
