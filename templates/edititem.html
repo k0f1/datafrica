@@ -15,22 +15,24 @@
         <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
         <form action="{{url_for('editItem', category_name = category.name, item_title = item.title)}}" method='post'>
           <div class="form-group col-md-6">
-            <label for="title">Title:</label>
-            <input type="text" class="form-control" placeholder="{{editedItem.title}}"></input>
+            <label for="editTitle">Title:</label>
+            <input type="text" class="form-control" placeholder="{{editedItem.title}}">
           </div>
           <div class="form-group col-md-6">
-            <label for="description">Description:</label>
+            <label for="editDescription">Description:</label>
             <textarea type="text" class="form-control" placeholder="{{editedItem.description}}" rows="5">Description</textarea>
           </div>
           <div class="form-group col-md-6">
-            <label for="price">Price:</label>
-            <input type="text" class="form-control" placeholder="{{editedItem.price}}"></input>
+            <label for="editPrice">Price:</label>
+            <input type="text" class="form-control" placeholder="{{editedItem.price}}">
           </div>
           <div class="form-group col-md-6">
-            <label for="Categories">Choose a category:</label>
-            <select class="form-control" id="categories">
+            <label for="category">Category list:</label>
+            <select class="form-control" id="category">
               {% for category in categories %}
-                <option value ="{{ category.name }}">{{ category.name }}</option>
+                <option value ="{{ category.name }}">
+                  <ul><li>{{ category.name }}</li></ul>
+                </option>
               {% endfor %}
             </select>
           </div>

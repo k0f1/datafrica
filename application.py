@@ -3,6 +3,7 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, g
 
 
+
 # Add database imports here
 from sqlalchemy import create_engine, asc, desc, literal, func
 from sqlalchemy.orm import sessionmaker
@@ -518,7 +519,8 @@ def editACategoryName(category_name):
  """
     # Execute a query to find the category and store it in
     # a variable editedCategory.
-    editACategoryName = session.query(Category).\
+    category = session.query(Category).filter_by(name=category_name).one()
+    categoryToEdit = session.query(Category).\
                 filter_by(name = category_name).one()
     # ADD LOGIN PERMISSION
     # Protect app modification from non-users
@@ -529,30 +531,34 @@ def editACategoryName(category_name):
     # Verify that a user is logged in by
     # checking if the username has a variable filled in
     # If a user isn't logged in or isn't the original creator
-    if editACategoryName.user.id != login_session['user_id']:
+    if categoryToEdit.user.id != login_session['user_id']:
         return "<script>function myFunction() {alert( 'You are not\
                  authorized to edit this category.');}</script><body onload='myFunction()'>"
 
     # Create an if statement that looks for a post request.
     # By calling request method
     if request.method == 'POST':
-        if request.form['name']:
+        # Then create an if statement that looks for a name in the form.
+        # By calling request form get.
+        if request.form.get('name'):
             # Now reset the name of the category to the new name from the form.
-            editACategoryName.name = request.form['name']
-            session.add(editACategoryName)
-            session.commit()
-            flash('The Category %s successfully is edited' % editACategoryName)
+            categoryToEdit.name = request.form.get('name')
+        session.add(categoryToEdit)
+        session.commit()
+        flash('The %s is successfully edited' % categoryToEdit)
             # Redirect the user back to the home page.
-            return redirect(url_for('showCatalog'))
+        return redirect(url_for('showCatalog'))
     else:
-        return render_template('editacategoryname.html', category = editACategoryName)
+        return render_template('editacategoryname.html',
+                                    category = categoryToEdit)
 
 
 
 @app.route('/catalog/<category_name>/delete', methods = ['GET', 'POST'])
 def deleteCategory(category_name):
     # Execute a query to find the category and store it in a variable.
-    deleteCategory = session.query(Category).\
+    category = session.query(Category).filter_by(name=category_name).one()
+    categoryToDelete = session.query(Category).\
                         filter_by(name = category.name).one()
     # To protect each item based on whoever created it.
     # ADD LOGIN PERMISSION
@@ -563,19 +569,20 @@ def deleteCategory(category_name):
         # ADD ALERT MESSAGE TO PROTECT.
 
     # If a user isn't logged in or isn't the original creator
-    if deleteCategory.user.id != login_session['user_id']:
+    if categoryToDelete.user.id != login_session['user_id']:
         return "<script>function myFunction() {alert( 'You are not\
                  authorized to delete this category.');}</script><body onload='myFunction()'>"
 
+    # Create an if statement that looks for a post request.
+    # By calling request method
     if request.method == 'POST':
-        session.delete(deleteCategory)
+        session.delete(categoryToDelete)
         session.commit()
-        flash('Category Successfully Edited')
+        flash('The %s category has been successfully Edited'% categoryToDelete)
         return redirect(url_for('showCatalog'))
     else:
         return render_template('deletecategory.html',
-                                  category = deleteCategory,
-                                  category_name = category_name)
+                                  category = categoryToDelete)
 
 
 
@@ -608,10 +615,12 @@ def showItem(category_name, item_title):
 # "This page will be for adding a new Item"
 @app.route('/catalog/new',
 methods = ['GET', 'POST'])
-def newItem():
+def newItem(category_name):# Add item base on category name.
     """ Renders a form for input of a new item - GET request.
         if I get a post -redirect to 'showCatalog' after creating new item info.
     """
+    category = session.query(Category).filter_by(name = category_name).one()
+    categories = session.query(Category).all()
 
     # ADD LOGIN PERMISSION
     # Protect app modification from non-users
@@ -625,7 +634,9 @@ def newItem():
         return redirect('/login')
      # Add SQLAlchemy statements
     if request.method == 'POST':
-        newItem = Item(title = request.form['title'], description = request.form['description'], price = request.form['price'] , category_id = category_id, user_id=login_session['user_id'])
+        newItem = Item(title = request.form['title'], description = request.form['description'], price = request.form['price'] ,
+        # The passed value can be obtained by request.form['value']
+        category_id = category_id, user_id=login_session['user_id'])
         session.add(newItem)
         flash('New Item %s successfully Created' % newItem)
         session.commit()
@@ -633,7 +644,8 @@ def newItem():
         # And which one should be private
         return redirect(url_for('showCatalog'))
     else:
-        return render_template('newItem.html')
+        return render_template('newitem.html', categories = categories,
+                                                category = category)
 
 
 
