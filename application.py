@@ -490,14 +490,14 @@ def newCategory():
         # Create an if statement that looks for a post request.
         # By calling request method
     if request.method == 'POST':
-        # Extract the name field from my form.
+        # Extract the name field from my form. .get used b/c of bad request key
         newCategory = Category(name = request.form.get('name'),
                 # Create the user_id field when you
                 # create a new Category.
                 user_id=login_session.get('user_id'))
         session.add(newCategory)
         session.commit()
-        flash('%s successfully created' % newCategory.name)
+        flash('%s category successfully created' % newCategory.name)
         # To redirect my user back to the main page. I can use a helper function
         # Url for takes the name of the function as the first arg,
         # and a number of key args, each corresponding to the variable
@@ -510,37 +510,42 @@ def newCategory():
 
 
 @app.route('/catalog/<category_name>/edit', methods = ['GET', 'POST'])
-def editCategory(category_name):
-    # Execute a query to find the category and store it in a variable.
-    editedCategory = session.query(Category).filter_by(name=category_name).one()
+def editACategoryName(category_name):
+    """1. First execute a query to find the exact item we want to update:       Find entry and store it in a variable
+        2. Next Reset values: we declare the new name of the variable
+        3. Next we add the variable to our session
+        4. Finally we commit the the session the database
+ """
+    # Execute a query to find the category and store it in
+    # a variable editedCategory.
+    editACategoryName = session.query(Category).\
+                filter_by(name = category_name).one()
     # ADD LOGIN PERMISSION
     # Protect app modification from non-users
     # If a username is not detected for a given request.
     # Lets redirect to login page.
     if 'username' not in login_session:
         return redirect('/login')
-
     # Verify that a user is logged in by
     # checking if the username has a variable filled in
-
     # If a user isn't logged in or isn't the original creator
-    if editedCategory.user_id != login_session['user_id']:
+    if editACategoryName.user.id != login_session['user_id']:
         return "<script>function myFunction() {alert( 'You are not\
                  authorized to edit this category.');}</script><body onload='myFunction()'>"
 
-    # Add SQLAlchemy statements
+    # Create an if statement that looks for a post request.
+    # By calling request method
     if request.method == 'POST':
-        editedCategory = Category(name = request.form['name'])
-        session.add(editedCategory)
-        session.commit()
-        flash('The Category %s successfully is edited' % editedCategory)
-        # Decide which page should be visible to the public
-        # And which one should be private
-        return redirect(url_for('showCatalog'))
+        if request.form['name']:
+            # Now reset the name of the category to the new name from the form.
+            editACategoryName.name = request.form['name']
+            session.add(editACategoryName)
+            session.commit()
+            flash('The Category %s successfully is edited' % editACategoryName)
+            # Redirect the user back to the home page.
+            return redirect(url_for('showCatalog'))
     else:
-        return render_template('editedcategory.html',
-                                category_name = category_name,
-                                category = editedCategory)
+        return render_template('editacategoryname.html', category = editACategoryName)
 
 
 
@@ -558,17 +563,15 @@ def deleteCategory(category_name):
         # ADD ALERT MESSAGE TO PROTECT.
 
     # If a user isn't logged in or isn't the original creator
-    if editedCategory.user.id != login_session['user_id']:
+    if deleteCategory.user.id != login_session['user_id']:
         return "<script>function myFunction() {alert( 'You are not\
                  authorized to delete this category.');}</script><body onload='myFunction()'>"
 
     if request.method == 'POST':
-        if request.form['name']:
-            editedCategory.name = request.form['name']
-            session.delete(deleteCategory)
-            session.commit()
-            flash('Category Successfully Edited')
-            return redirect(url_for('showCatalog'))
+        session.delete(deleteCategory)
+        session.commit()
+        flash('Category Successfully Edited')
+        return redirect(url_for('showCatalog'))
     else:
         return render_template('deletecategory.html',
                                   category = deleteCategory,

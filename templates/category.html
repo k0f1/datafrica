@@ -1,5 +1,5 @@
 {% extends "main.html" %}
-{% block page_name %} {{category.name}} page {% endblock %}
+{% block page_name %} Edit {{category.name}} page {% endblock %}
 
 {% block content %}
 {% include "header.html" %}
@@ -55,7 +55,7 @@
 
         </div>
         <div class="button padding-top, padding-bottom">
-          <a class="text-danger" href="{{url_for('editCategory', category_name = category.name ) }}"><div class="col-md-1">Edit</div></a>
+          <a class="text-danger" href="{{url_for('editACategoryName', category_name = category.name ) }}"><div class="col-md-1">Edit</div></a>
           <div class="vl"></div>
           <a class="text-danger" href="{{url_for('deleteCategory', category_name = category.name ) }}"><div class="col-md-1">Delete</div></a>
         </div>
