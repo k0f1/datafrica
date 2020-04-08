@@ -615,11 +615,10 @@ def showItem(category_name, item_title):
 # "This page will be for adding a new Item"
 @app.route('/catalog/new',
 methods = ['GET', 'POST'])
-def newItem(category_name):# Add item base on category name.
+def newItem():# Add item base on category name.
     """ Renders a form for input of a new item - GET request.
         if I get a post -redirect to 'showCatalog' after creating new item info.
     """
-    category = session.query(Category).filter_by(name = category_name).one()
     categories = session.query(Category).all()
 
     # ADD LOGIN PERMISSION
@@ -636,7 +635,7 @@ def newItem(category_name):# Add item base on category name.
     if request.method == 'POST':
         newItem = Item(title = request.form['title'], description = request.form['description'], price = request.form['price'] ,
         # The passed value can be obtained by request.form['value']
-        category_id = category_id, user_id=login_session['user_id'])
+        category = request.form['category'], user_id=login_session['user_id'])
         session.add(newItem)
         flash('New Item %s successfully Created' % newItem)
         session.commit()
@@ -644,8 +643,7 @@ def newItem(category_name):# Add item base on category name.
         # And which one should be private
         return redirect(url_for('showCatalog'))
     else:
-        return render_template('newitem.html', categories = categories,
-                                                category = category)
+        return render_template('newitem.html', categories = categories)
 
 
 

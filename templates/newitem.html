@@ -13,8 +13,7 @@
               <div class='col-md-6 col-md-offset-1 padding-top' id='formWrapper'>
                 <h1 class="text-dark"><strong>New Item</strong><h1>
                 <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
-                <form action="{{ url_for('newItem',
-                category_name = category.name) }}" method='post'>
+                <form action="{{ url_for('newItem') }}" method='post'>
                   <div class="form-group col-md-6">
                     <label for="title">Title:</label>
                     <input type="text" name="title" class="form-control" placeholder="Title">
@@ -28,13 +27,18 @@
                     <input type="text" class="form-control" placeholder='Price'>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="Categories">Choose a category:</label>
-                    <select class="form-control" id="categories">
-                      <option value="{{category.name}}">
-                        {% for category in categories %}
-                              {{ category.name }}
-                          {% endfor %}
-                      </option>
+                    <label for="category">Select a category:</label>
+                    <select class="form-control" id="category" name="category">
+                      {% for category in categories %}
+                      <!--call category name-->
+                        {% if category.name %}
+                          <option value="{{category.name}}" \
+                              selected>{{category.name}}</option>
+                        {% else %}
+                        <option value="{{category.name}}">{{category.name}}</option>
+                        {% endif %}
+
+                      {% endfor %}
                     </select>
                   </div>
                   <!--Boolean checkbox to include colour selection-->
