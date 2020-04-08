@@ -619,6 +619,7 @@ def newItem():# Add item base on category name.
     """ Renders a form for input of a new item - GET request.
         if I get a post -redirect to 'showCatalog' after creating new item info.
     """
+
     categories = session.query(Category).all()
 
     # ADD LOGIN PERMISSION
@@ -633,9 +634,11 @@ def newItem():# Add item base on category name.
         return redirect('/login')
      # Add SQLAlchemy statements
     if request.method == 'POST':
-        newItem = Item(title = request.form['title'], description = request.form['description'], price = request.form['price'] ,
-        # The passed value can be obtained by request.form['value']
-        category = request.form['category'], user_id=login_session['user_id'])
+        newItem = Item(category = request.form.get('value'),
+                        title = request.form.get('title'),\
+                        description = request.form.get('description'),\
+                        price = request.form.get('price'),\
+                        user_id=login_session['user_id'])
         session.add(newItem)
         flash('New Item %s successfully Created' % newItem)
         session.commit()

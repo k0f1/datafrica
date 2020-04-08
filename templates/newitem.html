@@ -30,7 +30,8 @@
                     <label for="category">Select a category:</label>
                     <select class="form-control" id="category" name="category">
                       {% for category in categories %}
-                      <!--call category name-->
+                      <!--Create an if statement that looks for a name-->
+                      <!--By call category name-->
                         {% if category.name %}
                           <option value="{{category.name}}" \
                               selected>{{category.name}}</option>
