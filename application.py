@@ -477,7 +477,7 @@ def showCategory(category_name):
                           categoryItems = categoryItems)
 
 
-
+# Role required - employee creator
 @app.route('/catalog/create', methods = ['GET', 'POST'])
 def newCategory():
     """ Renders a form for input of a new Category - GET request.
@@ -510,6 +510,7 @@ def newCategory():
         return render_template('newcategory.html')
 
 
+# Role required -employee creator
 @app.route('/catalog/<category_name>/edit', methods = ['GET', 'POST'])
 def editACategoryName(category_name):
     """1. First execute a query to find the exact item we want to update:       Find entry and store it in a variable
@@ -553,7 +554,7 @@ def editACategoryName(category_name):
                                     category = categoryToEdit)
 
 
-
+# Role required - employee creator
 @app.route('/catalog/<category_name>/delete', methods = ['GET', 'POST'])
 def deleteCategory(category_name):
     # Execute a query to find the category and store it in a variable.
@@ -611,7 +612,7 @@ def showItem(category_name, item_title):
 
 
 
-
+# Role required: User- creator
 # "This page will be for adding a new Item"
 @app.route('/catalog/new',
 methods = ['GET', 'POST'])
@@ -650,7 +651,7 @@ def newItem():# Add item base on category name.
 
 
 
-
+# Role required user- creator
 # "This page is for editing Item %s" % item_id
 @app.route('/catalog//<category_name>/<item_title>/edit',
 methods = ['GETS', 'POST'])
@@ -697,7 +698,7 @@ def editItem(category_name, item_title):
 
 
 
-
+# Role required: User creator
 # "This page is for deleting Item %s" %item_id
 @app.route('/catalog/<category_name>/<item_title>/delete',
     methods = ['GET', 'POST'])

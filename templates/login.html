@@ -35,23 +35,6 @@
         }
       </script>
 
-      <!--Facebook SDK -->
-      <script>
-              // The beginging of facebook script
-
-                  // Facebook authentication
-                  window.fbAsyncInit = function() {
-                    FB.init({
-                      appId            : '#',
-                      autoLogAppEvents : true,
-                      xfbml            : true,
-                      version          : 'v6.0'
-                    });
-                  };
-      </script>
-
-
-
 
     <!--This code goes out to google to authenticate our user-->
 
@@ -190,6 +173,29 @@
 
 <!--This is facebook js code -->
 <script>
+<!--Facebook SDK -->
+          // The beginging of facebook script
+
+              // Facebook authentication
+              window.fbAsyncInit = function() {
+                FB.init({
+                  appId            : '#',
+                  autoLogAppEvents : true,
+                  xfbml            : true,
+                  version          : 'v6.0'
+                });
+              };
+
+              (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
+
+
+
               $('#fSignInWrapper').click(function() {
                 Fb.login(function(response) {
                   if (authResponse['accessToken']) {
