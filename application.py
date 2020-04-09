@@ -498,7 +498,7 @@ def newCategory():
                 user_id=login_session.get('user_id'))
         session.add(newCategory)
         session.commit()
-        flash('%s category successfully created' % newCategory.name)
+        flash('New Category %s Successfully Created' % newCategory.name)
         # To redirect my user back to the main page. I can use a helper function
         # Url for takes the name of the function as the first arg,
         # and a number of key args, each corresponding to the variable
@@ -542,11 +542,11 @@ def editACategoryName(category_name):
         # Then create an if statement that looks for a name in the form.
         # By calling request form get.
         if request.form.get('name'):
-            # Now reset the name of the category to the new name from the form.
+            # Now reset the name of the category to the new name from the form
             categoryToEdit.name = request.form.get('name')
-        session.add(categoryToEdit)
-        session.commit()
-        flash('The %s is successfully edited' % categoryToEdit)
+        # To edit, you don't need to add it again.
+        session.commit() # commit the change
+        flash('Category successfully edited %s' % categoryToEdit.name)
             # Redirect the user back to the home page.
         return redirect(url_for('showCatalog'))
     else:
@@ -561,14 +561,12 @@ def deleteCategory(category_name):
     category = session.query(Category).filter_by(name=category_name).one()
     categoryToDelete = session.query(Category).\
                         filter_by(name = category.name).one()
-    # To protect each item based on whoever created it.
     # ADD LOGIN PERMISSION
     # If a user name is not detected for a given request.
     # Lets redirect to login page.
     if 'username' not in login_session:
         return redirect('/login')
-        # ADD ALERT MESSAGE TO PROTECT.
-
+    # To protect each item based on whoever created it.
     # If a user isn't logged in or isn't the original creator
     if categoryToDelete.user.id != login_session['user_id']:
         return "<script>function myFunction() {alert( 'You are not\
@@ -579,7 +577,7 @@ def deleteCategory(category_name):
     if request.method == 'POST':
         session.delete(categoryToDelete)
         session.commit()
-        flash('The %s category has been successfully Edited'% categoryToDelete)
+        flash('%s Successfully Deleted' % categoryToDelete.name)
         return redirect(url_for('showCatalog'))
     else:
         return render_template('deletecategory.html',
@@ -641,8 +639,8 @@ def newItem():# Add item base on category name.
                         price = request.form.get('price'),\
                         user_id=login_session['user_id'])
         session.add(newItem)
-        flash('New Item %s successfully Created' % newItem)
         session.commit()
+        flash('New Item %s successfully Created' % newItem.title)
         # Decide which page should be visible to the public
         # And which one should be private
         return redirect(url_for('showCatalog'))
@@ -687,7 +685,7 @@ def editItem(category_name, item_title):
             editedItem.price = request.form['price']
             session.add(editedItem)
             session.commit()
-            flash('Menu Item Successfully Edited')
+            flash('Item Successfully Edited')
             return redirect(url_for('showCategory',
                                    category_name = category_name,
                                    item_title = item_title))
@@ -721,6 +719,7 @@ def deleteItem(category_name, item_title):
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
+        flash('Item Successfully Deleted')
         return redirect(url_for('showCategory',
                                 category_name = category_name,
                                 item_title = item_title))
@@ -730,6 +729,9 @@ def deleteItem(category_name, item_title):
                                 item = itemToDelete)
 
 
+
+#########################
+# Shopping cart
 
 
 @app.route('/catalog/cart')
@@ -812,7 +814,8 @@ def checkout():
     flash("Sorry, checkout is still to be implemented")
     return render_template('display.html')
 
-
+############################
+# End of Shopping cart.
 
 
 @app.route('/logout')

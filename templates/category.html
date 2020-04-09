@@ -1,5 +1,5 @@
 {% extends "main.html" %}
-{% block page_name %} Edit {{category.name}} page {% endblock %}
+{% block page_name %} {{category.name}} page {% endblock %}
 
 {% block content %}
 {% include "header.html" %}
@@ -43,22 +43,29 @@
             <strong>{{ category.name }} Items ({{category.categoryItems}} items)
             </strong>
           </h2>
-                {% if items !=[] %} <!--If items is not an empty list-->
-                    {% for item in items %}
-                      <p class="text-warning item-list">
-                        <!--showItem opnly accepts category_name and item_title -->
-                        <a href = "{{url_for('showItem', category_name = category.name, item_title = item.title)}}">{{item.title}}
-                        </a>
-                      </p>
-                    {% endfor %}
-                {% endif %}
+              {% if items !=[] %} <!--If items is not an empty list-->
+                  {% for item in items %}
+                    <!--showItem opnly accepts category_name and item_title -->
+                    <a class="text-warning" href = "{{url_for('showItem', category_name = category.name,
+                          item_title = item.title)}}">
+                      <div class="text-warning item-list">
+                        <p>{{item.title}}</p>
+                      </div>
+                    </a>
+                  {% endfor %}
+              {% endif %}
 
         </div>
+
+
         <div class="button padding-top, padding-bottom">
           <a class="text-danger" href="{{url_for('editACategoryName', category_name = category.name ) }}"><div class="col-md-1">Edit</div></a>
           <div class="vl"></div>
           <a class="text-danger" href="{{url_for('deleteCategory', category_name = category.name ) }}"><div class="col-md-1">Delete</div></a>
         </div>
+
+
+
       </div>
 
     </div>

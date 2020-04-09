@@ -1,0 +1,6 @@
+*.json
+client_secrets.json
+static/login.js
+static/store.js
+templates/login.html
+

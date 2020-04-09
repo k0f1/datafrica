@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% block page_name %} {{category.name}} category {% endblock %}
+
+
+{% block content %}
+{% include "header.html" %}
+
+
+        <div class="row padding-top padding-bottom">
+          <div class="col-md-1"></div>
+            <div class="col-md-10 main padding-top padding-bottom">
+              <div class='col-md-6 col-md-offset-1 padding-top' id='formWrapper'>
+                <h1 class="text-dark"><strong>Edit Category</strong><h1>
+                <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
+                <form action="{{url_for('editACategoryName', category_name = category.name)}}" method='post'>
+                  <div class="form-group col-md-6">
+                    <label for="editACategoryName">Name:</label>
+                    <input type="text" class="form-control" name="editACategoryName" value="{{category.name}}">
+                  </div>
+                  <!--If colour selection is enabled, Add your item colour codes-->
+                  <button type="submit" class="btn btn-outline-warning">Submit</button>
+                </form>
+              </div>
+            </div>
+
+  <div class="col-md-1"></div>
+</div>
+
+{% endblock %}

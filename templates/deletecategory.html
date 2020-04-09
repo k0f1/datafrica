@@ -1,11 +1,8 @@
 {% extends "main.html" %}
-{% block page_name %} {{item.title}} page {% endblock %}
+{% block page_name %} {{category.name}} delete page {% endblock %}
 
 {% block content %}
 {% include "header.html" %}
-
-
-
 
 
       <div class = 'flash'>
@@ -21,20 +18,23 @@
         {% endwith %}
 
       </div>
-
-
-
       <div class="row padding-top padding-bottom">
         <div class="col-md-1"></div>
           <div class="col-md-10 main flex-column">
             <div class="vertical-center">
               <div>
-                <h1 class="text-dark"><strong>Edit Item</strong><h1>
+                <h2 class="text-dark"><strong>Delete category</strong><h2>
               </div>
               <div>
-                <p>Are you sure you want to delete?</p>
+                <p>Are you sure you want to delete {{ category.name}} category?</p>
               </div>
-              <button type="submit" class="btn btn-outline-warning" formmethod="post">Submit</button>
+              <form action="{{url_for('deleteCategory', category_name = category.name)}}" method= 'post'>
+                <button type="submit" class="btn btn-outline-warning">Delete</button>
+
+                <a href='{{ url_for('showCatalog') }}'>
+              		<button class="btn btn-outline-warning">Cancel</button>
+              	</a>
+              </form>
             </div>
           </div>
         <div class="col-md-1"></div>
