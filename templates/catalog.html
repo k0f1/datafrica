@@ -1,5 +1,5 @@
 {% extends "main.html" %}
-{% block page_name %} Datafrica home page {% endblock %}
+{% block page_name %} Datafrica catalog {% endblock %}
 
 {% block content %}
 {% include "header.html" %}
@@ -39,6 +39,8 @@
 
 
   <div class="col-md-8">
+    <a href="{{url_for('newItem')}}"><p class="text-warning"> Add item</p></a>
+
     <h2 class=" latest-item-list title text-dark">
       <strong>Latest Items</strong>
     </h2>

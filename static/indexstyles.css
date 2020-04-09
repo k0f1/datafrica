@@ -1,0 +1,159 @@
+/*Style the index page */
+
+
+• {
+  box-sizing: border-box!important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: Roboto;
+  font-size: 12px;
+  color: #424242;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+}
+
+
+header, nav, footer, section, article, div {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ddd;
+}
+header {
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  color: #697681;
+  background: white;
+  height: 85px;
+  padding: 15px;
+}
+
+
+
+section {
+  padding: 16px;
+}
+.flex-container {
+  display: flex;
+}
+.space-between {
+  justify-content: space-between;
+}
+.vertical-centerer {
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+.header-content {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.logo {
+  width: 200px;
+  display: inline-block;
+  margin: 10px 0px;
+}
+.menu {
+  list-style: none;
+  list-style-type: none;
+}
+.menu > li {
+  display: inline;
+  margin-left: 37.5px;
+}
+
+
+
+.wrapper {
+display: grid;
+}
+* {box-sizing: border-box;}
+
+.wrapper {
+border: 2px solid #f76707;
+border-radius: 5px;
+background-color: #fff4e6;
+}
+
+.wrapper > div {
+border: 2px solid #ffa94d;
+border-radius: 5px;
+background-color: #ffd8a8;
+padding: 1em;
+color: #d9480f;
+}
+
+
+header {
+  background-color: #000000;
+  height: 85px;
+}
+
+
+.header__menu svg {
+  width: 32px;
+  fill: #E0E0E0;
+}
+
+.header__logo {
+    height: 72px;
+    margin-right: 1em;
+    vertical-align: top;
+    margin-top: 12px;
+}
+
+
+.header__title {
+    font-weight: 400;
+    font-size: 4em;
+    margin: 0.5em 0.25em;
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+
+/*Footer of index page */
+.footer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.box {
+  width: 33%;
+  height: 200px;
+}
+
+.dark_blue {background-color: blue;}
+.light_blue {background-color: #18b6fd;}
+.green {background-color: green;}
+
+
+/*End of index page */

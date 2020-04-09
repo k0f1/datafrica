@@ -1,14 +1,71 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='indexstyles.css') }}">
+
+    <!--Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+
+    <!--Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+
+
   </head>
   <body>
-    <div class="wrapper">
-      <div>One</div>
-      <div>Two</div>
-      <div>Three</div>
-      <div>Four</div>
-      <div>Five</div>
-    </div>
+    <header>
+      <div class="vertical-centerer flex-container">
+        <div class="flex-container space-between header-content">
+          <div>
+            <span>
+              <a id='appName'  class="header_logo" href="{{url_for('showIndex')}}">
+                <span class="glyphicon glyphicon-home" aria-hidden="true" alt="Datafrica logo"></span> Catalog
+              </a>
+            </span>
+          </div>
+          <div>
+            <ul class="menu">
+              <!--Conditional login and logout links-->
+            {% if 'username' in login_session %}
+              <li><a id='logout' type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
+            {% else  %}
+              <li><a type="button" class="btn btn-warning btn-sm" href="{{url_for('showLogin')}}">Login</a></li>
+            {% endif%}
+              <li>
+                <a id='logout' type="button" class="btn btn-default btn-sm" href="#">Sign in</a>
+              </li>
+              <li>
+                <a id="menu" class="header__menu">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="content">
+        <div class="wrapper grid-container">
+          <div class="hero">Banner</div> <!--Banner end-->
+          <div>Three</div>
+          <div>Four</div>
+          <div>Five</div>
+        </div><!-- End of wrapper-->
+      </section>
+      <footer>
+        <div class="footer flex-container">
+          <div class="box dark_blue"></div>
+          <div class="box light_blue"></div>
+          <div class="box green"></div>
+        </div>
+      </footer>
+    </main>
   </body>
 </html>

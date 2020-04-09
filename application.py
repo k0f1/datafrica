@@ -409,6 +409,10 @@ def productItemJSON(category_name, item_title):
     return jsonify(Product_Item = Product_Item.serialize)
 
 
+@app.route('/index')
+def showIndex():
+    return render_template("index.html")
+
 
 # Show all Categories and latest Item-list associated with them
 @app.route('/')
@@ -429,9 +433,7 @@ def showCatalog():
     # render one template or the other.
     # If a user isn't logged in or isn't the original creator
     if 'username' not in login_session:
-        return render_template('publiccatalog.html',
-                                categories = categories,
-                                latestItems = latestItems)
+        return render_template('index.html')
     else:
         return render_template('catalog.html',
                                 categories = categories,
