@@ -209,7 +209,11 @@ Other media type is print if you think your users will print the page -->
   display: flex;
 }
 
-
+.cta {
+  background-color:  #fff7e6;
+  height: 300px;
+  width: 100%;
+}
 
 
 /*Footer of index page */
