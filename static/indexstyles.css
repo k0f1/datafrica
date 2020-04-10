@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5 {
 }
 
 
-header, nav, footer, section, article, div {
+header, nav, footer, section, article, div, figure {
   box-sizing: border-box;
 }
 
@@ -98,13 +98,12 @@ display: grid;
 .wrapper {
 border: 2px solid #f76707;
 border-radius: 5px;
-background-color: #fff4e6;
+
 }
 
 .wrapper > div {
 border: 2px solid #ffa94d;
 border-radius: 5px;
-background-color: #ffd8a8;
 padding: 1em;
 color: #d9480f;
 }
@@ -129,12 +128,72 @@ header {
 }
 
 
-.header__title {
+a .header__title {
     font-weight: 400;
     font-size: 4em;
     margin: 0.5em 0.25em;
     display: inline-block;
     text-decoration: none;
+}
+
+
+ul.menu li {
+  vertical-align: top;
+}
+
+.hero {
+  display: flex;
+  height: 450px;
+
+}
+
+.hero.justify-content {
+  justify-content: center;
+}
+
+video {
+  width: 456px;
+  height: 340px;
+}
+
+@media screen and (min-width:300px) {
+  video {width: 300px; height: 169px;}
+}
+
+@media screen and (min-width:500px) {
+  video {width: 600px; height: 338px;}
+}
+
+/*-- To apply different styles to different devices charcteristics such as width,
+height, or device pixel ratio; You can chage everything from background images
+to restructuring the site's layout and even more.
+Simply include an additional stylesheet in your page, with media query. -->
+
+<link rel="stylesheet" media="screen and (min-width: 300px)" href="pattern.css">
+<link rel="stylesheet" media="screen and (min-width: 500px)" href="over500.css">
+
+
+<!--The first from teh top will apply when the screen is large than 300pixels. The second style from the top will only apply if the screen is over 500 pixels.
+The media attribute type in this case is the value screen and min-width 500px.
+Other media type is print if you think your users will print the page -->
+
+*/
+/* Style products and product*/
+.product {
+  width: 100%;
+  height: 450px;
+  display: flex;
+}
+
+.call_to_action {
+  width: 100%;
+  height: 250px;
+  display: flex;
+}
+
+.call_to_action .light_blue {
+  background-color: #DCD4CA;
+  width: 100%;
 }
 
 
@@ -147,13 +206,21 @@ header {
 }
 
 .box {
-  width: 33%;
-  height: 200px;
+  width: 50%;
+  height: 100%;
 }
+
+.boxes {
+  width: 33%;
+  height: 400px;
+}
+
 
 .dark_blue {background-color: blue;}
 .light_blue {background-color: #18b6fd;}
 .green {background-color: green;}
 
 
-/*End of index page */
+.wrapper.hero {
+  background-color:
+}

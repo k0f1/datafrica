@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div class="wrapper row">
+      <div class="image-wrapper">
+        <div class="image-inner"><a href="#"></a></div>
+      </div>
+      <div class="card-content-wrapper grid">
+
+        <div class="card-heading-wrapper">
+          <div>
+            <span class="tag tag--new card ng-star-inserted">New</span>
+            <h3>Latest Items</h3>
+          </div>
+          <h3 class="">
+            {% for category in categories %} <!-- Run this loop-->
+              {% if item.category_id == category.id %}
+                <a href = "{{url_for('showItem', category_name = category.name,
+                        item_title = item.title)}}">
+                  <div class="col-md-8 text-warning">
+                    <p>{{ item.title }}<em class="text-muted">({{ item.category.name }})</em></p>
+                  </div>
+                </a>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+          </h3>
+          <div class="cta-wrapper">
+            <div></div>
+            <div></div>
+          </div>
+          <div class="hl"></div>
+          <div class-"item-details card-inner-lower"><a href="#">ITEM DETAILS</a></div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </body>
+</html>
