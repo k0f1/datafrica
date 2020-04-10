@@ -22,6 +22,15 @@ body {
   color: #424242;
 }
 
+
+.container {
+  display: grid;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+
 h1, h2, h3, h4, h5 {
   margin: 0;
 }
@@ -191,18 +200,26 @@ Other media type is print if you think your users will print the page -->
   display: flex;
 }
 
-.call_to_action .light_blue {
+.call_to_action {
   background-color: #DCD4CA;
-  width: 100%;
+  max-width: 100%;
 }
 
 
 
 /*Footer of index page */
+footer {
+  background-color: #b3b3b3;
+  color: white;
+  padding: 20px 20px 15px 15px;
+}
+
 .footer {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  margin-left: 20px;
+
 }
 
 .box {
@@ -215,12 +232,10 @@ Other media type is print if you think your users will print the page -->
   height: 400px;
 }
 
-
-.dark_blue {background-color: blue;}
-.light_blue {background-color: #18b6fd;}
-.green {background-color: green;}
-
-
-.wrapper.hero {
-  background-color:
+span#social-media {
+  width: 50%;
+}
+p#copy-right {
+  padding-left: 20px;
+  margin-left: 20px;
 }

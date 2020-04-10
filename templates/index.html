@@ -23,139 +23,182 @@
 
   </head>
   <body>
-    <header>
-      <div class="vertical-centerer flex-container">
-        <div class="flex-container space-between header-content">
-          <div>
-            <a id='appName'  class="header_logo" href="{{url_for('showIndex')}}">
-                <span class="glyphicon glyphicon-home" aria-hidden="true" alt="Datafrica logo"></span> Catalog
-            </a>
-          </div>
-          <div>
-            <ul class="menu">
-              <!--Conditional login and logout links-->
-            {% if 'username' in login_session %}
-              <li><a id='logout' type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
-            {% else  %}
-              <li><a type="button" class="btn btn-warning btn-sm" href="{{url_for('showLogin')}}">Login</a></li>
-            {% endif%}
-              <li>
-                <a id='logout' type="button" class="btn btn-default btn-sm" href="#">Sign in</a>
-              </li>
-              <li>
-                <a id="menu" class="header__menu">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
-                  </svg>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </header>
-    <main>
-      <section class="content">
-        <div class="wrapper grid-container">
-
-
-          <div class="hero justify-content">
-            <section>
-              <div>
-                <h2 class="title">Built for eCommerce</h2>
-                <p class="name"> Up load it, publish it, </br>
-                share it and embed it.</p>
-              </div>
-              <div class="call_to_action"><span>Call to action here</span></div>
-            </section>
-            <section>
-              <div class=" box datafrica_flip_book">
-                <div class="top">
-                  <video width="456" height=340"" controls poster="{{url_for('static', filename="catalog_poster.jpeg")}}"
-                  <!--To make video eleent clicable -->
-                        onclick="this.play();">
-                    <!--Let's provide multiple formats of our video -->
-                    <source src="assets/venice.mp4", type="video/mp4">
-                    <source src="assets/venice.ogv", type="video/ogg">
-                    <source src="assets/venice.webm", type="video/webm">
-                    Your browser does not support HTML_5 video.
-                  </video>
-                </div>
-              </div>
-            </section>
-          </div> <!--Banner end-->
-
-
-          <h2> Digital catalogs</h2>
-          <p>On flip book, flip card or video. High definition graphics to delight your customers.
-          For eCommerce, publishers, shop owners. Automate catalog creation from pdf</p>
-
-          <div class="product video justify-content">
-            <section>
-              <div class="box datafrica_video_card">
-                <div class="top">
-                  <video width="456" height=340"" controls poster="{{url_for('static', filename="beta_release.jpeg")}}"
-                        onclick="this.play();">
-                        <!--To make video eleent clicable -->
-                    <!--Let's provide multiple formats of our video -->
-                    <source src="{{url_for('static', filename="beta_release.mp4")}}", type="video/mp4">
-                    <source src="{{url_for('static', filename="beta_release.ogv")}}", type="video/ogg">
-                    <source src="{{url_for('static', filename="beta_release.webm")}}", type="video/webm">
-                    <source src="{{url_for('static', filename="beta_release.mov")}}", type="video/mov">
-                    Your browser does not support HTML_5 video.
-                  </video>
-                </div>
-              </div>
-            </section>
-            <section>
-              <div class="box">
-                <h3>On Video</h3>
-                <p>Personalised space with your own name and your own video ready for sharing on your website, email and social media
-                </p>
-              </div>
-            </section>
-          </div><!--End of product video card -->
-          <div class="product flip_card justify-content">
-            <section>
-              <div class="box">
-                <h2 class="name"> Display on and item on Datafrica flip card</h2>
-                <p>Publish, share and embed import. Place your "Add to cart" button for delighted customers to imeediately buy at your website..
-                </p>
-              </div>
-            </section>
-            <section>
-              <div class=" box datafrica_flip_book">
-                <div class="top">
-                  <video width="456" height=340"" controls poster="{{url_for('static', filename="catalog_poster.jpeg")}}"
-                  <!--To make video eleent clicable -->
-                        onclick="this.play();">
-                    <!--Let's provide multiple formats of our video -->
-                    <source src="assets/venice.mp4", type="video/mp4">
-                    <source src="assets/venice.ogv", type="video/ogg">
-                    <source src="assets/venice.webm", type="video/webm">
-                    Your browser does not support HTML_5 video.
-                  </video>
-                </div>
-              </div>
-            </section>
-          </div> <!--Flip card end-->
-          <div class="call_to_action flex container">
-            <div class="box light_blue">
-              Catalogs that is programmable for ecommerce, publishing and digital advertising.
+    <div class="container">
+      <header>
+        <div class="vertical-centerer flex-container">
+          <div class="flex-container space-between header-content">
+            <div>
+              <a id='appName'  class="header_logo" href="{{url_for('showIndex')}}">
+                  <span class="glyphicon glyphicon-home" aria-hidden="true" alt="Datafrica logo"></span> Catalog
+              </a>
             </div>
-          </div> <!--End of Flip card -->
-        </div><!-- End of wrapper-->
-      </section>
-      <footer>
-        <div class="footer flex-container">
-          <div class="boxes dark_blue">
-
-          </div>
-          <div class="boxes light_blue"></div>
-          <div class="boxes green">
+            <div>
+              <ul class="menu">
+                <!--Conditional login and logout links-->
+              {% if 'username' in login_session %}
+                <li><a id='logout' type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
+              {% else  %}
+                <li><a type="button" class="btn btn-warning btn-sm" href="{{url_for('showLogin')}}">Login</a></li>
+              {% endif%}
+                <li>
+                  <a id='logout' type="button" class="btn btn-default btn-sm" href="#">Request a Demo</a>
+                </li>
+                <li>
+                  <a id="menu" class="header__menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </footer>
-    </main>
+      </header>
+      <main>
+        <section class="content">
+          <div class="wrapper grid-container">
+
+
+            <div class="hero justify-content">
+              <section>
+                <div>
+                  <h2 class="title">Built for eCommerce</h2>
+                  <p class="name"> Up load it, publish it, </br>
+                  share it and embed it.</p>
+                </div>
+                <div class="call_to_action"><span>Call to action here</span></div>
+              </section>
+              <section>
+                <div class=" box datafrica_flip_book">
+                  <div class="top">
+                    <video width="456" height=340"" controls poster="{{url_for('static', filename="catalog_poster.jpeg")}}"
+                    <!--To make video eleent clicable -->
+                          onclick="this.play();">
+                      <!--Let's provide multiple formats of our video -->
+                      <source src="assets/venice.mp4", type="video/mp4">
+                      <source src="assets/venice.ogv", type="video/ogg">
+                      <source src="assets/venice.webm", type="video/webm">
+                      Your browser does not support HTML_5 video.
+                    </video>
+                  </div>
+                </div>
+              </section>
+            </div> <!--Banner end-->
+
+
+            <h2> Digital catalogs</h2>
+            <p>On flip book, flip card or video. High definition graphics to delight your customers.
+            For eCommerce, publishers, shop owners. Automate catalog creation from pdf</p>
+
+            <div class="product video justify-content">
+              <section>
+                <div class="box datafrica_video_card">
+                  <div class="top">
+                    <video width="456" height=340"" controls poster="{{url_for('static', filename="beta_release.jpeg")}}"
+                          onclick="this.play();">
+                          <!--To make video eleent clicable -->
+                      <!--Let's provide multiple formats of our video -->
+                      <source src="{{url_for('static', filename="beta_release.mp4")}}", type="video/mp4">
+                      <source src="{{url_for('static', filename="beta_release.ogv")}}", type="video/ogg">
+                      <source src="{{url_for('static', filename="beta_release.webm")}}", type="video/webm">
+                      <source src="{{url_for('static', filename="beta_release.mov")}}", type="video/mov">
+                      Your browser does not support HTML_5 video.
+                    </video>
+                  </div>
+                </div>
+              </section>
+              <section>
+                <div class="box">
+                  <h3>On Video</h3>
+                  <p>Personalised space with your own name and your own video ready for sharing on your website, email and social media
+                  </p>
+                </div>
+              </section>
+            </div><!--End of product video card -->
+            <div class="product flip_card justify-content">
+              <section>
+                <div class="box">
+                  <h2 class="name"> Display on and item on Datafrica flip card</h2>
+                  <p>Publish, share and embed import. Place your "Add to cart" button for delighted customers to imeediately buy at your website..
+                  </p>
+                </div>
+              </section>
+              <section>
+                <div class=" box datafrica_flip_book">
+                  <div class="top">
+                    <video width="456" height=340"" controls poster="{{url_for('static', filename="catalog_poster.jpeg")}}"
+                    <!--To make video eleent clicable -->
+                          onclick="this.play();">
+                      <!--Let's provide multiple formats of our video -->
+                      <source src="assets/venice.mp4", type="video/mp4">
+                      <source src="assets/venice.ogv", type="video/ogg">
+                      <source src="assets/venice.webm", type="video/webm">
+                      Your browser does not support HTML_5 video.
+                    </video>
+                  </div>
+                </div>
+              </section>
+            </div> <!--Flip card end-->
+            <div class="call_to_action flex container">
+              <div class="box light_blue">
+                Catalogs that is programmable for ecommerce, publishing and digital advertising.
+              </div>
+            </div> <!--End of Flip card -->
+          </div><!-- End of wrapper-->
+        </section>
+
+        <footer>
+          <div class="footer flex-container">
+            <div class="boxes company">
+              <div><h3>COMPANY</h3></div>
+              <div>
+                <ul>
+                  <li>About us</li>
+                  <li>Terms of Service</li>
+                  <li>Privacy Policy</li>
+                  <li>Accessibility</li>
+                  <li>Trust and Safety</li>
+                </ul>
+              </div>
+
+            </div>
+            <div class="boxes resources">
+              <div><h3>RESOURCES</h3></div>
+              <div>
+                <ul>
+                  <li>Customer Help</li>
+                  <li>Customer Stories</li>
+                  <li>Blog</li>
+                  <li>Reviews</li>
+                  <li>APIs</li>
+                </ul>
+              </div>
+
+            </div>
+            <div class="boxes browse">
+              <div><h3>SOLUTIONS</h3></div>
+              <div>
+                <ul>
+                  <li>eCommerce catalog</li>
+                  <li>Flipbooks</li>
+                  <li>Integration</li>
+                  <li>Animation</li>
+                  <li>Native Video</li>
+                  <li>Embed images</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div id="social-media" class="mobile-apps row footer">
+              <div class="box"><span>follow us</span></div>
+              <div class="mobile-apps box"></div>
+            </div>
+            <div id="copy-right row"><p>© 2020 DATAFRICA</p> </div>
+          </div>
+        </footer>
+      </main>
+    </div>
   </body>
 </html>
