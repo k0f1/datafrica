@@ -31,6 +31,13 @@ body {
 
 
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 15px 15px;
+}
+
 h1, h2, h3, h4, h5 {
   margin: 0;
 }
@@ -201,7 +208,7 @@ Other media type is print if you think your users will print the page -->
 }
 
 .call_to_action {
-  background-color: #DCD4CA;
+  background-color: #f2f2f2;
   max-width: 100%;
 }
 
@@ -210,14 +217,14 @@ Other media type is print if you think your users will print the page -->
 /*Footer of index page */
 footer {
   background-color: #b3b3b3;
-  color: white;
+  color: black;
   padding: 20px 20px 15px 15px;
 }
 
 .footer {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  height: 500px;
   margin-left: 20px;
 
 }
@@ -238,4 +245,68 @@ span#social-media {
 p#copy-right {
   padding-left: 20px;
   margin-left: 20px;
+}
+
+/*Styling social media icons   */
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+  border-radius: 50%;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+
+
+.fa-reddit {
+  background: #ff5700;
+  color: white;
+}
+
+#outer-social-media {
+  height: 84px;
+}
+
+ul.list-inline {
+
+}
+
+
+.list-unstyled {
+  list-style: none;
 }

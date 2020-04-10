@@ -9,6 +9,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='indexstyles.css') }}">
 
     <!--Google Font -->
@@ -149,53 +152,83 @@
         </section>
 
         <footer>
-          <div class="footer flex-container">
-            <div class="boxes company">
-              <div><h3>COMPANY</h3></div>
-              <div>
-                <ul>
-                  <li>About us</li>
-                  <li>Terms of Service</li>
-                  <li>Privacy Policy</li>
-                  <li>Accessibility</li>
-                  <li>Trust and Safety</li>
-                </ul>
+          <div class="footer grid flex-container">
+            <div class="footer-links">
+              <div class="row">
+                <div class="col-md-4 col-xl-3 col-xl-offset-1">
+                  <div>
+                    <h2>COMPANY</h2>
+                    <div>
+                      <ul class="list-unstyled">
+                        <li>About us</li>
+                        <li>Terms of Service</li>
+                        <li>Privacy Policy</li>
+                        <li>Accessibility</li>
+                        <li>Trust and Safety</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-xl-3 col-xl-offset-1">
+                  <div>
+                    <h2>RESOURCES</h2>
+                    <div>
+                      <ul class+"list-unstyled">
+                        <li>Customer help</li>
+                        <li>Customer stories</li>
+                        <li>Blog</li>
+                        <li>Reviews</li>
+                        <li>APIs</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-xl-3 col-xl-offset-1">
+                  <div>
+                    <h2>SOLUTIONS</h2>
+                    <div>
+                      <ul class="list-unstyled">
+                        <li>eCommerce catalog</li>
+                        <li>Flipbooks</li>
+                        <li>Integration</li>
+                        <li>Animation</li>
+                        <li>Embeded images and Videos</li>
+                      </ul>
+                    </div>
+                  X</div>
+                </div>
               </div>
-
             </div>
-            <div class="boxes resources">
-              <div><h3>RESOURCES</h3></div>
-              <div>
-                <ul>
-                  <li>Customer Help</li>
-                  <li>Customer Stories</li>
-                  <li>Blog</li>
-                  <li>Reviews</li>
-                  <li>APIs</li>
-                </ul>
+            <div class="footer-social">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="footer-social-icons">
+                    <h2>Follow us</h2>
+                    <ul class="list-inline">
+                      <!-- Add font awesome icons -->
+                      <li><a href="#" class="fa fa-facebook"></a></li>
+                      <li><a href="#" class="fa fa-twitter"></a></li>
+                      <li><a href="#" class="fa fa-linkedin"></a></li>
+                      <li><a href="#" class="fa fa-youtube"></a></li>
+                      <li><a href="#" class="fa fa-instagram"></a></li>
+                      <li><a href="#" class="fa fa-reddit"></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="footer-social-icons footer-download">
+                    <h2>Mobile app</h2>
+                    <ul>
+                      <li><i class="fab fa-android"></i></li>
+                      <li><i class="fab fa-apple"></i></li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-
             </div>
-            <div class="boxes browse">
-              <div><h3>SOLUTIONS</h3></div>
-              <div>
-                <ul>
-                  <li>eCommerce catalog</li>
-                  <li>Flipbooks</li>
-                  <li>Integration</li>
-                  <li>Animation</li>
-                  <li>Native Video</li>
-                  <li>Embed images</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div id="social-media" class="mobile-apps row footer">
-              <div class="box"><span>follow us</span></div>
-              <div class="mobile-apps box"></div>
-            </div>
-            <div id="copy-right row"><p>© 2020 DATAFRICA</p> </div>
+            <p class="copy-right text-center">
+              <small>© 2020 DATAFRICA</small>
+            </p>
           </div>
         </footer>
       </main>
