@@ -736,30 +736,6 @@ def deleteItem(category_name, item_title):
 
 
 
-# FLIPBOOK
-
-@app.route('/catalog/flipbook')
-def flipBook(category_name, item_title):
-    """Loop over items and create a front of back page for flipbook """
-    # Execute a query for all items
-    items = session.query(Item).all()
-    # while-loop, and the *break* and *continue* statements
-    # Access every 3rd element in a list.
-    i = 0
-    while i < len(items):
-        #if i have indices i to 2
-        item[i:3]
-        if page[i]:
-            return front
-        if page[i+1]:
-            return back
-        i = i + 3
-    return render_template('flipbook.html',
-                            items = items,
-                            front = front,
-                            back = back)
-
-
 
 
 
