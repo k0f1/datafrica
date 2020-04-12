@@ -12,7 +12,7 @@
               <div class='col-md-6 col-md-offset-1 padding-top' id='formWrapper'>
                 <h1 class="text-dark"><strong>Edit Category</strong><h1>
                 <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
-                <form action="{{url_for('editACategoryName', category_name = category.name)}}" method='post'>
+                <form action="{{url_for('editACategoryName', category_name = category.name, category_id = category.id)}}" method='post'>
                   <div class="form-group col-md-6">
                     <label for="editACategoryName">Name:</label>
                     <input type="text" class="form-control" name="editACategoryName" value="{{category.name}}">

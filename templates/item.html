@@ -29,9 +29,9 @@
         <p class="price">{{item.price}}</p>
 
         <div class="button padding-top, padding-bottom">
-          <a class="text-danger" href="{{url_for('editItem', category_name = category.name, item_title=item.title ) }}"><div class="col-md-1">Edit</div></a>
+          <a class="text-danger" href="{{url_for('editItem', category_name = category.name, category_id= category.id, item_title=item.title, item_id= item.id ) }}"><div class="col-md-1">Edit</div></a>
           <div class="vl"></div>
-          <a class="text-danger" href="{{url_for('deleteItem', category_name = category.name, item_title=item.title ) }}"><div class="col-md-1">Delete</div></a>
+          <a class="text-danger" href="{{url_for('deleteItem', category_name = category.name, category_id= category.id, item_title=item.title, item_id = item.id ) }}"><div class="col-md-1">Delete</div></a>
         </div>
       </div>
 

@@ -444,15 +444,17 @@ def showCatalog():
 
 
 # "Show item-list associated with a specific category
-@app.route('/catalog/<category_name>/items')
-def showCategory(category_name):
+@app.route('/catalog/<category_name>/<int:category_id>/items')
+def showCategory(category_name, category_id):
     # Add SQLAlchemy statements
     """Takes in a specified category_name and returns the the items associated with it. Renders a web page showing all the categories on one side and the items on the other side of the page.
     """
     # The filter_by function always returns a collection of objects
     # .one method ensures only one category is returned
     category = session.query(Category).\
-            filter_by(name = category_name).one()
+            filter_by(id = category_id).one()
+    # To protect each category based on whoever created it.
+    creator = getUserInfo(category.user_id)
 
 
     categories = session.query(Category).all()
@@ -462,25 +464,25 @@ def showCategory(category_name):
                             Item.id)).filter_by(
                             category_id = category.id).one()
 
-    # # # If there is a username value in the login_session, we would
-    # render one template or the other.
-    # If a user isn't logged in
-    if 'username' not in login_session:
-        # Decide which page to show, public or private
-        return render_template('publiccategory.html',
-                                categories = categories,
-                                category = category,
-                                items = items,
-                                categoryItems = categoryItems)
+    # # If a user isn't logged in or isn't the original creator, we would
+    # render one template or the other. # Decide which page to show,
+    # index or category.html
+    if 'username' not in login_session or creator.id !=login_session['user_id']:
+        return render_template('index.html')
     else:
         return render_template('category.html',
                           categories = categories,
                           category = category,
                           items = items,
-                          categoryItems = categoryItems)
+                          categoryItems = categoryItems,
+                          creator = creator)
 
 
-# Role required - employee creator
+# If a user isn't logged in or isn't the original creator
+
+
+
+# Role required - creator
 @app.route('/catalog/create', methods = ['GET', 'POST'])
 def newCategory():
     """ Renders a form for input of a new Category - GET request.
@@ -514,8 +516,8 @@ def newCategory():
 
 
 # Role required -employee creator
-@app.route('/catalog/<category_name>/edit', methods = ['GET', 'POST'])
-def editACategoryName(category_name):
+@app.route('/catalog/<category_name>/<int:category_id>/edit', methods = ['GET', 'POST'])
+def editACategoryName(category_name, category_id):
     """1. First execute a query to find the exact item we want to update:       Find entry and store it in a variable
         2. Next Reset values: we declare the new name of the variable
         3. Next we add the variable to our session
@@ -523,9 +525,9 @@ def editACategoryName(category_name):
  """
     # Execute a query to find the category and store it in
     # a variable editedCategory.
-    category = session.query(Category).filter_by(name=category_name).one()
+    category = session.query(Category).filter_by(id=category_id).one()
     categoryToEdit = session.query(Category).\
-                filter_by(name = category_name).one()
+                filter_by(id = category_id).one()
     # ADD LOGIN PERMISSION
     # Protect app modification from non-users
     # If a username is not detected for a given request.
@@ -558,12 +560,12 @@ def editACategoryName(category_name):
 
 
 # Role required - employee creator
-@app.route('/catalog/<category_name>/delete', methods = ['GET', 'POST'])
-def deleteCategory(category_name):
+@app.route('/catalog/<category_name>/<int:category_id>/delete', methods = ['GET', 'POST'])
+def deleteCategory(category_name, category_id):
     # Execute a query to find the category and store it in a variable.
-    category = session.query(Category).filter_by(name=category_name).one()
+    category = session.query(Category).filter_by(id=category_id).one()
     categoryToDelete = session.query(Category).\
-                        filter_by(name = category.name).one()
+                        filter_by(id = category.id).one()
     # ADD LOGIN PERMISSION
     # If a user name is not detected for a given request.
     # Lets redirect to login page.
@@ -589,14 +591,14 @@ def deleteCategory(category_name):
 
 
 # "This page is the Item for %s" % item_id
-@app.route('/catalog/<category_name>/<item_title>/')
-def showItem(category_name, item_title):
+@app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/')
+def showItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Renders product information web page of an item.
     """
     category = session.query(Category).\
-            filter_by(name = category_name).one()
-    item = session.query(Item).filter_by(title = item_title).one()
+            filter_by(id = category_id).one()
+    item = session.query(Item).filter_by(id = item_id).one()
 
     # # # If there is a username value in the login_session, we would
     # render one template or the other.
@@ -654,9 +656,9 @@ def newItem():# Add item base on category name.
 
 # Role required user- creator
 # "This page is for editing Item %s" % item_id
-@app.route('/catalog//<category_name>/<item_title>/edit',
+@app.route('/catalog//<category_name>/<int:category_id>/<item_title>/<int:item_id>/edit',
 methods = ['GETS', 'POST'])
-def editItem(category_name, item_title):
+def editItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Edit the details of the specified item.
         Returns a GET with edititem.html - form with inputs to edit item info
@@ -667,7 +669,7 @@ def editItem(category_name, item_title):
     # To protect each item based on whoever created it.
     creator = getUserInfo(item.user_id)
 
-    category = session.query(Category).filter_by(name = category_name).one()
+    category = session.query(Category).filter_by(id = category_id).one()
     # ADD LOGIN PERMISSION
     # If a user name is not detected for a given request.
     # Lets redirect to login page.
@@ -701,9 +703,9 @@ def editItem(category_name, item_title):
 
 # Role required: User creator
 # "This page is for deleting Item %s" %item_id
-@app.route('/catalog/<category_name>/<item_title>/delete',
+@app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/delete',
     methods = ['GET', 'POST'])
-def deleteItem(category_name, item_title):
+def deleteItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Delete a specified item from the database.
         Returns:
@@ -717,15 +719,17 @@ def deleteItem(category_name, item_title):
         return redirect('/login')
 
     # filter_by uses the names of the columns in a table
-    category = session.query(Category).filter_by(name = category_name).one()
-    itemToDelete = session.query(Item).filter_by(title =item_title).one()
+    category = session.query(Category).filter_by(id = category_id).one()
+    itemToDelete = session.query(Item).filter_by(id =item_id).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
         flash('Item Successfully Deleted')
         return redirect(url_for('showCategory',
                                 category_name = category_name,
-                                item_title = item_title))
+                                category_id = category_id,
+                                item_title = item_title,
+                                item_id = item_id))
     else:
         return render_template('deleteitem.html',
                                 category = category_name,

@@ -28,7 +28,7 @@
               <div>
                 <p>Are you sure you want to delete {{ category.name}} category?</p>
               </div>
-              <form action="{{url_for('deleteCategory', category_name = category.name)}}" method= 'post'>
+              <form action="{{url_for('deleteCategory', category_name = category.name, category_id = category.id)}}" method= 'post'>
                 <button type="submit" class="btn btn-outline-warning">Delete</button>
 
                 <a href='{{ url_for('showCatalog') }}'>
