@@ -15,7 +15,8 @@
                 <form action="{{url_for('editACategoryName', category_name = category.name, category_id = category.id)}}" method='post'>
                   <div class="form-group col-md-6">
                     <label for="editACategoryName">Name:</label>
-                    <input type="text" class="form-control" name="editACategoryName" value="{{category.name}}">
+                    <!--Must match what will be shown in lable to the value of attr name in input -->
+                    <input type="text" class="form-control" name="name" value="{{category.name}}">
                   </div>
                   <!--If colour selection is enabled, Add your item colour codes-->
                   <button type="submit" class="btn btn-outline-warning">Submit</button>

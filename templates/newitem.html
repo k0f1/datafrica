@@ -25,16 +25,22 @@
 
                     <div class="form-group col-md-6">
                       <label for="description">Description:</label>
-                      <textarea type="text" class="form-control" placeholder='Description' rows="5">Description</textarea>
+                      <textarea type="text" name='Description' class="form-control" placeholder='Description' rows="5"></textarea>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="price">Price:</label>
-                      <input type="text" class="form-control" placeholder='Price'>
+                      <input type="text" name='Price' class="form-control" placeholder='Price'>
+                    </div>
+                    <div class="form-group col-md-6">
+
+                      <!--Upload image -->
+                      <label for="img">Select image:</label>
+                      <input type="file" id="img" name="Select image" accept="image/*">
                     </div>
 
                     <div class="form-group col-md-6">
                       <label for="category">Select a category:</label>
-                      <select class="form-control" id="category" name="category">
+                      <select class="form-control" id="category" name="Select a category">
                         {% for category in categories %}
                         <!--Create an if statement that looks for a name-->
                         <!--By call category name-->
