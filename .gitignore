@@ -4,4 +4,6 @@ static/login.js
 static/store.js
 templates/login.html
 templates/index.html
+static/flipbookstyles.css
+templates/itemcard.html
 
