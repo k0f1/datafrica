@@ -56,7 +56,8 @@ APPLICATION_NAME = "Ehelt Catalog App"
 
 
 # Make an instance of create engine
-engine = create_engine ('sqlite:///catalog.db')
+# engine = create_engine ('sqlite:///catalog.db')
+engine = create_engine ('sqlite:///catalogwithusers.db')
 
 
 # Bind the engine to the metadata of the Base class
@@ -737,14 +738,7 @@ def deleteItem(category_name, item_title):
 
 
 
-
-
-
-
-
-
 # Shopping cart
-
 
 @app.route('/catalog/cart')
 def shoppingCart():

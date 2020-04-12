@@ -5,7 +5,7 @@ import os
 import sys
 
 
-from sqlalchemy import UniqueConstraint
+
 from sqlalchemy import Column, ForeignKey, Integer, String, Index
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +36,7 @@ class Category(Base):
 
     # Mapping: connects rows of the category table to this class
     id = Column(Integer, primary_key=True)
-    name = Column(String(80), nullable=False, index=True)
+    name = Column(String(80), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
@@ -59,8 +59,8 @@ class Item(Base):
 
     # Mapping
     id = Column(Integer, primary_key=True)
-    title = Column(String(100), nullable=False, unique=True)
-    # picture = Column(String(250))
+    title = Column(String(100), nullable=False)
+    picture = Column(String(250))
     description = Column(String(250))
     price = Column(String(8))
     category_id = Column(Integer, ForeignKey('category.id'))
@@ -86,7 +86,8 @@ class Item(Base):
 ####### Insert at end of file #######
 
 # Make an instance - engine from create_engine. Point it to the database.
-engine = create_engine ('sqlite:///catalog.db')
+# engine = create_engine ('sqlite:///catalog.db')
+engine = create_engine ('sqlite:///catalogwithusers.db')
 
 
 
