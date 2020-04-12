@@ -27,7 +27,7 @@
     <h2 class="text-dark"><strong>Categories</strong></h2>
       {% for category in categories %}
         <a class="text-warning" href = "{{url_for('showCategory',
-            category_name  = category.name)}}">
+            category_name  = category.name, category_id = category.id)}}">
           <div class="text-warning category-list">
             <p>{{category.name}}</p>
           </div>
@@ -46,8 +46,8 @@
               {% if items !=[] %} <!--If items is not an empty list-->
                   {% for item in items %}
                     <!--showItem opnly accepts category_name and item_title -->
-                    <a class="text-warning" href = "{{url_for('showItem', category_name = category.name,
-                          item_title = item.title)}}">
+                    <a class="text-warning" href = "{{url_for('showItem', category_name = category.name, category_id = category.id,
+                          item_title = item.title, item_id = item.id)}}">
                       <div class="text-warning item-list">
                         <p>{{item.title}}</p>
                       </div>
@@ -59,9 +59,9 @@
 
 
         <div class="button padding-top, padding-bottom">
-          <a class="text-danger" href="{{url_for('editACategoryName', category_name = category.name ) }}"><div class="col-md-1">Edit</div></a>
+          <a class="text-danger" href="{{url_for('editACategoryName', category_name = category.name, category_id = category.id ) }}"><div class="col-md-1">Edit</div></a>
           <div class="vl"></div>
-          <a class="text-danger" href="{{url_for('deleteCategory', category_name = category.name ) }}"><div class="col-md-1">Delete</div></a>
+          <a class="text-danger" href="{{url_for('deleteCategory', category_name = category.name, category_id = category.id ) }}"><div class="col-md-1">Delete</div></a>
         </div>
 
 

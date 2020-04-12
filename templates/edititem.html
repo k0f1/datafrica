@@ -13,7 +13,7 @@
       <div class='col-md-6 col-md-offset-1 padding-top' id='formWrapper'>
         <h1 class="text-dark"><strong>Edit Item</strong><h1>
         <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
-        <form action="{{url_for('editItem', category_name = category.name, item_title = item.title)}}" method='post'>
+        <form action="{{url_for('editItem', category_name = category.name, category_id= category.id, item_title = item.title, item_id=item.id)}}" method='post'>
           <div class="form-group col-md-6">
             <label for="editTitle">Title:</label>
             <input type="text" class="form-control" placeholder="{{editedItem.title}}">
