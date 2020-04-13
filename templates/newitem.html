@@ -15,6 +15,7 @@
             <div class="col-md-10  padding-top padding-bottom">
               <div class='col-md-6 grid padding-top'>
                 <h1 class="text-dark"><strong>New Item</strong><h1>
+
                 <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
                 <form action="{{ url_for('newItem') }}" enctype="multipart/form-data" method='post'>
                   <div class="container grid" id='formWrapper'>
@@ -25,22 +26,31 @@
 
                     <div class="form-group col-md-6">
                       <label for="description">Description:</label>
-                      <textarea type="text" name='Description' class="form-control" placeholder='Description' rows="5"></textarea>
+                      <textarea type="text" name='description' class="form-control" placeholder='Description' rows="5"></textarea>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="price">Price:</label>
-                      <input type="text" name='Price' class="form-control" placeholder='Price'>
+                      <input type="text" name='price' class="form-control" placeholder='Price'>
                     </div>
                     <div class="form-group col-md-6">
 
                       <!--Upload image  critical ti inlude type="file"-->
-                      <label for="img">Select image:</label>
-                      <input type="file" id="img" name="Select image" accept="image/*">
+                      <h6>Upload an image of the item <em>(optional)</em></h6>
+                      <label for="file">Select image file <small><em>(jpg, png, gif, 3MB max size)</em></small></label>:<br><br>
+
+                      <input type="file" name="file" accept="image/*"><br><br>
+                      <label for="img-url">Or supply a link to an image on the web
+                      </label><br><br>
+                      <!--Image url imput -->
+                      <div class="input-group mb-3">
+                        <input class="input-group-text form-control" type="text" name="basic_url" id="basic_url">
+                        <label class="mdl-textfield__label" for="basic_url"><small>Full image URL</small></label>
+                      </div>
                     </div>
 
                     <div class="form-group col-md-6">
                       <label for="category">Select a category:</label>
-                      <select class="form-control" id="category" name="Select a category">
+                      <select class="form-control" id="category" name="category">
                         {% for category in categories %}
                         <!--Create an if statement that looks for a name-->
                         <!--By call category name-->
@@ -50,7 +60,6 @@
                           {% else %}
                           <option value="{{category.name}}">{{category.name}}</option>
                           {% endif %}
-
                         {% endfor %}
                       </select>
                     </div>

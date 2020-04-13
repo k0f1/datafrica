@@ -2,7 +2,10 @@
 
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, g
 
-
+# File upload import here
+from flask import send_from_directory
+from werkzeug.utils import secure_filename
+from file_organizer import allowed_file
 
 # Add database imports here
 from sqlalchemy import create_engine, asc, desc, literal, func
@@ -41,8 +44,12 @@ import json
 from flask import make_response
 import requests
 
+UPLOAD_FOLDER = '/vagrant/catalog/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 
 # DECLARE MY CLIENT ID BY REFERENCING THE CLIENT SECRETS FILE
@@ -461,7 +468,8 @@ def showCategory(category_name, category_id):
 
 
     categories = session.query(Category).all()
-    items = session.query(Item).filter_by(category_id = category.id).all()
+    items = session.query(Item).filter_by(
+                    category = category).order_by(asc(Item.name))
     # # return count of item "id" grouped by category_id
     categoryItems = session.query(func.count(
                             Item.id)).filter_by(
@@ -595,6 +603,28 @@ def deleteCategory(category_name, category_id):
 
 
 
+@app.route('/catalog/myitems/')
+def showUserItems():
+    """If logged in, show the user the items they have added."""
+    if 'username' not in login_session:
+        return redirect('/login')
+
+    user_id = get_user_id(login_session['email'])
+
+    categories = session.query(Category).all()
+    items = session.query(Item).filter_by(user_id=user_id).all()
+
+    if not items:
+        flash("You haven't add any animals yet.")
+        redirect(url_for('showCatalog'))
+
+    return render_template('useritems.html',
+                           categories=categories,
+                           items=items)
+
+
+
+
 # "This page is the Item for %s" % item_id
 @app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/')
 #@login_required
@@ -624,39 +654,52 @@ def showItem(category_name, category_id, item_title, item_id):
 @app.route('/catalog/new', methods = ['GET', 'POST'])
 #@login_required
 def newItem():# Add item base on category name.
-    """ Renders a form for input of a new item - GET request.
-        if I get a post -redirect to 'showCatalog' after creating new item info.
+    """ Renders a form for input of a new item - GET request. if I get a post -redirect to 'showItem' after creating new item.
     """
-
-    categories = session.query(Category).all()
-
     # ADD LOGIN PERMISSION
     # Protect app modification from non-users
     # If a username is not detected for a given request.
     # Lets redirect to login page.
 
-
-    # Verify that a user is logged in by
-    # checking if the username has a variable filled in
     if 'username' not in login_session:
         return redirect('/login')
+
+    categories = session.query(Category).all()
+
      # Add SQLAlchemy statements
     if request.method == 'POST':
-        newItem = Item(category = request.form.get('value'),
+        # This is key to retreiving category from the form.
+        category = (session.query(Category).\
+                        filter_by(name= request.form.get('category')).one())
+        newItem = Item(category = category,
                         title = request.form['title'],
-                        # access the file from the files dictionary
-                        # on request object:
-                        #file = request.files['file']
-                        picture =request.form.get('file'),
-                        description = request.form.get('description'),
-                        price = request.form.get('price'),
+                        description = request.form['description'],
+                        price = request.form['price'],
                         user_id=login_session['user_id'])
+        # access the file from the files dictionary
+        # on request object:
+        #file = request.files['file']
+
+        # Process optional item image.
+        image_file =request.files['file']
+        if image_file and allowed_file(image_file.filename):
+            filename = secure_filename(image_file.filename)
+            if os.path.isdir(app.config['UPLOAD_FOLDER']) is False:
+                os.mkdir(app.config['UPLOAD_FOLDER'])
+            image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            new_item.image_filename = filename
+        elif request.form['basic_url']:
+            newItem.basic_url = request.form['basic_url']
+
         session.add(newItem)
         session.commit()
         flash('New Item %s successfully Created' % newItem.title)
         # Decide which page should be visible to the public
         # And which one should be private
-        return redirect(url_for('showCatalog'))
+        category_name = category.name
+        item_title = newItem.title
+        return redirect(url_for('showItem', category_name=category_name,
+                                            category_id=category_id, item_title=item_title, item_id=item_id))
     else:
         return render_template('newitem.html', categories = categories)
 
@@ -813,4 +856,5 @@ if __name__ == '__main__':
     app.debug = True
     # app.run(ssl_context='adhoc')
     app.run(threaded=False)
+    app.config['UPLOAD_FOLDER']= True
     app.run(host = '0.0.0.0', port = 8000)

@@ -6,5 +6,4 @@ templates/login.html
 templates/index.html
 static/flipbookstyles.css
 templates/itemcard.html
-application.py
 templates/flipbook.html
