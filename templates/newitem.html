@@ -16,7 +16,7 @@
               <div class='col-md-6 grid padding-top'>
                 <h1 class="text-dark"><strong>New Item</strong><h1>
                 <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
-                <form action="{{ url_for('newItem') }}" method='post'>
+                <form action="{{ url_for('newItem') }}" enctype="multipart/form-data" method='post'>
                   <div class="container grid" id='formWrapper'>
                     <div class="form-group col-md-6">
                       <label for="title">Title:</label>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group col-md-6">
 
-                      <!--Upload image -->
+                      <!--Upload image  critical ti inlude type="file"-->
                       <label for="img">Select image:</label>
                       <input type="file" id="img" name="Select image" accept="image/*">
                     </div>

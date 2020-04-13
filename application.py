@@ -391,6 +391,7 @@ def getUserID(email):
 
 #JSON APIs to view Catalog Information
 @app.route('/catalog/json')
+#@login_required
 def catalogJSON():
     categories = session.query(Category).all()
     return jsonify(Category =[i.serialize for i in categories])
@@ -398,6 +399,7 @@ def catalogJSON():
 
 
 @app.route('/catalog/items/json')
+#@login_required
 def itemsJSON():
     Items = session.query(Item).all()
     return jsonify(Items = [i.serialize for i in items])
@@ -405,6 +407,7 @@ def itemsJSON():
 
 
 @app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/json')
+#@login_required
 def productItemJSON(category_name, item_title):
     Product_Item = session.query(Item).filter_by(title = item_title).one()
     return jsonify(Product_Item = Product_Item.serialize)
@@ -418,6 +421,7 @@ def showIndex():
 # Show all Categories and latest Item-list associated with them
 @app.route('/')
 @app.route('/catalog/')
+#@login_required
 def showCatalog():
     # Add SQLAlchemy statements
     """Show the index page displaying the categories and latest items 20 items added to the database."""
@@ -445,6 +449,7 @@ def showCatalog():
 
 # "Show item-list associated with a specific category
 @app.route('/catalog/<category_name>/<int:category_id>/items')
+#@login_required
 def showCategory(category_name, category_id):
     # Add SQLAlchemy statements
     """Takes in a specified category_name and returns the the items associated with it. Renders a web page showing all the categories on one side and the items on the other side of the page.
@@ -481,6 +486,7 @@ def showCategory(category_name, category_id):
 
 # Role required - creator
 @app.route('/catalog/create', methods = ['GET', 'POST'])
+#@login_required
 def newCategory():
     """ Renders a form for input of a new Category - GET request.
         if I get a post -redirect to 'showCatalog' after creating new Category info.
@@ -514,6 +520,7 @@ def newCategory():
 
 # Role required -employee creator
 @app.route('/catalog/<category_name>/<int:category_id>/edit', methods = ['GET', 'POST'])
+#@login_required
 def editACategoryName(category_name, category_id):
     """1. First execute a query to find the exact item we want to update:       Find entry and store it in a variable
         2. Next Reset values: we declare the new name of the variable
@@ -558,6 +565,7 @@ def editACategoryName(category_name, category_id):
 
 # Role required - employee creator
 @app.route('/catalog/<category_name>/<int:category_id>/delete', methods = ['GET', 'POST'])
+#@login_required
 def deleteCategory(category_name, category_id):
     # Execute a query to find the category and store it in a variable.
     category = session.query(Category).filter_by(id=category_id).one()
@@ -589,6 +597,7 @@ def deleteCategory(category_name, category_id):
 
 # "This page is the Item for %s" % item_id
 @app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/')
+#@login_required
 def showItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Renders product information web page of an item.
@@ -612,8 +621,8 @@ def showItem(category_name, category_id, item_title, item_id):
 
 # Role required: User- creator
 # "This page will be for adding a new Item"
-@app.route('/catalog/new',
-methods = ['GET', 'POST'])
+@app.route('/catalog/new', methods = ['GET', 'POST'])
+#@login_required
 def newItem():# Add item base on category name.
     """ Renders a form for input of a new item - GET request.
         if I get a post -redirect to 'showCatalog' after creating new item info.
@@ -635,6 +644,9 @@ def newItem():# Add item base on category name.
     if request.method == 'POST':
         newItem = Item(category = request.form.get('value'),
                         title = request.form['title'],
+                        # access the file from the files dictionary
+                        # on request object:
+                        #file = request.files['file']
                         picture =request.form.get('file'),
                         description = request.form.get('description'),
                         price = request.form.get('price'),
@@ -652,8 +664,8 @@ def newItem():# Add item base on category name.
 
 # Role required user- creator
 # "This page is for editing Item %s" % item_id
-@app.route('/catalog//<category_name>/<int:category_id>/<item_title>/<int:item_id>/edit',
-methods = ['GETS', 'POST'])
+@app.route('/catalog//<category_name>/<int:category_id>/<item_title>/<int:item_id>/edit', methods = ['GETS', 'POST'])
+#@login_required
 def editItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Edit the details of the specified item.
@@ -702,8 +714,8 @@ def editItem(category_name, category_id, item_title, item_id):
 
 # Role required: User creator
 # "This page is for deleting Item %s" %item_id
-@app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/delete',
-    methods = ['GET', 'POST'])
+@app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/delete', methods = ['GET', 'POST'])
+#@login_required
 def deleteItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Delete a specified item from the database.
@@ -738,16 +750,37 @@ def deleteItem(category_name, category_id, item_title, item_id):
 
 #########################
 
+# Flipbook
+
+@app.route('/catalog/flipbook/<username>/<int:user_id>/')
+def flipBook(username, user_id):
+    """Retreive items belong to a specific userand make pages out of them """
+    # Execute a query for all items
+    items = session.query(Item).filter_by(id = user_id).all()
+    # while-loop, and the *break* and *continue* statements
+    # Access every 3rd element in a list.
+    i = 0
+    while i < len(items):
+        frontPages =  [].append(items[i])
+        # If I increase i by 1 i get my back page.
+        for i in range(3):
+            backPages =  [].append(items[i + 1])
+        # Now access the next third item
+        i = i + 3
+
+    return render_template('flipbook.html',
+                            items = items,
+                            frontPages = frontPages,
+                            backPages = backPages)
 
 
-
-# Shopping cart
 
 ############################
-# End of Shopping cart.
+# End of Flip book.
 
 
 @app.route('/logout')
+#@login_required
 def disconnect():
     """Checks if the provider has been set in login_session"""
 
@@ -774,8 +807,10 @@ def disconnect():
 
 
 
+
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
+    # app.run(ssl_context='adhoc')
     app.run(threaded=False)
     app.run(host = '0.0.0.0', port = 8000)
