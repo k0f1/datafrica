@@ -2,6 +2,7 @@
 
 import os
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
     """Check if the filename has one of the allowed extensions.

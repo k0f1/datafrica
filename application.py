@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+import os
+
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, g
 
 # File upload import here
@@ -469,7 +471,7 @@ def showCategory(category_name, category_id):
 
     categories = session.query(Category).all()
     items = session.query(Item).filter_by(
-                    category = category).order_by(asc(Item.name))
+                    category = category).order_by(asc(Item.title))
     # # return count of item "id" grouped by category_id
     categoryItems = session.query(func.count(
                             Item.id)).filter_by(
@@ -687,17 +689,19 @@ def newItem():# Add item base on category name.
             if os.path.isdir(app.config['UPLOAD_FOLDER']) is False:
                 os.mkdir(app.config['UPLOAD_FOLDER'])
             image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            new_item.image_filename = filename
+            newItem.image_filename = filename
         elif request.form['basic_url']:
             newItem.basic_url = request.form['basic_url']
 
         session.add(newItem)
         session.commit()
         flash('New Item %s successfully Created' % newItem.title)
-        # Decide which page should be visible to the public
-        # And which one should be private
+        # Now define the url variable path to the newItem created.
         category_name = category.name
+        category_id = category.id
         item_title = newItem.title
+        item_id = newItem.id
+        # Show response to my post request in the client.
         return redirect(url_for('showItem', category_name=category_name,
                                             category_id=category_id, item_title=item_title, item_id=item_id))
     else:
