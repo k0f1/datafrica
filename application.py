@@ -8,6 +8,7 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from file_organizer import allowed_file, delete_file
+from sqlalchemy.orm.exc import NoResultFound
 
 # Add database imports here
 from sqlalchemy import create_engine, asc, desc, literal, func
@@ -728,8 +729,13 @@ def editItem(category_name, category_id, item_title, item_id):
     if 'username' not in login_session:
         return redirect('/login')
     # Add SQLAlchemy statements
-    editedItem = session.query(Item).filter_by(id = item_id).one()
     category = session.query(Category).filter_by(id = category_id).one()
+    try:
+        editedItem = session.query(Item).filter_by(id = item_id).one()
+    except NoResultFound:
+        flash("Error: The item '%s' does not exist." % item_title)
+        return redirect(url_for('showCatalog'))
+
     # To protect each item based on whoever created it.
     creator = getUserInfo(editedItem.user_id)
 
@@ -741,9 +747,9 @@ def editItem(category_name, category_id, item_title, item_id):
 
 
     if request.method == 'POST':
-        # This is key to retreiving category from the form.
-        category = (session.query(Category).\
-                        filter_by(name= request.form.get('category')).one())
+        # This is key to retreiving the category from the form.
+        category = (session.query(Category).filter_by(
+                    name= request.form.get('category')).one())
         if request.form['title']:
             editedItem.title = request.form['title']
         if request.form['description']:
@@ -780,18 +786,11 @@ def editItem(category_name, category_id, item_title, item_id):
         session.add(editedItem)
         session.commit()
         flash('Item Successfully Edited')
-        # Define parameters
-        category_name = category.name
-        category_id = category.id
-        item = editedItem
-        item_title = editedItem.title
-        item_id = editedItem.id
         return redirect(url_for('showCategory', category_name=category_name,
                                                 category_id = category_id))
     else:
-        return render_template('edititem.html', #Parse the sqlalchemy variables
-                                    category = category,
-                                    item = editedItem)
+        return render_template('edititem.html', category = category,
+                                                item = editedItem)
 
 
 

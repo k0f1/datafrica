@@ -17,25 +17,25 @@
           <div class="form-group col-md-6">
             <!--Must match for='' in label with name attribute in input -->
             <label for="title">Title:</label>
-            <input type="text" name='title' class="form-control" placeholder="{{editedItem.title}}">
+            <input type="text" name='title' class="form-control" value="{{item.title}}">
           </div>
           <div class="form-group col-md-6">
             <label for="description">Description:</label>
-            <textarea type="text" name='description' class="form-control" placeholder="{{editedItem.description}}" rows="5">Description</textarea>
+            <textarea type="text" name='description' class="form-control" value="{{item.description}}" rows="5">Description</textarea>
           </div>
           <div class="form-group col-md-6">
             <label for="price">Price:</label>
-            <input type="text" name='price' class="form-control" placeholder="{{editedItem.price}}">
+            <input type="text" name='price' class="form-control" value="{{item.price}}">
           </div>
           <div>
             <!--Address uploaded item image -->
-            <input type="file" name="file" accept="image/*" placeholder={{editedItem.image_filename}}><br><br>
+            <input type="file" name="file" accept="image/*" value={{item.image_filename}}><br><br>
             <label for="file">Or supply a link to an image on the web
             </label><br><br>
           </div>
           <!--Address Image url input - optional -->
           <div class="input-group mb-3">
-            <input class="input-group-text form-control" type="text" name="basic_url" id="basic_url" placeholder="{{editedItem.basic_url}}">
+            <input class="input-group-text form-control" type="text" name="basic_url" id="basic_url" value="{{item.basic_url}}">
           </div>
 
 
@@ -43,8 +43,8 @@
             <label for="category">Category list:</label>
             <select type=text name="category" id="category">
               {% for category in categories %}
-              <!--Create an if statement that looks for a match between category id and it ferign key in item table. By call category id and editedItem category_id. -->
-                {% if category.id == editedItem.category_id %}
+              <!--Create an if statement that looks for a match between category id and its foreign key in item table. By calling category id and item category_id. -->
+                {% if category.id == item.category_id %}
                   <option value="{{category.name}}" selected>{{ category.name}}</option>
                   {% else %}
                   <option value="{{category.name}}">{{ category.name}}</option>
