@@ -14,7 +14,7 @@
                 <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
                 <form action="{{url_for('editACategoryName', category_name = category.name, category_id = category.id)}}" method='post'>
                   <div class="form-group col-md-6">
-                    <label for="editACategoryName">Name:</label>
+                    <label for="name">Name:</label>
                     <!--Must match what will be shown in lable to the value of attr name in input -->
                     <input type="text" class="form-control" name="name" value="{{category.name}}">
                   </div>

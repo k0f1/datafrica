@@ -637,6 +637,7 @@ def showItem(category_name, category_id, item_title, item_id):
     category = session.query(Category).\
             filter_by(id = category_id).one()
     item = session.query(Item).filter_by(id = item_id).one()
+    creator = getUserInfo(item.user_id)
 
     # # # If there is a username value in the login_session, we would
     # render one template or the other.
@@ -647,7 +648,8 @@ def showItem(category_name, category_id, item_title, item_id):
     else:
         return render_template('item.html',
                            category = category,
-                           item = item)
+                           item = item,
+                           creator = creator)
 
 
 
@@ -701,9 +703,11 @@ def newItem():# Add item base on category name.
         category_id = category.id
         item_title = newItem.title
         item_id = newItem.id
+        creator = getUserInfo(newItem.user_id)
         # Show response to my post request in the client.
         return redirect(url_for('showItem', category_name=category_name,
-                                            category_id=category_id, item_title=item_title, item_id=item_id))
+                                            category_id=category_id, item_title=item_title, item_id=item_id,
+                                            creator = creator))
     else:
         return render_template('newitem.html', categories = categories)
 
@@ -711,51 +715,83 @@ def newItem():# Add item base on category name.
 
 # Role required user- creator
 # "This page is for editing Item %s" % item_id
-@app.route('/catalog//<category_name>/<int:category_id>/<item_title>/<int:item_id>/edit', methods = ['GETS', 'POST'])
+@app.route('/catalog//<category_name>/<int:category_id>/<item_title>/<int:item_id>/edit', methods = ['GET', 'POST'])
 #@login_required
 def editItem(category_name, category_id, item_title, item_id):
-    # Add SQLAlchemy statements
     """Edit the details of the specified item.
         Returns a GET with edititem.html - form with inputs to edit item info
         if I get a post - redirect to 'showCategory' after updating item info.
     """
-
-    editedItem = session.query(Item).filter_by(id = item_id).one()
-    # To protect each item based on whoever created it.
-    creator = getUserInfo(item.user_id)
-
-    category = session.query(Category).filter_by(id = category_id).one()
     # ADD LOGIN PERMISSION
     # If a user name is not detected for a given request.
     # Lets redirect to login page.
     if 'username' not in login_session:
         return redirect('/login')
-        # ADD ALERT MESSAGE TO PROTECT.
+    # Add SQLAlchemy statements
+    editedItem = session.query(Item).filter_by(id = item_id).one()
+    category = session.query(Category).filter_by(id = category_id).one()
+    # To protect each item based on whoever created it.
+    creator = getUserInfo(editedItem.user_id)
+
+
+    # ADD ALERT MESSAGE TO PROTECT.
     # If a user isn't logged in or isn't the original creator
     if 'username' not in login_session or creator.id !=login_session['user_id']:
         return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit items.');}</script><body onload='myFunction()'>"
 
 
     if request.method == 'POST':
+        # This is key to retreiving category from the form.
+        category = (session.query(Category).\
+                        filter_by(name= request.form.get('category')).one())
         if request.form['title']:
             editedItem.title = request.form['title']
         if request.form['description']:
             editedItem.description = request.form['description']
         if request.form['price']:
             editedItem.price = request.form['price']
-        if request.form['file']:
-            editedItem.picture = request.form['file']
+        if request.files['file']:
+            editedItem.image_filename = request.files['file']
 
-            session.add(editedItem)
-            session.commit()
-            flash('Item Successfully Edited')
-            return redirect(url_for('showCategory',
-                                   category_name = category_name,
-                                   item_title = item_title))
+        # Process optional item image
+        image_file = request.files['file']
+        if image_file and allowed_file(image_file.filename):
+            if editedItem.image_filename:
+                delete_image(editedItem.image_filename)
+            filename = secure_filename(image_file.filename)
+            if os.path.isdir(app.config['UPLOAD_FOLDER']) is False:
+                os.mkdir(app.config['UPLOAD_FOLDER'])
+            image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            editedItem.image_filename = filename
+            editedItem.basic_url = None
+
+        elif ('delete_image' in request.form and
+              request.form['delete_image'] == 'delete'):
+            if editedItem.image_filename:
+                delete_image(editedItem.image_filename)
+
+        if not image_file and request.form['basic_url']:
+            editedItem.basic_url = request.form['basic_url']
+            if editedItem.image_filename:
+                delete_image(editedItem.image_filename)
+
+
+        session.add(editedItem)
+        session.commit()
+        flash('Item Successfully Edited')
+        # Define parameters
+        category_name = category.name
+        category_id = category.id
+        item = editedItem
+        item_title = editedItem.title
+        item_id = editedItem.id
+        return redirect(url_for('showCategory', category_name=category_name,
+                                                category_id = category_id))
     else:
-        return render_template('edititem.html',
-                              item = editeditem,
-                              category_name = category_name,                              item_title = item_title)
+        return render_template('edititem.html', #Parse the sqlalchemy variables
+                                    category = category,
+                                    item = editedItem)
 
 
 
@@ -775,23 +811,23 @@ def deleteItem(category_name, category_id, item_title, item_id):
     # Lets redirect to login page.
     if 'username' not in login_session:
         return redirect('/login')
-
     # filter_by uses the names of the columns in a table
     category = session.query(Category).filter_by(id = category_id).one()
     itemToDelete = session.query(Item).filter_by(id =item_id).one()
+    creator = getUserInfo(itemToDelete.user_id)
+    # ADD ALERT MESSAGE TO PROTECT.
+    # If a user isn't logged in or isn't the original creator
+    if 'username' not in login_session or creator.id !=login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit items.');}</script><body onload='myFunction()'>"
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
         flash('Item Successfully Deleted')
-        return redirect(url_for('showCategory',
-                                category_name = category_name,
-                                category_id = category_id,
-                                item_title = item_title,
-                                item_id = item_id))
+        return redirect(url_for('showCategory', category_name = category_name,
+                                                category_id =category_id))
     else:
-        return render_template('deleteitem.html',
-                                category = category_name,
-                                item = itemToDelete)
+        return render_template('deleteitem.html', category = category,
+                                            item = itemToDelete)
 
 
 
@@ -802,6 +838,8 @@ def deleteItem(category_name, category_id, item_title, item_id):
 @app.route('/catalog/flipbook/<username>/<int:user_id>/')
 def flipBook(username, user_id):
     """Retreive items belong to a specific userand make pages out of them """
+    if 'username' not in login_session:
+        return redirect('/login')
     # Execute a query for all items
     items = session.query(Item).filter_by(id = user_id).all()
     # while-loop, and the *break* and *continue* statements

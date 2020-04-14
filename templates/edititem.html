@@ -1,5 +1,5 @@
 {% extends "main.html" %}
-{% block page_name %} {{item.title}} page {% endblock %}
+{% block page_name %}  Edit item page {% endblock %}
 
 
 {% block content %}
@@ -15,40 +15,42 @@
         <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
         <form action="{{url_for('editItem', category_name = category.name, category_id= category.id, item_title = item.title, item_id=item.id)}}" method='post'>
           <div class="form-group col-md-6">
-            <label for="editTitle">Title:</label>
-            <input type="text" class="form-control" placeholder="{{editedItem.title}}">
+            <!--Must match for='' in label with name attribute in input -->
+            <label for="title">Title:</label>
+            <input type="text" name='title' class="form-control" placeholder="{{editedItem.title}}">
           </div>
           <div class="form-group col-md-6">
-            <label for="editDescription">Description:</label>
-            <textarea type="text" class="form-control" placeholder="{{editedItem.description}}" rows="5">Description</textarea>
+            <label for="description">Description:</label>
+            <textarea type="text" name='description' class="form-control" placeholder="{{editedItem.description}}" rows="5">Description</textarea>
           </div>
           <div class="form-group col-md-6">
-            <label for="editPrice">Price:</label>
-            <input type="text" class="form-control" placeholder="{{editedItem.price}}">
+            <label for="price">Price:</label>
+            <input type="text" name='price' class="form-control" placeholder="{{editedItem.price}}">
           </div>
-          <div class="form-group col-md-6">
+          <div>
+            <!--Address uploaded item image -->
+            <input type="file" name="file" accept="image/*" placeholder={{editedItem.image_filename}}><br><br>
+            <label for="file">Or supply a link to an image on the web
+            </label><br><br>
+          </div>
+          <!--Address Image url input - optional -->
+          <div class="input-group mb-3">
+            <input class="input-group-text form-control" type="text" name="basic_url" id="basic_url" placeholder="{{editedItem.basic_url}}">
+          </div>
+
+
+          <div class="form-group col-md-6 dropdown-menu">
             <label for="category">Category list:</label>
-            <select class="form-control" id="category">
+            <select type=text name="category" id="category">
               {% for category in categories %}
-                <option value ="{{ category.name }}">
-                  <ul><li>{{ category.name }}</li></ul>
-                </option>
+              <!--Create an if statement that looks for a match between category id and it ferign key in item table. By call category id and editedItem category_id. -->
+                {% if category.id == editedItem.category_id %}
+                  <option value="{{category.name}}" selected>{{ category.name}}</option>
+                  {% else %}
+                  <option value="{{category.name}}">{{ category.name}}</option>
+                {% endif %}
               {% endfor %}
             </select>
-          </div>
-          <!--Tick checkbox to include colour selection -->
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="colorPicker">
-            <label class="form-check-label" for="colorPicker">Color picker</label>
-          </div>
-          <div id='favcolor'>
-            <!--If selected, Show color picker -->
-            <label for="favcolor">Add your item colors</label>
-            <input type="color" id="favcolor" name="favcolor" value="">
-            <input type="color" id="favcolor" name="favcolor" value="">
-            <input type="color" id="favcolor" name="favcolor" value="">
-            <input type="color" id="favcolor" name="favcolor" value="">
-            <input type="color" id="favcolor" name="favcolor" value="">
           </div>
           <button type="submit" class="btn btn-outline-warning">Submit</button>
         </form>
@@ -57,99 +59,5 @@
 
   <div class="col-md-1"></div>
 </div>
-
-{% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% extends "main.html" %}
-{% block content %}
-{% include "header.html" %}
-
-  <div class="row divider blue">
-    <div class="col-md-1"></div>
-    <div class="col-md-10"></div>
-    <div class="col-md-1"></div>
-  </div>
-
-  <div class="row top-menu">
-    <div class="col-md-1"></div>
-    <div class="col-md-8"></div>
-    <div class="col-md-2 text-right"></div>
-    <div class="col-md-1"></div>
-  </div>
-
-
-
-
-  <div class="row padding-top padding-bottom">
-    <div class="col-md-1"></div>
-    <div class="col-md-10 padding-top padding-bottom">
-
-      <h1 class="text-dark">Edit Item<h1>
-        <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
-      <form action="#" method ="post">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" class="form-control" placeholder="{{ item.title}}"></input>
-        </div>
-        <div class="form-group">
-          <label for="picture">Picture</label>
-          <input type="text" class="form-control" placeholder="item.picture"></input>
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea type="text" class="form-control" row="3"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="price">Price</label>
-          <input type="text" class="form-control"></input>
-        </div>
-        <div class="form-group">
-          <label for="Category">Category</label>
-          <select class="form-control">
-            {% for category in categories %}
-            <option>{{ category.name}}</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-outline-secondary">Submit</button>
-      </form>
-    </div>
-    {% endfor %}
-    <div class="col-md-1"></div>
-  </div>
-
 
 {% endblock %}
