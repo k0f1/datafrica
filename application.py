@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 # File upload import here
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
-from file_organizer import allowed_file
+from file_organizer import allowed_file, delete_file
 
 # Add database imports here
 from sqlalchemy import create_engine, asc, desc, literal, func
