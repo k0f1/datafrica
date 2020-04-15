@@ -75,17 +75,19 @@ header {
 
 /* Styling of login page */
 
-#login .social-login  {
+body#login  {
   background-color: #e5e5e5;
   display: grid;
+  grid-column: auto;
 }
 
-#loginHeader {
+header#loginHeader {
   padding-top: 40px;
   padding-bottom: 40px;
   padding-left: 0px;
   padding-right: 0px;
   text-align: center;
+  background-color: #e5e5e5;
 }
 
 
@@ -94,24 +96,35 @@ header#loginHeader {
   padding-bottom: 20px;
 }
 
+
 /*
 Select all body elements with id login and select all section elements
 with id login-sessionmaker
  */
-section#login section#login-session {
-  display: flex;
-  flex-direction: column;
+
+/*Select all elements class grid cell that is a descendant of the id. */
+.form-wrapper {
+  display: grid;
+}
+
+#oauth-wrapper {
+  display: grid;
+  justify-content: center;
+}
+
+#content-wrapper {
+  display: grid;
   margin-top: 0px;
   margin-bottom: 24px;
   margin-left: auto;
   margin-right: auto;
-  width: 400px;
   padding: 32px 40px;
   background: rgb(255, 255, 255) none repeat scroll 0% 0%;
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
 
 }
+*/
 
 /*
 #login-session {
@@ -136,6 +149,12 @@ input.grid-cell {
   white-space: nowrap;
 
 }
+
+
+/*End of login page styling */
+
+
+
 
 
 /* Styling the header */

@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <title>Datafrica log in page</title>
 
     <!--For google custom buttons -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
@@ -9,7 +10,10 @@
     <!--My custome css -->
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 
-    <title>Datafrica log in page</title>
+    <!--Bootsrap -->
+    <!--Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
     <!-- BEGIN Pre-requisites -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -45,35 +49,32 @@
     <header id="loginHeader" class="social-login">
       <div><span class="brand">DATAFRICA</span></div>
     </header>
-    <section class="vertical-center fd-column flex-container form-item social-login" id="login-session">
-      <div class="size-of-col">
-        <div class="vertical-center flex-container space-between login-content grid">
-          <div class="grid vertical-center fd-column"> <!--GOOGLE -->
+    <section id="login-section">
+      <div class="inner-container">
+          <div class="grid vertical-center col-md-5 white" id="content-wrapper">
+            <!--GOOGLE -->
             <div class="grid-cell">
               <h3>Login in to your account</h3>
             </div>
 
 
-            <div class="grid vertical-center fd-column">
+            <div class="form-wrapper">
               <form>
-                <div id="oauthWrapper">
-                  <div class="grid-cell">
-                    <div class="grid fd-column">
-                      <label>Email</label>
-                      <div><input class="grid-cell"placeholder="Email"></div>
-                      <small id="emailHelp">We'll never share your email with anyone else!</small>
+                <div id="oauth-wrapper grid">
+                  <div class="form-group grid-cell col-md-5">
+                    <label for="email">Email:</label><br>
+                    <input type="text" name="email" placeholder="Email"><br>
+                    <small id="emailHelp">We'll never share your email with anyone else!</small>
+                  </div>
+                  <div class="form-group grid-cell col-md-5">
+                      <label for="password">Password:</label><br>
+                      <input type="text"name="password" placeholder="Password"><br>
+                  </div>
+                  <div class="form-group grid-cell col=md-5 btn btn-dark">
+                    <div>
+                        <button class="btn btn-link" id="customBtn">Sign in</button>  
                     </div>
                   </div>
-                  <div class="grid-cell">
-                    <div class="grid fd-column">
-                      <label>Password</label>
-                      <div><input class="grid-cell" placeholder="Password"></div>
-                    </div>
-                  </div>
-                  <div class="grid-cell btn btn-dark">
-                    <button class="btn btn-link grid-cell" id="customBtn">Sign in</button>
-                  </div>
-
                 </div>
               </form>
             </div>
@@ -81,7 +82,7 @@
             <div id="oauthWrapper">
               <div class="gri-cell"><small>Or</small></div>
             </div>
-            <div class="grid vertical-center fd-column" id="oauthWrapper">
+            <div class="grid vertical-center" id="oauthWrapper">
               <!-- For google -->
               <div class="grid-cell google" id="gSignInWrapper">
                 <!--In the callback, you would hide the gSignInWrapper element on a successful sign in-->
@@ -112,8 +113,6 @@
                 <li> &#42;  Sign up for an account</li>
               </ul>
             </div>
-
-        </div> <!--Flex contain ends -->
         <script>
 
             // Handles the response google send back to the client.
@@ -248,7 +247,7 @@
 
 
         <div id="result"></div><!--Empty div to populate the response from the server on succssful login  -->
-      </div><!--End of vertical flex container with column flex direction  -->
+      </div><!--End of inner-container  -->
     </section>
 
   </body>
