@@ -13,7 +13,7 @@
       <div class='col-md-6 col-md-offset-1 padding-top' id='formWrapper'>
         <h1 class="text-dark"><strong>Edit Item</strong><h1>
         <!--Textual form controls—like <input>s, <select>s, and <textarea>s—are styled with the .form-control class -->
-        <form action="{{url_for('editItem', category_name = category.name, category_id= category.id, item_title = item.title, item_id=item.id)}}" method='post'>
+        <form action="{{url_for('editItem', category_name = category.name, category_id= category.id, item_title = item.title, item_id=item.id)}}" method='post' enctype="multipart/form-data">
           <div class="form-group col-md-6">
             <!--Must match for='' in label with name attribute in input -->
             <label for="title">Title:</label>
@@ -21,7 +21,7 @@
           </div>
           <div class="form-group col-md-6">
             <label for="description">Description:</label>
-            <textarea type="text" name='description' class="form-control" value="{{item.description}}" rows="5">Description</textarea>
+            <input type="text" name='description' class="form-control" value="{{item.description}}" rows="5">
           </div>
           <div class="form-group col-md-6">
             <label for="price">Price:</label>
@@ -37,16 +37,19 @@
           <div class="input-group mb-3">
             <input class="input-group-text form-control" type="text" name="basic_url" id="basic_url" value="{{item.basic_url}}">
           </div>
-
-
-          <div class="form-group col-md-6 dropdown-menu">
-            <label for="category">Category list:</label>
-            <select type=text name="category" id="category">
+            <!--Address uploaded item image -->
+            <input type="file" name="file" accept="image/*" value={{item.image_filename}}><br><br>
+            <label for="file">Or supply a link to an image on the web
+            </label><br><br>
+          <div class="form-group col-md-6">
+            <label for="category">Select a category:</label>
+            <select class="form-control" id="category" name="category">
               {% for category in categories %}
-              <!--Create an if statement that looks for a match between category id and its foreign key in item table. By calling category id and item category_id. -->
-                {% if category.id == item.category_id %}
+              <!--Create an if statement that looks for a name-->
+              <!--By call category name-->
+                {% if category.name %}
                   <option value="{{category.name}}" selected>{{ category.name}}</option>
-                  {% else %}
+                {% else %}
                   <option value="{{category.name}}">{{ category.name}}</option>
                 {% endif %}
               {% endfor %}

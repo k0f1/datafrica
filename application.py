@@ -7,7 +7,7 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 # File upload import here
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
-from file_organizer import allowed_file, delete_file
+from file_organizer import allowed_file, delete_image
 from sqlalchemy.orm.exc import NoResultFound
 
 # Add database imports here
@@ -729,6 +729,7 @@ def editItem(category_name, category_id, item_title, item_id):
     if 'username' not in login_session:
         return redirect('/login')
     # Add SQLAlchemy statements
+    categories = session.query(Category).all()
     category = session.query(Category).filter_by(id = category_id).one()
     try:
         editedItem = session.query(Item).filter_by(id = item_id).one()
@@ -790,6 +791,7 @@ def editItem(category_name, category_id, item_title, item_id):
                                                 category_id = category_id))
     else:
         return render_template('edititem.html', category = category,
+                                                categories = categories,
                                                 item = editedItem)
 
 
