@@ -555,28 +555,29 @@ def editACategoryName(category_name, category_id):
         # To edit, you don't need to add it again.
         session.commit()
         flash('Category successfully edited %s' % categoryToEdit.name)
-            # Redirect the user back to the home page.
+        # Redirect the user back to the home page.
         return redirect(url_for('showCatalog'))
     else:
-        return render_template('editacategoryname.html',
-                                    category = categoryToEdit)
+        return render_template(
+            'editacategoryname.html',
+            category=categoryToEdit)
 
 
 # Role required - employee creator
-@app.route('/catalog/<category_name>/<int:category_id>/delete', methods = ['GET', 'POST'])
-#@login_required
+@app.route('/catalog/<category_name>/<int:category_id>\
+/delete', methods=['GET', 'POST'])
 def deleteCategory(category_name, category_id):
     # Execute a query to find the category and store it in a variable.
     try:
         category = session.query(Category).\
                         filter_by(id=category_id).one_or_none()
-    except None: # If a NoneType object is returned
+    except None:
         return PageNotFound
 
     try:
         categoryToDelete = session.query(Category).\
-                    filter_by(id = category_id).one_or_none()
-    except None: # If a NoneType object is returned
+                    filter_by(id=category_id).one_or_none()
+    except None:
         return PageNotFound
     creator = getUserInfo(category.user_id)
 
@@ -590,10 +591,13 @@ def deleteCategory(category_name, category_id):
     if categoryToDelete.user.id != login_session['user_id']:
         # The script gives not only an alert that you are not,
         # but also we stay where we are right here.
-        return "<script>function myFunction() {alert('You are not authorized to delete this category. Please create your own category in order to edit categories.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() {alert('You are not\
+                authorized to delete this category.\
+                Please create your own category in order\
+                 to edit categories.');}</script><body onload='myFunction()'>"
     else:
-        render_template('deletecategory.html', category = categoryToDelete,
-                                                creator = creator)
+        render_template('deletecategory.html', category=categoryToDelete,
+                                                creator=creator)
 
 
 
