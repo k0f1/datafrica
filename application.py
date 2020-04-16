@@ -2,8 +2,8 @@
 
 import os
 
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, g
-
+from flask import Flask
+from flask import render_template, request, redirect, jsonify, url_for, flash
 # File upload import here
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
@@ -15,30 +15,18 @@ from sqlalchemy import create_engine, asc, desc, literal, func
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item, User
 
-
-
-
-
 # NEW IMPORTS FOR THIS STEP
 from flask import session as login_session
-# As keyword b/c we already used the variable session in my database sqlalchemy.
-import random, string
-
-
-# Add other imports here
-
-# NEW IMPORTS FOR SHOPPING CART
-from flask import session as cart_session
-
+# As keyword b/c we already used the variable session
+# in my database sqlalchemy.
 
 # NEW IMPORTS FOR THIS STEP
 from flask import session as login_session
 # As keyword b/c we already used the variable session my database sqlalchemy.
-import random, string
+import random
+import string
 
-
-
-#IMPORTS FOR THIS STEP (oauth server side)
+# IMPORTS FOR THIS STEP (oauth server side)
 from oauth2client import client
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -53,23 +41,15 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
-
 # DECLARE MY CLIENT ID BY REFERENCING THE CLIENT SECRETS FILE
 client_id = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 
 APPLICATION_NAME = "Ehelt Catalog App"
 
-
-
-
-
 # Make an instance of create engine
 # engine = create_engine ('sqlite:///catalog.db')
-engine = create_engine ('sqlite:///catalogwithusers.db')
-
-
+engine = create_engine('sqlite:///catalogwithusers.db')
 # Bind the engine to the metadata of the Base class
 # To establish conversation with the database and act as staging zone
 Base.metadata.bind = engine
@@ -78,8 +58,6 @@ DBSession = sessionmaker(bind=engine)
 # Create DB session instance
 session = DBSession()
 
-
-
 # Create ant-forgery state token
 @app.route('/login')
 def showLogin():
@@ -87,19 +65,14 @@ def showLogin():
     # the one-time code sent by google via GET request sent to
     # localhost:8000/login.
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                for x in range(32))
-                # state is a random mixed 32 character long string.
-                # Store state from our login_session(a dict)
-                # in a variable state.
+                    for x in range(32))
+    # state is a random mixed 32 character long string.
+    # Store state from our login_session(a dict)
+    # in a variable state.
     login_session['state'] = state
-    #return "The current session state is %s" %login_session['state']
+    # return "The current session state is %s" %login_session['state']
     # to see what are current state look like. STATE is sent back with oauth.
     return render_template('login.html', STATE=state)
-
-
-
-
-
 
 # HANDLER OF CODE SENT BACK FROM CALLBACK METHOD - one time code from google
 @app.route('/gconnect', methods=['GET', 'POST'])
@@ -118,8 +91,7 @@ def gconnect():
 
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json',
-            scope='')
+        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         # Access all credentials including access code.
         credentials = oauth_flow.step2_exchange(code)
@@ -127,15 +99,16 @@ def gconnect():
         access_token = credentials.access_token
     # If an error happen along the way
     except FlowExchangeError:
-        response = make_response(json.dumps('Failed to upgrade the authorization code.'), 401)
+        response = make_response(json.dumps(
+            'Failed to upgrade the authorization code.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    #Append this token to the following url
-    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
-          % access_token)
-          #Create a json GET request with these two lines,
-          # containing the url and access_token
+    # Append this token to the following url
+    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo\
+                ?access_token = %s' % access_token)
+    # Create a json GET request with these two lines,
+    # containing the url and access_token
     h = httplib2.Http()
     result = json.loads((h.request(url, 'GET')[1]).decode('utf-8'))
 
@@ -158,7 +131,7 @@ def gconnect():
         response = make_response(
             json.dumps("token's client ID does not match the app's."), 401
         )
-        print ("Token's client ID does not match app's.")
+        print("Token's client ID does not match app's.")
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -166,7 +139,8 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current  user is already connected.'), 200)
+        response = make_response(json.dumps(
+                    'Current  user is already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -199,12 +173,12 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px; height: 300px;\
+                border-radius: 150px;-webkit-border-radius: \
+                150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
     print("done!")
     return output
-
-
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
 @app.route('/gdisconnect')
@@ -213,18 +187,20 @@ def gdisconnect():
 
     access_token = login_session.get('access_token')
     if access_token is None:
-        print ('Access Token is None')
-        response = make_response(json.dumps('Current user not connected.'), 401)
+        print('Access Token is None')
+        response = make_response(json.dumps(
+                        'Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    print ('In gdisconnect access token is %s'), access_token
-    print ('User name is: ')
-    print (login_session['username'])
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    print('In gdisconnect access token is %s'), access_token
+    print('User name is: ')
+    print(login_session['username'])
+    url = ('https://accounts.google.com/o/oauth2\
+            /revoke?token = %s' % login_session['access_token'])
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
-    print ('result is ')
-    print (result)
+    print('result is ')
+    print(result)
     if result['status'] == '200':
         del login_session['access_token']
         del login_session['gplus_id']
@@ -235,10 +211,10 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     else:
-        response = make_response(json.dumps('Failed to revoke token for given   user.', 400))
+        response = make_response(json.dumps(
+                    'Failed to revoke token for given   user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
-
 
 
 # FACEBOOK SIGN IN
@@ -249,33 +225,36 @@ def fbconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     access_token = request.data
-    print ("access token received %s ") % access_token
+    print("access token received %s ") % access_token
     # Below, exchange the short-lived token for a long-lived server side token
     # with GET /oauth/access_token?grant_type=fb_exchange_token&client_id=
     # {app-id}&client_secret={app-secret}&fb_exchange_token={short-lived-token}
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
         'web']['app_id']
-    app_secret = json.loads( # I have to send my app secret to Facebook
-        # to verify my identity.
+    # send my app secret to Facebook to verify my identity.
+    app_secret = json.loads(
         open('fb_client_secrets.json', 'r').read())['web']['app_secret']
-    url = 'https://graph.facebook.com/v5.0/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (app_id, app_secret, access_token)
+    url = 'https://graph.facebook.com/v5.0/oauth\
+            /access_token?grant_type=fb_exchange_token&\
+            client_id = %s&client_secret = %s&fb_exchange_token = %s'\
+            % (app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-
-
     # Use token to get user info from API
     userinfo_url = "https://graph.facebook.com/v5.0/me"
-
     '''
-        Due to the formatting for the result from the server token exchange we have to
-        split the token first on commas and select the first index which gives us the key : value
-        for the server access token then we split it on colons to pull out the actual token value
-        and replace the remaining quotes with nothing so that it can be used directly in the graph
-        api calls
+        Due to the formatting for the result from the server token
+        exchange we have to split the token first on commas
+        and select the first index which gives us the key :
+        value for the server access token then we split it
+        on colons to pull out the actual token value
+        and replace the remaining quotes with nothing so
+        that it can be used directly in the graph api calls
     '''
     token = result.split(',')[0].split(':')[1].replace('"', '')
 
-    url = 'https://graph.facebook.com/\nv5.0/me?access_token=%s&fields=id,name,email' % token
+    url = 'https://graph.facebook.com/\
+            v5.0/me?access_token=%s&fields=id,name,email' % token
 
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
@@ -291,7 +270,9 @@ def fbconnect():
     login_session['access_token'] = token
 
     # Get user picture
-    url = 'https://graph.facebook.com/v2.8/me/picture?access_token=%s&redirect=0&height=200&width=200' % token
+    url = 'https://graph.facebook.com/v2.8/\
+            me/picture?access_token = %s&redirect = 0\
+            &height = 200&width = 200' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
@@ -312,11 +293,12 @@ def fbconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px; height: \
+                300px;border-radius: 150px;-webkit-border-radius: \
+                150px;-moz-border-radius: 150px;"> '
 
     flash("Now logged in as %s" % login_session['username'])
     return output
-
 
 
 @app.route('/fbdisconnect')
@@ -324,7 +306,8 @@ def fbdisconnect():
     facebook_id = login_session['facebook_id']
     # The access token must me included to successfully logout
     access_token = login_session['access_token']
-    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id,access_token)
+    url = 'https://graph.facebook.com/%s\
+            /permissions?access_token = %s' % (facebook_id, access_token)
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
     del login_session['username']
@@ -335,8 +318,6 @@ def fbdisconnect():
     return "you have been logged out"
 
 #####
-
-
 # LOCAL PERMISSION SYSTEM
 # User Helper Functions
 # Local permission system, leverages the information
@@ -347,11 +328,8 @@ def fbdisconnect():
 # We need a table of users, so we can identify what data belongs to whom.
 # This step include work on lotsofitems as well.
 
-
-
 # createUser takes in login_session as input
 def createUser(login_session):
-
     """create new user in our database, extracting all
     the fields neccessary to populate it from information
     gathered from the login_session"""
@@ -365,9 +343,7 @@ def createUser(login_session):
     return user.id
 
 
-
 def getUserInfo(user_id):
-
     """If a user ID is passed into this method,
     it simply returns the user object associated with this ID number."""
 
@@ -376,9 +352,7 @@ def getUserInfo(user_id):
     return user
 
 
-
 def getUserID(email):
-
     """This method, takes an email address and return and ID,
     if that email address belongs to  user stored in our database"""
 
