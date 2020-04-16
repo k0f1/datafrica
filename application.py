@@ -917,6 +917,15 @@ def show_item_image(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return 'This page does not exist', 404
+
+
+def special_exception_handler(error):
+    return 'Database connection failed', 500
+
+
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
