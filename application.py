@@ -466,11 +466,21 @@ def showCategory(category_name, category_id):
     # Add SQLAlchemy statements
     """Takes in a specified category_name and returns the the items associated with it. Renders a web page showing all the categories on one side and the items on the other side of the page.
     """
-    # The filter_by function always returns a collection of objects
-    # .one method ensures only one category is returned
-    category = session.query(Category).\
-            filter_by(id = category_id).one()
-
+    # NOTE IMPORTANT!
+    # In other to handle cases where requested items does not exist,
+    # in the database. As it is, if you access the
+    # URL: http://localhost:8000/catalog/Frisbee/10/Joylight/250000/.
+    # The .one() method in filter_by will return:
+    # sqlalchemy.orm.exc.NoResultFound
+    # NoResultFound: No row was found for one ()
+    # A better way to do that would be using one_or_none().
+    # This function returns an object NoneType if it doesn't
+    # exist and then you do a PageNotFound when the object is None.
+    try:
+        category = session.query(Category).\
+                filter_by(id = category_id).one_or_none()
+    except None:
+        return PageNotFound
 
     categories = session.query(Category).all()
     items = session.query(Item).filter_by(
@@ -542,9 +552,12 @@ def editACategoryName(category_name, category_id):
  """
     # Execute a query to find the category and store it in
     # a variable editedCategory.
+    try:
+        categoryToEdit = session.query(Category).\
+                    filter_by(id = category_id).one_or_none()
+    except None: # If a NoneType object is returned
+        return PageNotFound
 
-    categoryToEdit = session.query(Category).\
-                filter_by(id = category_id).one()
     # ADD LOGIN PERMISSION
     # Protect app modification from non-users
     # If a username is not detected for a given request.
@@ -581,9 +594,19 @@ def editACategoryName(category_name, category_id):
 #@login_required
 def deleteCategory(category_name, category_id):
     # Execute a query to find the category and store it in a variable.
-    category = session.query(Category).filter_by(id=category_id).one()
-    categoryToDelete = session.query(Category).\
-                        filter_by(id = category.id).one()
+    try:
+        category = session.query(Category).\
+                        filter_by(id=category_id).one_or_none()
+    except None: # If a NoneType object is returned
+        return PageNotFound
+
+    try:
+        categoryToDelete = session.query(Category).\
+                    filter_by(id = category_id).one_or_none()
+    except None: # If a NoneType object is returned
+        return PageNotFound
+    creator = getUserInfo(category.user_id)
+
     # ADD LOGIN PERMISSION
     # If a user name is not detected for a given request.
     # Lets redirect to login page.
@@ -592,8 +615,18 @@ def deleteCategory(category_name, category_id):
     # To protect each item based on whoever created it.
     # If a user isn't logged in or isn't the original creator
     if categoryToDelete.user.id != login_session['user_id']:
-        return "<script>function myFunction() {alert( 'You are not\
-                 authorized to delete this category.');}</script><body onload='myFunction()'>"
+        # The script gives not only an alert that you are not,
+        # but also we stay where we are right here.
+        return "<script>function myFunction() {alert('You are not authorized to delete this category. Please create your own category in order to edit categories.');}</script><body onload='myFunction()'>"
+    else:
+        render_template('deletecategory.html', category = categoryToDelete,
+                                                creator = creator)
+
+
+
+
+
+    # if not we stay here- render_template('deletecategory.html', category=categoryToDelete)
 
     # Create an if statement that looks for a post request.
     # By calling request method
@@ -637,9 +670,18 @@ def showItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Renders product information web page of an item.
     """
-    category = session.query(Category).\
-            filter_by(id = category_id).one()
-    item = session.query(Item).filter_by(id = item_id).one()
+    try:
+        category = session.query(Category).\
+            filter_by(id = category_id).one_or_none()
+
+    except None: # If a NoneType object is returned
+        return PageNotFound
+
+    try:
+        item = session.query(Item).filter_by(id = item_id).one_or_none()
+    except None: # If a NoneType object is returned
+        return PageNotFound
+
     creator = getUserInfo(item.user_id)
 
     # # # If there is a username value in the login_session, we would
@@ -676,8 +718,12 @@ def newItem():# Add item base on category name.
      # Add SQLAlchemy statements
     if request.method == 'POST':
         # This is key to retreiving category from the form.
-        category = (session.query(Category).\
-                        filter_by(name= request.form.get('category')).one())
+        try:
+            category = (session.query(Category).filter_by(
+                        name= request.form.get('category')).one_or_none())
+        except None:# If a NoneType object is returned
+            return PageNotFound
+
         newItem = Item(category = category,
                         title = request.form['title'],
                         description = request.form['description'],
@@ -702,10 +748,7 @@ def newItem():# Add item base on category name.
         session.commit()
         flash('New Item %s successfully Created' % newItem.title)
         # Now define the url variable path to the newItem created.
-        category_name = category.name
-        category_id = category.id
-        item_title = newItem.title
-        item_id = newItem.id
+
         creator = getUserInfo(newItem.user_id)
         # Show response to my post request in the client.
         return redirect(url_for('showItem', category_name=category_name,
@@ -732,12 +775,20 @@ def editItem(category_name, category_id, item_title, item_id):
         return redirect('/login')
     # Add SQLAlchemy statements
     categories = session.query(Category).all()
-    category = session.query(Category).filter_by(id = category_id).one()
+
     try:
-        editedItem = session.query(Item).filter_by(id = item_id).one()
-    except NoResultFound:
-        flash("Error: The item '%s' does not exist." % item_title)
-        return redirect(url_for('showCatalog'))
+        category = session.query(Category).\
+                    filter_by(id = category_id).one_or_none()
+    except None: # If a NoneType object is returned
+        return PageNotFound
+
+    try:
+        editedItem = session.query(Item).filter_by(
+                            id = item_id).one_or_none()
+    except None:
+         # If a NoneType object is returned
+         return PageNotFound
+    return redirect(url_for('showCatalog'))
 
     # To protect each item based on whoever created it.
     creator = getUserInfo(editedItem.user_id)
@@ -815,8 +866,18 @@ def deleteItem(category_name, category_id, item_title, item_id):
     if 'username' not in login_session:
         return redirect('/login')
     # filter_by uses the names of the columns in a table
-    category = session.query(Category).filter_by(id = category_id).one()
-    itemToDelete = session.query(Item).filter_by(id =item_id).one()
+    try:
+        category = session.query(Category).\
+                    filter_by(id = category_id).one_or_none()
+    except None: # If a NoneType object is returned
+        return PageNotFound
+
+    try:
+        itemToDelete = session.query(Item).filter_by(
+                            id =item_id).one_or_none()
+    except None: # If a NoneType object is returned
+        return PageNotFound
+
     creator = getUserInfo(itemToDelete.user_id)
     # ADD ALERT MESSAGE TO PROTECT.
     # If a user isn't logged in or isn't the original creator
@@ -826,45 +887,14 @@ def deleteItem(category_name, category_id, item_title, item_id):
         session.delete(itemToDelete)
         session.commit()
         flash('Item Successfully Deleted')
-        return redirect(url_for('showCategory', category_name = category_name,
-                                                category_id =category_id))
+        return redirect(url_for('showCategory',
+                                            category_name = category_name,
+                                            category_id =category_id))
     else:
         return render_template('deleteitem.html', category = category,
                                             item = itemToDelete)
 
 
-
-#########################
-
-# Flipbook
-
-@app.route('/catalog/flipbook/<username>/<int:user_id>/')
-def flipBook(username, user_id):
-    """Retreive items belong to a specific userand make pages out of them """
-    if 'username' not in login_session:
-        return redirect('/login')
-    # Execute a query for all items
-    items = session.query(Item).filter_by(id = user_id).all()
-    # while-loop, and the *break* and *continue* statements
-    # Access every 3rd element in a list.
-    i = 0
-    while i < len(items):
-        frontPages =  [].append(items[i])
-        # If I increase i by 1 i get my back page.
-        for i in range(3):
-            backPages =  [].append(items[i + 1])
-        # Now access the next third item
-        i = i + 3
-
-    return render_template('flipbook.html',
-                            items = items,
-                            frontPages = frontPages,
-                            backPages = backPages)
-
-
-
-############################
-# End of Flip book.
 
 
 @app.route('/logout')
@@ -893,6 +923,14 @@ def disconnect():
 
 
 
+
+@app.route('/item_images/<filename>')
+def show_item_image(filename):
+    """Route to serve user uploaded images.
+    Args:
+        filename (str): Filename of the image to serve to the client.
+    """
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 
