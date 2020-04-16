@@ -452,7 +452,9 @@ def showCatalog():
     else:
         return render_template('catalog.html',
                                 categories = categories,
-                                latestItems = latestItems)
+                                latestItems = latestItems,
+                                # A parameter for conditional login/out
+                                login_session = login_session)
 
 
 

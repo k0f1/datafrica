@@ -13,9 +13,12 @@
               <ul class="menu">
                     <!--Conditional login and logout links-->
                   {% if 'username' in login_session %}
-                    <li><a id='logout' type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
+
+                  <li><a id='logout' type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
+
                   {% else  %}
-                    <li><a type="button" class="btn btn-warning btn-sm" href="{{url_for('showLogin')}}">Login</a></li>
+                  <li><a type="button" class="btn btn-warning btn-sm" href="{{url_for('showLogin')}}">Login</a></li>
+                       
                   {% endif%}
                     <li>
                       <a id='logout' type="button" class="btn btn-default btn-sm" href="#">Sign in</a>
