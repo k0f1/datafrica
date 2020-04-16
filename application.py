@@ -450,17 +450,17 @@ def showCategory(category_name, category_id):
     # exist and then you do a PageNotFound when the object is None.
     try:
         category = session.query(Category).\
-                filter_by(id = category_id).one_or_none()
+                filter_by(id=category_id).one_or_none()
     except None:
         return PageNotFound
 
     categories = session.query(Category).all()
     items = session.query(Item).filter_by(
-                    category = category).order_by(asc(Item.title))
+                    category=category).order_by(asc(Item.title))
     # # return count of item "id" grouped by category_id
     categoryItems = session.query(func.count(
                             Item.id)).filter_by(
-                            category_id = category.id).one()
+                            category_id=category.id).one()
 
     # # If a user isn't logged in or isn't the original creator, we would
     # render one template or the other. # Decide which page to show,
@@ -468,23 +468,20 @@ def showCategory(category_name, category_id):
     if 'username' not in login_session:
         return redirect('/login')
     else:
-        return render_template('category.html',
-                          categories = categories,
-                          category = category,
-                          items = items,
-                          categoryItems = categoryItems)
-
-
-# If a user isn't logged in or isn't the original creator
-
+        return render_template(
+            'category.html',
+            categories=categories,
+            category=category,
+            items=items,
+            categoryItems=categoryItems)
 
 
 # Role required - creator
-@app.route('/catalog/create', methods = ['GET', 'POST'])
-#@login_required
+@app.route('/catalog/create', methods=['GET', 'POST'])
 def newCategory():
     """ Renders a form for input of a new Category - GET request.
-        if I get a post -redirect to 'showCatalog' after creating new Category info.
+        if I get a post -redirect to 'showCatalog' after creating
+        new Category info.
     """
     # ADD LOGIN PERMISSION
     # If a username is not detected for a given request.
@@ -495,14 +492,15 @@ def newCategory():
         # By calling request method
     if request.method == 'POST':
         # Extract the name field from my form. .get used b/c of bad request key
-        newCategory = Category(name = request.form['name'],
-                # Create the user_id field when you
-                # create a new Category.
-                user_id=login_session.get('user_id'))
+        newCategory = Category(
+                        name=request.form['name'],
+                        user_id=login_session.get('user_id'))
         session.add(newCategory)
         session.commit()
-        flash('New Category %s Successfully Created' % newCategory.name)
-        # To redirect my user back to the main page. I can use a helper function
+        flash('New Category %s Successfully \
+                Created' % newCategory.name)
+        # To redirect my user back to the main page.
+        # I can use a helper function
         # Url for takes the name of the function as the first arg,
         # and a number of key args, each corresponding to the variable
         # part of the URL rule.
@@ -514,11 +512,13 @@ def newCategory():
 
 
 # Role required -employee creator
-@app.route('/catalog/<category_name>/<int:category_id>/edit', methods = ['GET', 'POST'])
-#@login_required
+@app.route('/catalog/<category_name>/<int:category_id>\
+/edit', methods=['GET', 'POST'])
 def editACategoryName(category_name, category_id):
-    """1. First execute a query to find the exact item we want to update:       Find entry and store it in a variable
-        2. Next Reset values: we declare the new name of the variable
+    """1. First execute a query to find the exact item we want
+            to update:  Find entry and store it in a variable
+        2. Next Reset values: we declare the new name of
+        the variable
         3. Next we add the variable to our session
         4. Finally we commit the the session the database
  """
@@ -526,8 +526,8 @@ def editACategoryName(category_name, category_id):
     # a variable editedCategory.
     try:
         categoryToEdit = session.query(Category).\
-                    filter_by(id = category_id).one_or_none()
-    except None: # If a NoneType object is returned
+                    filter_by(id=category_id).one_or_none()
+    except None:
         return PageNotFound
 
     # ADD LOGIN PERMISSION
@@ -541,7 +541,8 @@ def editACategoryName(category_name, category_id):
     # If a user isn't logged in "Alert message"
     if categoryToEdit.user.id != login_session['user_id']:
         return "<script>function myFunction() {alert( 'You are not\
-                 authorized to edit this category.');}</script><body onload='myFunction()'>"
+                 authorized to edit this category.');}\
+                 </script><body onload='myFunction()'>"
 
     # Create an if statement that looks for a post request.
     # By calling request method
@@ -552,7 +553,7 @@ def editACategoryName(category_name, category_id):
             # Now reset the name of the category to the new name from the form
             categoryToEdit.name = request.form['name']
         # To edit, you don't need to add it again.
-        session.commit() # commit the change
+        session.commit()
         flash('Category successfully edited %s' % categoryToEdit.name)
             # Redirect the user back to the home page.
         return redirect(url_for('showCatalog'))
