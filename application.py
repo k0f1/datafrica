@@ -328,14 +328,17 @@ def fbdisconnect():
 # We need a table of users, so we can identify what data belongs to whom.
 # This step include work on lotsofitems as well.
 
+
 # createUser takes in login_session as input
 def createUser(login_session):
     """create new user in our database, extracting all
     the fields neccessary to populate it from information
     gathered from the login_session"""
 
-    newUser = User(name=login_session['username'],
-        email=login_session['email'], picture=login_session['picture'])
+    newUser = User(
+                    name=login_session['username'],
+                    email=login_session['email'],
+                    picture=login_session['picture'])
     session.add(newUser)
     session.commit()
     user = session.query(User).filter_by(email=login_session['email']).one()
@@ -361,40 +364,32 @@ def getUserID(email):
         # Returns an ID number if the email address belongs to
         # a user stored in our database.
         return user.id
-    except:
+    except None:
         # If not, it returns None.
         return None
 
 # END OF LOCAL PERMISSION
 
 
-
-
-
-
-
-#JSON APIs to view Catalog Information
+# JSON APIs to view Catalog Information
 @app.route('/catalog/json')
-#@login_required
 def catalogJSON():
     categories = session.query(Category).all()
-    return jsonify(Category =[i.serialize for i in categories])
-
+    return jsonify(Category=[i.serialize for i in categories])
 
 
 @app.route('/catalog/items/json')
-#@login_required
 def itemsJSON():
     Items = session.query(Item).all()
-    return jsonify(Items = [i.serialize for i in items])
+    return jsonify(Items=[i.serialize for i in items])
 
 
-
-@app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/json')
-#@login_required
+@app.route('/catalog/<category_name>/<int:category_id>/<item_title>\
+/<int:item_id>/json')
 def productItemJSON(category_name, item_title):
-    Product_Item = session.query(Item).filter_by(title = item_title).one()
-    return jsonify(Product_Item = Product_Item.serialize)
+    Product_Item = session.query(Item).filter_by(
+                        title=item_title).one_or_none()
+    return jsonify(Product_Item=Product_Item.serialize)
 
 
 @app.route('/index')
@@ -405,11 +400,13 @@ def showIndex():
 # Show all Categories and latest Item-list associated with them
 @app.route('/')
 @app.route('/catalog/')
-#@login_required
 def showCatalog():
     # Add SQLAlchemy statements
-    """Show the index page displaying the categories and latest items 20 items added to the database."""
-    # To protect each category or each category or item based on whoever created it.
+    """Show the index page displaying the categories and
+    latest items 20 items added to the database.
+    """
+    # To protect each category or each category or
+    # item based on whoever created it.
     categories = session.query(Category).all()
 
     # result[::-1] return the slice of every elelement of result in reverse
@@ -424,21 +421,22 @@ def showCatalog():
     if 'username' not in login_session:
         return render_template('index.html')
     else:
-        return render_template('catalog.html',
-                                categories = categories,
-                                latestItems = latestItems,
-                                # A parameter for conditional login/out
-                                login_session = login_session)
-
-
+        return render_template(
+            'catalog.html',
+            categories=categories,
+            latestItems=latestItems,
+            # A parameter for conditional login/out
+            login_session=login_session)
 
 
 # "Show item-list associated with a specific category
 @app.route('/catalog/<category_name>/<int:category_id>/items')
-#@login_required
 def showCategory(category_name, category_id):
     # Add SQLAlchemy statements
-    """Takes in a specified category_name and returns the the items associated with it. Renders a web page showing all the categories on one side and the items on the other side of the page.
+    """Takes in a specified category_name and returns the
+        the items associated with it. Renders a web page
+        showing all the categories on one side and the items
+         on the other side of the page.
     """
     # NOTE IMPORTANT!
     # In other to handle cases where requested items does not exist,
