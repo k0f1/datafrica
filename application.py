@@ -596,9 +596,15 @@ def deleteCategory(category_name, category_id):
                 Please create your own category in order\
                  to edit categories.');}</script><body onload='myFunction()'>"
     else:
-        render_template('deletecategory.html',
-                        category=categoryToDelete,
-                        creator=creator)
+        render_template('deletecategory.html', category=categoryToDelete,
+                                                creator=creator)
+
+
+
+
+
+    # if not we stay here- render_template('deletecategory.html', category=categoryToDelete)
+
     # Create an if statement that looks for a post request.
     # By calling request method
     if request.method == 'POST':
@@ -607,9 +613,9 @@ def deleteCategory(category_name, category_id):
         flash('%s Successfully Deleted' % categoryToDelete.name)
         return redirect(url_for('showCatalog'))
     else:
-        return render_template(
-                            'deletecategory.html',
-                            category=categoryToDelete)
+        return render_template('deletecategory.html',
+                                  category = categoryToDelete)
+
 
 
 @app.route('/catalog/myitems/')
@@ -632,23 +638,25 @@ def showUserItems():
                            items=items)
 
 
+
+
 # "This page is the Item for %s" % item_id
-@app.route('/catalog/<category_name>/<int:category_id>\
-/<item_title>/<int:item_id>/')
+@app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/')
+#@login_required
 def showItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Renders product information web page of an item.
     """
     try:
         category = session.query(Category).\
-            filter_by(id=category_id).one_or_none()
+            filter_by(id = category_id).one_or_none()
 
-    except None:
+    except None: # If a NoneType object is returned
         return PageNotFound
 
     try:
-        item = session.query(Item).filter_by(id=item_id).one_or_none()
-    except None:
+        item = session.query(Item).filter_by(id = item_id).one_or_none()
+    except None: # If a NoneType object is returned
         return PageNotFound
 
     creator = getUserInfo(item.user_id)
@@ -660,19 +668,19 @@ def showItem(category_name, category_id, item_title, item_id):
         # Decide which page should be visible to the public
         # And which one should be private
     else:
-        return render_template(
-                            'item.html',
-                            category=category,
-                            item=item,
-                            creator=creator)
+        return render_template('item.html',
+                           category = category,
+                           item = item,
+                           creator = creator)
+
+
 
 # Role required: User- creator
 # "This page will be for adding a new Item"
-@app.route('/catalog/new', methods=['GET', 'POST'])
-def newItem():
-    """ Renders a form for input of a new item -
-        GET request. if I get a post -redirect to
-        'showItem' after creating new item.
+@app.route('/catalog/new', methods = ['GET', 'POST'])
+#@login_required
+def newItem():# Add item base on category name.
+    """ Renders a form for input of a new item - GET request. if I get a post -redirect to 'showItem' after creating new item.
     """
     # ADD LOGIN PERMISSION
     # Protect app modification from non-users
@@ -684,33 +692,31 @@ def newItem():
 
     categories = session.query(Category).all()
 
-    # Add SQLAlchemy statements
+     # Add SQLAlchemy statements
     if request.method == 'POST':
         # This is key to retreiving category from the form.
         try:
             category = (session.query(Category).filter_by(
-                        name=request.form.get('category')).one_or_none())
-        except None:
+                        name= request.form.get('category')).one_or_none())
+        except None:# If a NoneType object is returned
             return PageNotFound
 
-        newItem = Item(
-                    category=category,
-                    title=request.form['title'],
-                    description=request.form['description'],
-                    price=request.form['price'],
-                    user_id=login_session['user_id'])
+        newItem = Item(category = category,
+                        title = request.form['title'],
+                        description = request.form['description'],
+                        price = request.form['price'],
+                        user_id=login_session['user_id'])
         # access the file from the files dictionary
         # on request object:
-        # file = request.files['file']
+        #file = request.files['file']
 
         # Process optional item image.
-        image_file = request.files['file']
+        image_file =request.files['file']
         if image_file and allowed_file(image_file.filename):
             filename = secure_filename(image_file.filename)
             if os.path.isdir(app.config['UPLOAD_FOLDER']) is False:
                 os.mkdir(app.config['UPLOAD_FOLDER'])
-            image_file.save(os.path.join(
-                app.config['UPLOAD_FOLDER'], filename))
+            image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             newItem.image_filename = filename
         elif request.form['basic_url']:
             newItem.basic_url = request.form['basic_url']
@@ -722,27 +728,22 @@ def newItem():
 
         creator = getUserInfo(newItem.user_id)
         # Show response to my post request in the client.
-        return redirect(url_for(
-                'showItem',
-                category_name=category_name,
-                category_id=category_id,
-                item_title=item_title,
-                item_id=item_id,
-                creator=creator))
+        return redirect(url_for('showItem', category_name=category_name,
+                                            category_id=category_id, item_title=item_title, item_id=item_id,
+                                            creator = creator))
     else:
-        return render_template('newitem.html', categories=categories)
+        return render_template('newitem.html', categories = categories)
+
 
 
 # Role required user- creator
 # "This page is for editing Item %s" % item_id
-@app.route('/catalog//<category_name>/<int:category_id>\
-/<item_title>/<int:item_id>/edit', methods=['GET', 'POST'])
+@app.route('/catalog//<category_name>/<int:category_id>/<item_title>/<int:item_id>/edit', methods = ['GET', 'POST'])
+#@login_required
 def editItem(category_name, category_id, item_title, item_id):
     """Edit the details of the specified item.
-        Returns a GET with edititem.html - form with
-        inputs to edit item info
-        if I get a post - redirect to 'showCategory'
-        after updating item info.
+        Returns a GET with edititem.html - form with inputs to edit item info
+        if I get a post - redirect to 'showCategory' after updating item info.
     """
     # ADD LOGIN PERMISSION
     # If a user name is not detected for a given request.
@@ -754,34 +755,32 @@ def editItem(category_name, category_id, item_title, item_id):
 
     try:
         category = session.query(Category).\
-                    filter_by(id=category_id).one_or_none()
-    except None:
+                    filter_by(id = category_id).one_or_none()
+    except None: # If a NoneType object is returned
         return PageNotFound
 
     try:
         editedItem = session.query(Item).filter_by(
-                            id=item_id).one_or_none()
+                            id = item_id).one_or_none()
     except None:
-        # If a NoneType object is returned
-        return PageNotFound
+         # If a NoneType object is returned
+         return PageNotFound
     return redirect(url_for('showCatalog'))
 
     # To protect each item based on whoever created it.
     creator = getUserInfo(editedItem.user_id)
 
+
     # ADD ALERT MESSAGE TO PROTECT.
     # If a user isn't logged in or isn't the original creator
-    if 'username' not in login_session or\
-            creator.id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not\
-                authorized to edit this item. Please create your\
-                own item in order to edit items.');}\
-                </script><body onload='myFunction()'>"
+    if 'username' not in login_session or creator.id !=login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit items.');}</script><body onload='myFunction()'>"
+
 
     if request.method == 'POST':
         # This is key to retreiving the category from the form.
         category = (session.query(Category).filter_by(
-                    name=request.form.get('category')).one())
+                    name= request.form.get('category')).one())
         if request.form['title']:
             editedItem.title = request.form['title']
         if request.form['description']:
@@ -799,8 +798,7 @@ def editItem(category_name, category_id, item_title, item_id):
             filename = secure_filename(image_file.filename)
             if os.path.isdir(app.config['UPLOAD_FOLDER']) is False:
                 os.mkdir(app.config['UPLOAD_FOLDER'])
-            image_file.save(os.path.join(
-                app.config['UPLOAD_FOLDER'], filename))
+            image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             editedItem.image_filename = filename
             editedItem.basic_url = None
@@ -815,32 +813,29 @@ def editItem(category_name, category_id, item_title, item_id):
             if editedItem.image_filename:
                 delete_image(editedItem.image_filename)
 
+
         session.add(editedItem)
         session.commit()
         flash('Item Successfully Edited')
-        return redirect(url_for(
-                'showCategory',
-                category_name=category_name,
-                category_id=category_id))
+        return redirect(url_for('showCategory', category_name=category_name,
+                                                category_id = category_id))
     else:
-        return render_template(
-                'edititem.html',
-                category=category,
-                categories=categories,
-                item=editedItem)
+        return render_template('edititem.html', category = category,
+                                                categories = categories,
+                                                item = editedItem)
+
 
 
 # Role required: User creator
 # "This page is for deleting Item %s" %item_id
-@app.route('/catalog/<category_name>/<int:category_id>\
-/<item_title>/<int:item_id>/delete', methods=['GET', 'POST'])
+@app.route('/catalog/<category_name>/<int:category_id>/<item_title>/<int:item_id>/delete', methods = ['GET', 'POST'])
+#@login_required
 def deleteItem(category_name, category_id, item_title, item_id):
     # Add SQLAlchemy statements
     """Delete a specified item from the database.
-        Returns: GET: deleteitem.html - form for confirmation prior
-        to deletion of item.
-        POST: if I get a post -redirect to 'showCategory'
-        after item info deletion.
+        Returns:
+        GET: deleteitem.html - form for confirmation prior to deletion of item.
+        POST: if I get a post -redirect to 'showCategory' after item info deletion.
     """
     # ADD LOGIN PERMISSION
     # If a user name is not detected for a given request.
@@ -850,41 +845,37 @@ def deleteItem(category_name, category_id, item_title, item_id):
     # filter_by uses the names of the columns in a table
     try:
         category = session.query(Category).\
-                    filter_by(id=category_id).one_or_none()
-    except None:
+                    filter_by(id = category_id).one_or_none()
+    except None: # If a NoneType object is returned
         return PageNotFound
 
     try:
         itemToDelete = session.query(Item).filter_by(
-                            id=item_id).one_or_none()
-    except None:
+                            id =item_id).one_or_none()
+    except None: # If a NoneType object is returned
         return PageNotFound
 
     creator = getUserInfo(itemToDelete.user_id)
     # ADD ALERT MESSAGE TO PROTECT.
     # If a user isn't logged in or isn't the original creator
-    if 'username' not in login_session or\
-            creator.id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not\
-                authorized to edit this item. Please create\
-                 your own item in order to edit items.');}\
-                 </script><body onload='myFunction()'>"
+    if 'username' not in login_session or creator.id !=login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit items.');}</script><body onload='myFunction()'>"
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
         flash('Item Successfully Deleted')
-        return redirect(url_for(
-                    'showCategory',
-                    category_name=category_name,
-                    category_id=category_id))
+        return redirect(url_for('showCategory',
+                                            category_name = category_name,
+                                            category_id =category_id))
     else:
-        return render_template(
-                    'deleteitem.html',
-                    category=category,
-                    item=itemToDelete)
+        return render_template('deleteitem.html', category = category,
+                                            item = itemToDelete)
+
+
 
 
 @app.route('/logout')
+#@login_required
 def disconnect():
     """Checks if the provider has been set in login_session"""
 
@@ -908,6 +899,8 @@ def disconnect():
         return redirect(url_for('showCatalog'))
 
 
+
+
 @app.route('/item_images/<filename>')
 def show_item_image(filename):
     """Route to serve user uploaded images.
@@ -917,19 +910,10 @@ def show_item_image(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
-@app.errorhandler(404)
-def page_not_found(error):
-    return 'This page does not exist', 404
-
-
-def special_exception_handler(error):
-    return 'Database connection failed', 500
-
-
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
     # app.run(ssl_context='adhoc')
     app.run(threaded=False)
-    app.config['UPLOAD_FOLDER'] = True
-    app.run(host='0.0.0.0', port=8000)
+    app.config['UPLOAD_FOLDER']= True
+    app.run(host = '0.0.0.0', port = 8000)
