@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-# from __future__ import unicode_literals
 
 
 from sqlalchemy import create_engine
@@ -9,10 +8,9 @@ from database_setup import Base, Category, Item, User
 
 # Make an instance of create engine
 # engine = create_engine('sqlite:///catalog.db')
-engine = create_engine('sqlite:///catalogwithusers.db')
+engine = create_engine('postgresql://datafrica:password@localhost/datafrica')
 
 # Bind the engine to the metadata of the Base class
-
 Base.metadata.bind = engine
 # DBsession establishes conversation with the database and act as staging zone
 DBSession = sessionmaker(bind=engine)
@@ -340,7 +338,7 @@ session.add(category11)
 session.commit()
 
 item1 = Item(picture="static/fig1.jpeg", user_id=1, title="YiQile", \
-            description="Kids outdoor playground items best rock climbing wall good clim holds", price="$10,000.00", category = category11)
+            description="Kids outdoor playground items best rock climbing wall good clim holds", price="$100.00", category = category11)
 
 session.add(item1)
 session.commit()

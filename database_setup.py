@@ -89,9 +89,9 @@ class Item(Base):
 
 # Make an instance - engine from create_engine. Point it to the database.
 # engine = create_engine ('sqlite:///catalog.db')
-engine = create_engine ('sqlite:///catalogwithusers.db')
-
+engine = create_engine ('postgresql://datafrica:password@localhost/datafrica')
 
 
 
 Base.metadata.create_all(engine)
+

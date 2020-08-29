@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
 
-UPLOAD_FOLDER = '/vagrant/catalog/uploads'
+UPLOAD_FOLDER = '/var/www/datafrica/datafrica/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
