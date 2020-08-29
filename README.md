@@ -122,7 +122,7 @@ See also the list of [contributors](https://github.com/k0f1/Catalog-App.git/cont
 * Facebook, Linkedin, Amazon, Microsoft, Paypal Oauth2
 * Running the app on https
 
-### In ssl certficate with Let's encrypt
+### ssl certficate
 * Use the link [here](https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-18-04)
 * If successful, go to your account in AWS and enable custom HTTPS port 443 and you web app should be accessible live.
 
