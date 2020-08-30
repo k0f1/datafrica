@@ -65,7 +65,7 @@ A step by step series of how to get a development env running
    Download_Old_Builds_5_1)
 * Install Vagrant
  * It is a software that runs the virtual machine.
- * To [download](https://www.vagrantup.com/)
+ * To download it [here](https://www.vagrantup.com/)
  * Here is a zipped [file](https://s3.amazonaws.com/
    video.udacity-data.com/topher/2018/April/
    5acfbfa3_fsnd-virtual-machine/fsnd-virtual-machine.zip)
