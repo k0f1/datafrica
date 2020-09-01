@@ -46,7 +46,7 @@ APP_PATH = '/var/www/datafrica/datafrica/'
 client_id = json.loads(
     open(APP_PATH + 'client_secrets.json', 'r').read())['web']['client_id']
 
-APPLICATION_NAME = "Ehelt Catalog App"
+APPLICATION_NAME = "Catalog App"
 
 # Make an instance of create engine
 # engine = create_engine ('sqlite:///catalog.db')
