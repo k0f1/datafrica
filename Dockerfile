@@ -16,7 +16,7 @@ WORKDIR /app
 # Here is my containerPort
 EXPOSE 8000
 
-CMD ["python3", "__ini__.py"]
+CMD ["python3", "__init__.py"]
 
 
 
