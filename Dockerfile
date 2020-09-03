@@ -2,7 +2,7 @@ FROM python:3.7.2-slim
 
 RUN mkdir /app
 
-# For good caching, run reqa.txt
+# For good caching, run reqs.txt
 COPY . /app
 RUN pip3 install -r app/requirements.txt
 
