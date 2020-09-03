@@ -11,6 +11,7 @@ WORKDIR /app
 # Containers have no public IP address by default
 # Remember to ufw allow port 8000
 # Forward host port 80 -> container port
+# Here is my containerPort
 EXPOSE 8000
 
 CMD ["python3", "__ini__.py"]
