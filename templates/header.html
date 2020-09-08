@@ -1,16 +1,17 @@
     <header>
-      <div class="row top-menu">
+      <div class="row top-menu navbar">
         <div class="vertical-centerer flex-container">
           <div class="flex-container space-between header-content">
             <div>
               <span>
-                <a id='appName' href="{{url_for('showCatalog')}}">
-            			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Catalog
-            		</a>
+		      <a id='appName' href="{{url_for('showCatalog')}}"><div class="logo"><svg height="30" viewBox="0 0 30 30" width="30" src="{{ url_for('static', filename='buz_logo.svg') }}"></svg></div></a>
               </span>
             </div>
             <div>
               <ul class="menu">
+		   <li><a>All Categories</a></li>
+		   <li><a>Rate an Enterprise</a></li>
+		   <li><a>For Enterprise</a></li>
                     <!--Conditional login and logout links-->
                   {% if 'username' in login_session %}
 
@@ -30,3 +31,5 @@
       </div>
 
     </header>
+
+
