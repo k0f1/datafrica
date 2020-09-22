@@ -101,12 +101,13 @@ section {
 }
 .flex-container {
   display: flex;
+  height: 60%;
 }
 .space-between {
   justify-content: space-between;
 }
 .vertical-centerer {
-  height: 100%;
+  height: 60%;
   flex-direction: column;
   justify-content: center;
 }
