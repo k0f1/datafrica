@@ -101,7 +101,6 @@ section {
 }
 .flex-container {
   display: flex;
-  height: 60%;
 }
 .space-between {
   justify-content: space-between;
@@ -113,6 +112,7 @@ section {
 }
 .header-content {
   width: 960px;
+  height: 60%;
   margin-left: auto;
   margin-right: auto;
 }
