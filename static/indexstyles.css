@@ -73,7 +73,6 @@ header {
   -webkit-font-smoothing: antialiased;
   color: #697681;
   background: white;
-  height: 130px;
   width: 100%;
   padding: 15px;
 }
@@ -153,7 +152,7 @@ color: #d9480f;
 
 header {
   background-color: #000000;
-  height: 85px;
+  height: 200px;
 }
 
 
