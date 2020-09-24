@@ -90,7 +90,9 @@ header {
 
 
 /* Menu  Dropdowns */
-
+.col-sm-6 {
+  display: flex;
+  width: 100%;
 
 /* End of dropdown */
 
