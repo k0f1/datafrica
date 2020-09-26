@@ -93,7 +93,7 @@ header {
 
 /* End of dropdown */
 
-.flex-container {
+.flex-container.vertical-centerer {
   height: 50px;
 
 
