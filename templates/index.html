@@ -82,39 +82,35 @@
 	      </div> <!--End of top row -->
 	
 					
+	  <div class="flex-container space-between header-content row" id="navbar-input">
+	    <div>
+		    <a id='appName'  class="header_logo" href="{{url_for('showIndex')}}"><div class="logo"><svg height="30" viewBox="0 0 30 30" width="30" src="{{ url_for('static', filename='buz_logo.svg') }}"></svg></div></a>
+	    </div>
 
-	      <div class="flex-container" id="navbar-input">
-		  <div class="flex-container space-between header-content row" id="navbar-input">
-		    <div>
-			    <a id='appName'  class="header_logo" href="{{url_for('showIndex')}}"><div class="logo"><svg height="30" viewBox="0 0 30 30" width="30" src="{{ url_for('static', filename='buz_logo.svg') }}"></svg></div></a>
-		    </div>
+	    <div>
+	      <ul class="menu">
+		 <li><a>Submit Rating</a></li>
+		 <li><a>For Enterprise</a></li>
 
-		    <div>
-		      <ul class="menu">
-			 <li><a>Submit Rating</a></li>
-			 <li><a>For Enterprise</a></li>
-
-			<!--Conditional login and logout links-->
-		      {% if 'username' in login_session %}
-			<li><a id='logout' type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
-		      {% else  %}
-			<li><a type="button" class="btn btn-warning btn-sm" href="{{url_for('showLogin')}}">Login</a></li>
-		      {% endif%}
-			<li>
-			  <a id='logout' type="button" class="btn btn-info btn-sm" href="#">Sign in</a>
-			</li>
-			<li>
-			  <a id="menu" class="header__menu">
-			    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-			      <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
-			    </svg>
-			  </a>
-			</li>
-		      </ul>
-		    </div>
-
-		  </div>
-		</div>
+		<!--Conditional login and logout links-->
+	      {% if 'username' in login_session %}
+		<li><a id='logout' type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
+	      {% else  %}
+		<li><a type="button" class="btn btn-warning btn-sm" href="{{url_for('showLogin')}}">Login</a></li>
+	      {% endif%}
+		<li>
+		  <a id='logout' type="button" class="btn btn-info btn-sm" href="#">Sign in</a>
+		</li>
+		<li>
+		  <a id="menu" class="header__menu">
+		    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+		      <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+		    </svg>
+		  </a>
+		</li>
+	      </ul>
+	    </div>
+	  </div>
       </header>
 
       <main>
