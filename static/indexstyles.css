@@ -94,7 +94,7 @@ header {
   display: flex;
   width: 100%;
   
-  #header-wrapper {
+  #header-container {
     height: 150px;
     
   #navbar-input {
