@@ -104,6 +104,7 @@ section {
 }
 .flex-container {
   display: flex;
+  height: 65px;
 }
 .space-between {
   justify-content: space-between;
