@@ -90,15 +90,10 @@ header {
 
 
 /* Menu  Dropdowns */
-.col-sm-6 {
-  display: flex;
-  width: 100%;
   
-  header #header-container {
-    height: 150px;
     
   #navbar-input {
-    height: 65px;
+    height: 50px;
 
 /* End of dropdown */
 
