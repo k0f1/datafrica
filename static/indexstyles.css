@@ -79,7 +79,7 @@ header {
 }
 
 /* Nav drawer  */
-.header__menu {
+.header_menu {
   display: none;
 }
 
@@ -93,6 +93,8 @@ header {
 
 /* End of dropdown */
 
+header .flex-container {
+  height: 50px;
 
 
 section {
@@ -100,7 +102,6 @@ section {
 }
 .flex-container {
   display: flex;
-  height: 50px;
 }
 .space-between {
   justify-content: space-between;
