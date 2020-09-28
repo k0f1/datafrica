@@ -143,11 +143,10 @@ header .header-navbar-menu {
   
 */  
 
-/*
 .logo {
   width: 200px;
   display: inline-block;
-  /*margin: 10px 0px;
+  margin: 10px 0px;
 }
 .menu {
   list-style: none;
@@ -157,13 +156,12 @@ header .header-navbar-menu {
   display: inline-block;
  /* margin-left: 37.5px;*/
 }
-*/
 
 .header_menu svg {
   width: 32px;
   fill: #E0E0E0;
 }
-/*
+
 .header_logo {
     height: 45px;
     width: 19%%;
@@ -179,7 +177,7 @@ a .header_title {
     text-decoration: none;
 }
 
-*/  
+ 
   
   
   
