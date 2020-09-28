@@ -31,7 +31,7 @@
       <header>
 	      <div class="row top-row space-between navbar-input">
 
-		      <div class="input-group col-md-8">
+		      <div class="input-group col-md-8 header-navbar-input">
 			      <form>
 				      <select class="custom-select"> <!--This element is labelled by ID above -->
 					<option selected="selected" value="All" aria-describedby="searchDropdownDescription">All</option>
@@ -69,7 +69,7 @@
 		      	      </form>
 			      
 		      </div>
-		      <div class="col-md-4">
+		      <div class="col-md-4 header-navbar-input-menu">
 
 			      <ul class="menu">
 
@@ -83,11 +83,11 @@
 	
 					
 	  <div class="space-between header-content row navbar-input">
-	    <div class="nav-left">
+	    <div class="header-navbar-logo">
 		    <a id='appName'  class="header_logo" href="{{url_for('showIndex')}}"><div class="logo"><svg height="30" viewBox="0 0 30 30" width="30" src="{{ url_for('static', filename='buz_logo.svg') }}"></svg></div></a>
 	    </div>
 
-	    <div class="nav-right">
+	    <div class="header-navbar-menu">
 	      <ul class="menu">
 		 <li><a>Submit Rating</a></li>
 		 <li><a>For Enterprise</a></li>
