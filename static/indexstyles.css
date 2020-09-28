@@ -98,22 +98,27 @@ header .navbar-input {
 section {
   padding: 16px;
 }
+  
+/*
 .flex-container {
   display: flex;
 }
-    
+*/
+  
+  
 .header-navbar-logo {
   float: left;
   display: block;
   margin-right: .84034%;
-  width: 20.16807%;
+  width: 20.16%;
   
 }
  
-.header-navbar-menu {
+header .header-navbar-menu {
   width: 78.99%;
   display: flex;
   justify-content: flex-end;
+  float: right;
   
 }
 
@@ -121,9 +126,6 @@ section {
     margin-right: 0;
 }
 
-header .header-navbar-menu {
-    float: right;
- 
   
 /*
 .space-between {
