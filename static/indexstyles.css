@@ -118,7 +118,6 @@ section {
  
 header .header-navbar-menu {
   width: 78.99%;
-  display: flex;
   justify-content: flex-end;
   float: right;
   
@@ -128,6 +127,10 @@ header .header-navbar-menu {
     margin-right: 0;
 }
 
+
+.menu {
+  display: flex;
+ }
   
 /*
 .space-between {
@@ -150,10 +153,14 @@ header .header-navbar-menu {
   display: inline-block;
   margin: 10px 0px;
 }
+  
+  
 .menu {
   list-style: none;
   list-style-type: none;
 }
+  
+  
 .menu > li {
   display: inline-block;
  /* margin-left: 37.5px;*/
