@@ -88,14 +88,15 @@ header {
 /* Menu  Dropdowns */
   
     
-  #navbar-input {
+  .navbar-input {
     height: 50px;
 
 /* End of dropdown */
 
+/*
 .flex-container.vertical-centerer {
   height: 50px;
-
+*/
 
 section {
   padding: 16px;
