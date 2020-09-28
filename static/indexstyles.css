@@ -143,10 +143,11 @@ header .header-navbar-menu {
   
 */  
 
+/*
 .logo {
   width: 200px;
   display: inline-block;
-  margin: 10px 0px;
+  /*margin: 10px 0px;
 }
 .menu {
   list-style: none;
@@ -154,10 +155,35 @@ header .header-navbar-menu {
 }
 .menu > li {
   display: inline-block;
-  margin-left: 37.5px;
+ /* margin-left: 37.5px;*/
+}
+*/
+
+.header_menu svg {
+  width: 32px;
+  fill: #E0E0E0;
+}
+/*
+.header_logo {
+    height: 45px;
+    width: 19%%;
+    margin-right: 1em;
 }
 
 
+a .header_title {
+    font-weight: 400;
+    font-size: 4em;
+    margin: 0.5em 0.25em;
+    display: inline-block;
+    text-decoration: none;
+}
+
+*/  
+  
+  
+  
+  
 
 .wrapper {
   display: grid;
@@ -178,31 +204,7 @@ color: #d9480f;
 }
 
 
-.header_menu svg {
-  width: 32px;
-  fill: #E0E0E0;
-}
 
-.header_logo {
-    height: 45px;
-    width: 20%;
-    margin-right: 1em;
-    vertical-align: top;
-}
-
-
-a .header_title {
-    font-weight: 400;
-    font-size: 4em;
-    margin: 0.5em 0.25em;
-    display: inline-block;
-    text-decoration: none;
-}
-
-
-ul.menu li {
-  vertical-align: top;
-}
 
 .hero {
   display: flex;
