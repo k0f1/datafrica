@@ -103,16 +103,29 @@ section {
 }
     
 .header-navbar-logo {
-  width: 28%;
+  float: left;
+  display: block;
+  margin-right: .84034%;
+  width: 20.16807%;
   
 }
  
 .header-navbar-menu {
   width: 72%;
+  display: flex;
+  justify-content: flex-end;
   
 }
-    
-    
+
+.header-navbar-menu:last-child {
+    margin-right: 0;
+}
+
+header .header-navbar-menu {
+    float: right;
+ 
+  
+ 
 .space-between {
   justify-content: space-between;
 }
