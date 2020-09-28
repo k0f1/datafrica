@@ -96,10 +96,6 @@ header .navbar-input {
 /* End of dropdown */
 
 
-
-section {
-  padding: 16px;
-}
   
 /*
 .flex-container {
@@ -203,6 +199,10 @@ padding: 1em;
 color: #d9480f;
 }
 
+
+section {
+  padding: 16px;
+}
 
 
 
