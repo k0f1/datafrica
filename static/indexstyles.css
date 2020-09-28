@@ -93,10 +93,7 @@ header {
 
 /* End of dropdown */
 
-/*
-.flex-container.vertical-centerer {
-  height: 50px;
-*/
+
 
 section {
   padding: 16px;
@@ -104,6 +101,7 @@ section {
 .flex-container {
   display: flex;
 }
+    
 .space-between {
   justify-content: space-between;
 }
@@ -113,7 +111,6 @@ section {
 }
 .header-content {
   width: 960px;
-  /*height: 100%;*/
   margin-left: auto;
   margin-right: auto;
 }
