@@ -40,7 +40,7 @@ body {
 
 
 .row {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   width: 100%;
   margin: 5px 5px;
