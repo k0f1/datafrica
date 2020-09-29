@@ -43,10 +43,14 @@ body {
   display: flex;
   direction: row;
   flex-wrap: wrap;
-  justify-content: flex-end;
   width: 100%;
   margin: 1px 1px;
 }
+
+.menu {
+  justify-content: flex-end;
+}
+
 
 h1, h2, h3, h4, h5 {
   margin: 0;
