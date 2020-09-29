@@ -91,8 +91,35 @@ header {
 header .navbar-input {
   height: 50px;
   display: flex;
-  
+ 
+#searchScopeButtonID .nav-search-dropdown {
+    position: absolute;
+    display: block;
+    top: -1px;
+    left: 0;
+    height: 35px;
+    width: auto;
+    font-family: inherit;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    visibility: visible;
+    border: 0;
+    line-height: 35px;
+}
 
+input, select, textarea {
+  transition: all .1s linear;
+      transition-property: all;
+      transition-duration: 0.1s;
+      transition-timing-function: linear;
+      transition-delay: 0s;
+  line-height: 19px;
+  color: #111;
+}
 /* End of dropdown */
 
 
