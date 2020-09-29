@@ -47,11 +47,6 @@ body {
   margin: 1px 1px;
 }
 
-.menu {
-  display: flex;
-  direction: row;
-  justify-content: flex-end;
-}
 
 
 h1, h2, h3, h4, h5 {
