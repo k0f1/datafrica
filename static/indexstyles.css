@@ -48,6 +48,8 @@ body {
 }
 
 .menu {
+  display: flex;
+  direction: row;
   justify-content: flex-end;
 }
 
