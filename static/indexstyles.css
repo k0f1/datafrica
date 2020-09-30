@@ -101,12 +101,8 @@ header {
   
 }
 
-#submit-btn {
+.fa, .fa-search {
   width: 40px;
-  height: 40px:
-}
-
-.nav-search, .fa, .fa-search {
   height: 40px;
 }
 
