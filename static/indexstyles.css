@@ -86,14 +86,16 @@ header {
   display: none;
 }
 
-
+.nav-input {
+  display: flex;
+  direction: row;
+}
 
 /* Menu  Dropdowns */
   
     
 header .navbar-input {
   height: 50px;
-  display: flex;
  
 #searchScopeButtonID .nav-search-dropdown {
     position: absolute;
