@@ -71,6 +71,7 @@ body {
   padding: 0;
   background-color: #ddd;
 }
+
 header {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -162,7 +163,7 @@ input, select, textarea {
   
 }
  
-header .header-navbar-menu {
+.header-navbar-menu {
   width: 78.99%;
   justify-content: flex-end;
   float: right;
@@ -177,10 +178,7 @@ header .header-navbar-menu {
   height: 100%;
 }
 
-.header-navbar, .menu, .justify-content {
-  display: block;
-  justify-content: flex-end;
-}
+
 /*
 .space-between {
   justify-content: space-between;
