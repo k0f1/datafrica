@@ -164,7 +164,9 @@ header .header-navbar-menu {
     margin-right: 0;
 }
 
-
+.header-navbar {
+  height: 100%;
+}
   
 /*
 .space-between {
