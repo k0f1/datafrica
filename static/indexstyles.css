@@ -176,7 +176,11 @@ header .header-navbar-menu {
 .header-navbar {
   height: 100%;
 }
-  
+
+.header-navbar, .menu, .justify-content {
+  display: block;
+  justify-content: flex-end;
+}
 /*
 .space-between {
   justify-content: space-between;
