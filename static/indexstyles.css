@@ -93,7 +93,7 @@ header {
 
 /* Menu  Dropdowns */
   
-    
+/*   
 header .navbar-input {
   height: 50px;
  
@@ -125,7 +125,8 @@ input, select, textarea {
   line-height: 19px;
   color: #111;
 }
-  
+*/
+
   form {
     background-color: white;
   }
