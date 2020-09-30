@@ -93,10 +93,13 @@ header {
 
 /* Menu  Dropdowns */
   
-/*   
-header .navbar-input {
+.navbar-input {
+  display: flex;
+  direction: row;
   height: 50px;
- 
+  
+}
+  
 #searchScopeButtonID .nav-search-dropdown {
     position: absolute;
     display: block;
@@ -125,11 +128,11 @@ input, select, textarea {
   line-height: 19px;
   color: #111;
 }
-*/
 
-  form {
-    background-color: white;
-  }
+#form-container, .form-container {
+    background: transparent;
+}
+
   
 /* End of dropdown */
 
