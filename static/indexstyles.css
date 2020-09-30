@@ -100,7 +100,7 @@ header {
   
 }
 
-.nav-search {
+.nav-search, .fa, .fa-search {
   height: 100%;
 }
 
