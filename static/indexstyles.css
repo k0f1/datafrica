@@ -8,10 +8,10 @@
 /*Style the index page */
 
 
-/*• {
+• {
   box-sizing: border-box!important;
 }
-*/
+
 * {
   box-sizing: border-box;
 }
@@ -204,7 +204,6 @@ input, select, textarea {
   
 .menu > li {
   display: inline-block;
- /* margin-left: 37.5px;*/
 }
 
 .header_menu svg {
@@ -231,7 +230,6 @@ a .header_title {
 
 .wrapper {
   display: grid;
-  border: 2px solid #f76707;
   border-radius: 5px;
   width: 100%;
   height: 100%;
@@ -241,7 +239,6 @@ a .header_title {
 
 
 .wrapper > div {
-border: 2px solid #ffa94d;
 border-radius: 5px;
 padding: 1em;
 color: #d9480f;
