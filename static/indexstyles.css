@@ -158,6 +158,7 @@ input, select, textarea {
  
 .header-navbar-menu, .menu > ul {
   width: 78.99%;
+  display: flex;
   justify-content: flex-end;
   float: right;
   
