@@ -99,7 +99,12 @@ header {
   height: 50px;
   
 }
-  
+
+.nav-search {
+  height: 100%;
+}
+
+
 #searchScopeButtonID .nav-search-dropdown {
     position: absolute;
     display: block;
