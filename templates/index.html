@@ -74,8 +74,8 @@
 
 			      <ul class="menu justify-content">
 
-				      <li><a type="button" class="btn btn-outline-primary" href="#">My List</a></li>
-				      <li><a type="button" class="btn btn-outline-primary" href="#">Catalog</a></li>
+				      <li><a type="button" class="btn btn-outline-warning href="#">My List</a></li>
+				      <li><a type="button" class="btn btn-outline-warning" href="#">Catalog</a></li>
 
 			      </ul>
 		      </div>
@@ -90,17 +90,17 @@
 
 	    <div class="header-navbar-menu menu justify-content">
 	      <ul class="menu justify-content">
-		 <li><a type="button" class="btn btn-outline-primary" href="#">Submit Rating</a></li>
-		 <li><a type="button" class="btn btn-outline-primary" href="#">For Enterprise</a></li>
+		 <li><a type="button" class="btn btn-outline-warning" href="#">Submit Rating</a></li>
+		 <li><a type="button" class="btn btn-outline-warning" href="#">For Enterprise</a></li>
 
 		<!--Conditional login and logout links-->
 	      {% if 'username' in login_session %}
-		<li><a id='logout' type="button" class="btn btn-warning btn-lg"   href="{{url_for('disconnect')}}">Logout</a></li>
+		<li><a id='logout' type="button" class="btn btn-outline-warning"   href="{{url_for('disconnect')}}">Logout</a></li>
 	      {% else  %}
-		<li><a type="button" class="btn btn-warning btn-sm" href="{{url_for('showLogin')}}">Login</a></li>
+		<li><a type="button" class="btn btn-warning" href="{{url_for('showLogin')}}">Login</a></li>
 	      {% endif%}
 		<li>
-		  <a id='logout' type="button" class="btn btn-primary btn-sm" href="#">Sign in</a>
+		  <a id='logout' type="button" class="btn btn-outline-warning" href="#">Sign in</a>
 		</li>
 		<li>
 		  <a id="menu" class="header_menu">
