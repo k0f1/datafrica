@@ -160,6 +160,7 @@ input, select, textarea {
   width: 78.99%;
   display: flex;
   justify-content: flex-end;
+  justify-content: space-between;
   float: right;
   
 }
@@ -173,10 +174,8 @@ input, select, textarea {
 }
 
 
+
 /*
-.space-between {
-  justify-content: space-between;
-}
 .vertical-centerer {
   flex-direction: column;
   justify-content: center;
