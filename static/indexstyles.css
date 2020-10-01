@@ -172,7 +172,7 @@ input, select, textarea {
   height: 100%;
 }
 
-#top-menu {
+#top-menu, header-navbar-menu, .col-md-3 {
   float: right;
 }
 
