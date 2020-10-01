@@ -172,7 +172,9 @@ input, select, textarea {
   height: 100%;
 }
 
-
+#top-menu {
+  float: right;
+}
 
 /*
 .vertical-centerer {
