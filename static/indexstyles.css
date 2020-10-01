@@ -172,11 +172,12 @@ input, select, textarea {
   height: 100%;
 }
 
-/*
-#top-menu, header-navbar-menu, .col-md-3 {
+
+#top-menu, .header-navbar-menu, .menu > ul {
   float: right;
+  width: 33%;
 }
-*/
+
 
 /*
 .vertical-centerer {
