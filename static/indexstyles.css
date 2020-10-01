@@ -132,8 +132,8 @@ input, select, textarea {
   color: #111;
 }
 
-#form-container, .form-container {
-    background: transparent;
+.input-group {
+    background: none;
 }
 
   
