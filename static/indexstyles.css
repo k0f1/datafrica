@@ -173,7 +173,7 @@ input, select, textarea {
 }
 
 
-#top-menu, .header-navbar-menu, .menu > ul {
+#top-menu {
   float: right;
   width: 33%;
 }
