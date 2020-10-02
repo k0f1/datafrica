@@ -313,10 +313,8 @@ Other media type is print if you think your users will print the page -->
 }
 
 
-
 h2 { text-align: center }
 
-.cta > h2, .row > p { text-align: center }
 
 /*Footer of index page */
 footer {
