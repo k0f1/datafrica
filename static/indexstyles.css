@@ -312,7 +312,7 @@ Other media type is print if you think your users will print the page -->
   width: 100%;
 }
 
-#HIW, .justify-content {
+h2, #HIW, .justify-content {
   justify-content: center;
   color: black;
 }
