@@ -313,9 +313,9 @@ Other media type is print if you think your users will print the page -->
 }
 
 
-#HIW {
-  justify-content: center;
-  color: black;
+
+h2 { 
+  text-align: center; 
 }
 
 /*Footer of index page */
