@@ -310,13 +310,16 @@ Other media type is print if you think your users will print the page -->
   background-color:  #fff7e6;
   height: 300px;
   width: 100%;
-}
-
-h2, #HIW, .justify-content {
   justify-content: center;
   color: black;
 }
 
+/*
+h2, #HIW, .justify-content {
+  justify-content: center;
+  color: black;
+}
+*/
 
 /*Footer of index page */
 footer {
