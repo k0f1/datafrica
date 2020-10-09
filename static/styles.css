@@ -103,9 +103,15 @@ Select all body elements with id login and select all section elements
 with id login-sessionmaker
  */
 
+#login-header, #form-wrapper {
+  width: 100%;
+  padding: 10px 10px, 10px 10px;
+}
+
 /*Select all elements class grid cell that is a descendant of the id. */
 .form-wrapper {
   display: grid;
+  width: 100%
 }
 
 #oauth-wrapper {
