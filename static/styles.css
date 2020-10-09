@@ -296,7 +296,6 @@ Remove any boostrap propperty that is forcing the issue ie .row and col-md */
 
 
 .row {
-  border: 2px dotted red;
   width: 100%;
 }
 
