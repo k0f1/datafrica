@@ -148,11 +148,13 @@ div.login-wrapper {
 }
 */
 
+/*
 .reposition {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+*/
 
 #content-wrapper {
   display: grid;
@@ -236,6 +238,7 @@ input.grid-cell {
   margin-left: auto;
   margin-right: auto;
 }
+
 .logo {
   width: 200px;
   display: inline-block;
