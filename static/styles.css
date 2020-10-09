@@ -121,11 +121,13 @@ div.login-wrapper {
 
 #oauth-wrapper {
   display: grid;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
 .oauth-wrapper {
   display: flex;
+  flex-wrap: wrap;
 }
 
 /* Select all elements with these two attributes */
