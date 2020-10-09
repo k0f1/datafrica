@@ -98,16 +98,13 @@ header#loginHeader {
 }
 
 
-/*
-Select all body elements with id login and select all section elements
-with id login-sessionmaker
- 
+/* Selects all <div> elements with class="login-wrapper" */
 
-#login-header, #form-wrapper {
+div.login-wrapper {
   width: 100%;
   padding: 10px 10px, 10px 10px;
 }
-*/
+
 
 /*Select all elements class grid cell that is a descendant of the id. */
 .form-wrapper {
