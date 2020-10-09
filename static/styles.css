@@ -113,6 +113,11 @@ with id login-sessionmaker
   justify-content: center;
 }
 
+.oauth-wrapper {
+  display: flex;
+}
+
+
 #content-wrapper {
   display: grid;
   margin-top: 0px;
