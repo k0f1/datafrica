@@ -141,6 +141,11 @@ with id login-sessionmaker
   margin-bottom: 20px;
 }
 
+.hundred-percent {
+  width: 100%;
+}
+
+
 .grid-cell ul {
   font-size: 14px;
   display: inline-flex;
