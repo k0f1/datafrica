@@ -143,13 +143,11 @@ div.login-wrapper {
 }
 */
 
-/*
+
 .reposition {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: auto;
 }
-*/
+
 
 /* Selects all <p> elements with class="intro" */
 p.intro {
