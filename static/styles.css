@@ -287,6 +287,7 @@ span.label {
   font-weight: normal;
 }
 
+/*
 span.icon {
   background: url('/identity/sign-in/g-normal.svg') transparent 5px 50% no-repeat;
   display: inline-block;
@@ -294,6 +295,8 @@ span.icon {
   width: 42px;
   height: 42px;
 }
+*/
+
 
 span.buttonText {
   display: inline-block;
