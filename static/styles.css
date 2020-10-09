@@ -140,8 +140,8 @@ with id login-sessionmaker
   display: block;
   margin-bottom: 20px;
 }
-
-.hundred-percent {
+/* select allelements whose attributes include both classes   */
+.form-group .hundred-percent {
   width: 100%;
 }
 
