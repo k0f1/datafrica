@@ -138,14 +138,15 @@ div.login-wrapper {
 }
 
 /* Selects all elements with name2 that is a descendant of an element with name1 */
-.row .left {
+/*.row .left {
   float: left;
 }
-
+*/
 /* Selects all elements with name2 that is a descendant of an element with name1 */
-.row .right {
+/*.row .right {
   float: right;
 }
+*/
 
 #content-wrapper {
   display: grid;
@@ -192,6 +193,9 @@ input.grid-cell {
 
 }
 
+#email-login {
+	background-color: black;
+}
 
 /*End of login page styling */
 
