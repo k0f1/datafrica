@@ -138,11 +138,6 @@ div.login-wrapper {
 }
 
 /* Selects all elements with name2 that is a descendant of an element with name1 */
-#oauthWrapper .sign-in-with {
-  text-align: center;
-}
-*/
-/* Selects all elements with name2 that is a descendant of an element with name1 */
 /*.row .right {
   float: right;
 }
@@ -155,6 +150,12 @@ div.login-wrapper {
   align-items: center;
 }
 */
+
+/* Selects all <p> elements with class="intro" */
+p.intro {
+  text-align: center;
+}
+
 
 #content-wrapper {
   display: grid;
