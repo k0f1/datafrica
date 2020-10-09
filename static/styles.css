@@ -138,8 +138,8 @@ div.login-wrapper {
 }
 
 /* Selects all elements with name2 that is a descendant of an element with name1 */
-/*.row .left {
-  float: left;
+#oauthWrapper .sign-in-with {
+  text-align: center;
 }
 */
 /* Selects all elements with name2 that is a descendant of an element with name1 */
