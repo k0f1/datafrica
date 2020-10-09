@@ -143,10 +143,11 @@ div.login-wrapper {
 }
 */
 
-
+/* How to Center a Div with CSS Margin Auto
+Use the shorthand margin property with the value 0 auto to center block-level elements like a div horizontally: */
 .reposition {
   display: block;
-  margin: auto;
+  margin: 0 auto;
 }
 
 
