@@ -125,13 +125,13 @@ with id login-sessionmaker
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
 
 }
-*/
 
-/*
+
 #login-session {
   justify-content: center;
 }
-*/
+
+
 
 #oauthWrapper .grid-cell {
   display: block;
