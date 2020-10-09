@@ -137,10 +137,15 @@ div.login-wrapper {
   
 }
 
-.google {
+/* Selects all elements with name2 that is a descendant of an element with name1 */
+.row .left {
   float: left;
 }
 
+/* Selects all elements with name2 that is a descendant of an element with name1 */
+.row .right {
+  float: right;
+}
 
 #content-wrapper {
   display: grid;
