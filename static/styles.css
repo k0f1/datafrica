@@ -98,13 +98,19 @@ header#loginHeader {
 }
 
 
-/* Selects all <div> elements with class="login-wrapper" */
+/* 
+Selects all <div> elements with class="login-wrapper" 
 
 div.login-wrapper {
   width: 100%;
   padding: 10px 10px, 10px 10px;
 }
+*/
 
+/* Selects all elements with name2 that is a descendant of an element with name1 */
+.login-wrapper .row {
+  width: 100%;
+}
 
 /*Select all elements class grid cell that is a descendant of the id. */
 .form-wrapper {
