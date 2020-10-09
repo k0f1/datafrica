@@ -146,10 +146,6 @@ with id login-sessionmaker
   justify-content: center;
 }
 
-.full-width {
-	width: 100%;
-}
-
 
 #oauthWrapper .grid-cell {
   display: block;
