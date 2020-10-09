@@ -149,7 +149,9 @@ div.login-wrapper {
 */
 
 .reposition {
+  display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 #content-wrapper {
