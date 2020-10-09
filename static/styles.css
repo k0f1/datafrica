@@ -117,6 +117,13 @@ with id login-sessionmaker
   display: flex;
 }
 
+/* Select all elements with these two attributes */
+.oauth-wrapper .space-between {
+  justify-content: space-between;
+  
+}
+
+
 
 #content-wrapper {
   display: grid;
