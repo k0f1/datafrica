@@ -108,10 +108,11 @@ div.login-wrapper {
 */
 
 /* Selects all elements with name2 that is a descendant of an element with name1 */
-.login-wrapper .row {
+/*.login-wrapper .row {
   position: relative;
   width: 100%;
 }
+*/
 
 /*Select all elements class grid cell that is a descendant of the id. */
 .form-wrapper {
@@ -269,6 +270,7 @@ The following element would be selected by a :target selector when the current U
   box-shadow: 1px 1px 1px grey;
   white-space: nowrap;
 }
+
 #customBtn:hover {
   cursor: pointer;
 }
@@ -276,6 +278,7 @@ span.label {
   font-family: serif;
   font-weight: normal;
 }
+
 span.icon {
   background: url('/identity/sign-in/g-normal.svg') transparent 5px 50% no-repeat;
   display: inline-block;
@@ -283,6 +286,7 @@ span.icon {
   width: 42px;
   height: 42px;
 }
+
 span.buttonText {
   display: inline-block;
   vertical-align: middle;
