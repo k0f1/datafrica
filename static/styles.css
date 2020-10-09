@@ -109,6 +109,7 @@ div.login-wrapper {
 
 /* Selects all elements with name2 that is a descendant of an element with name1 */
 .login-wrapper .row {
+  position: relative;
   width: 100%;
 }
 
