@@ -174,7 +174,8 @@ input, select, textarea {
 
 
 #top-menu {
-  float: right;
+  display: flex;
+  justify-content: flex-end;
   width: 25%;
 }
 
@@ -186,12 +187,12 @@ input, select, textarea {
 }
 
 */
-/* Select ul element with class justify content. Styling of right top menu- push content to the end */
+/* Select ul element with class justify content. Styling of right top menu- push content to the end 
 ul.header-navbar-menu {
   display: flex;
   justify-content: flex-end;
 }
-   
+*/   
 
 .logo {
   width: 200px;
