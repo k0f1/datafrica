@@ -187,12 +187,13 @@ input, select, textarea {
 }
 
 */
-/* Select ul element with class justify content. Styling of right top menu- push content to the end 
-ul.header-navbar-menu {
-  display: flex;
+/* Select ul element with class justify content. Styling of right top menu- push content to the end */
+ul.justify-content {
+  display: block;
   justify-content: flex-end;
+  width: 100%;
 }
-*/   
+
 
 .logo {
   width: 200px;
