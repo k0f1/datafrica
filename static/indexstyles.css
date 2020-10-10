@@ -184,13 +184,15 @@ input, select, textarea {
   flex-direction: column;
   justify-content: center;
 }
-.header-content {
-  width: 960px;
-  margin-left: auto;
-  margin-right: auto;
+
+*/
+/* Select ul element with class justify content. Styling of right top menu- push content to the end */
+ul.justify-content {
+  display: block;
+  display: flex;
+  justify-content: flex-end;
 }
-  
-*/  
+   
 
 .logo {
   width: 200px;
