@@ -101,7 +101,9 @@ header {
   
 }
 
-
+h1.header-navbar-menu {
+  height: 100%;
+}
 
 #searchScopeButtonID .nav-search-dropdown {
     position: absolute;
@@ -166,6 +168,7 @@ input, select, textarea {
 
 .header-navbar-menu:last-child {
     margin-right: 0;
+    float: right;
 }
 
 .header-navbar {
