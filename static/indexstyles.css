@@ -188,7 +188,7 @@ input, select, textarea {
 
 */
 /* Select ul element with class justify content. Styling of right top menu- push content to the end */
-ul.justify-content {
+ul#top-menu {
   display: block;
   justify-content: flex-end;
   width: 100%;
