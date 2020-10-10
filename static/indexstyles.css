@@ -187,8 +187,9 @@ input, select, textarea {
 
 */
 /* Select ul element with class justify content. Styling of right top menu- push content to the end */
-ul.justify-content {
-  float: right;
+ul.header-navbar-menu {
+  display: flex;
+  justify-content: flex-end;
 }
    
 
