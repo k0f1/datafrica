@@ -206,11 +206,11 @@
 
 
 
-              $('#fSignInWrapper').click(function() {
+              $('#facebook_auth').click(function() {
                 Fb.login(function(response) {
                   if (authResponse['accessToken']) {
                     // Now that the app is authorized, hide the signinButton
-                    $('#fSignInWrapper').attr('style', 'display:none');
+                    $('#facebook_auth').attr('style', 'display:none');
                     // Send the one-time code to the server
                     $.ajax({
                       type: 'POST',
