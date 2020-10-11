@@ -109,8 +109,7 @@
               <div class="grid-cell facebook right fifty-percent col-sm" id="fSignInWrapper">
                 <button id="facebook_auth" class="facebook" id="customBtn">
                   <span class="icon"  scope="public_profile, email" onlogin="checkLoginState();" target="_parent" href="https://graph.facebook.com/v5.0/oauth/access_token?grant_type=fb_exchange_token&\
-            			client_id = %s&client_secret = %s&fb_exchange_token = %s>
-			<img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="46" height="46" veiwBox="0 0 46 46">
+            			client_id = %s&client_secret = %s&fb_exchange_token = %s><img src ="{{url_for('static', filename='Facebook_F_logo.svg')}}" aria-hidden="true" width="46" height="46" veiwBox="0 0 46 46">
                   </span>
 		  <span class="buttonText">Facebook</span>
                 </button>
