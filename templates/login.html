@@ -214,8 +214,10 @@
 	 
 
               $('#facebook_auth').click(function() {
-                Fb.login(function(response) {
-			statusChangeCallback(response);
+
+		function checkLoginState() {
+		  FB.getLoginStatus(function(response) {
+		    statusChangeCallback(response);
                   if (authResponse['accessToken']) {
                     // Now that the app is authorized, hide the signinButton
                     $('#facebook_auth').attr('style', 'display:none');
